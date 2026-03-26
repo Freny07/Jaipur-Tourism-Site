@@ -1,0 +1,242 @@
+header {
+            position: relative;
+            margin: 40px auto;
+            max-width: 700px;
+        }
+
+        .hero-box {
+            position: absolute;
+            top: 65%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.45);
+            border: 3px solid #f2d872;
+            border-radius: 55px;
+            padding: 25px 45px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+            backdrop-filter: blur(2px);
+
+        }
+
+        .hero-box h1 {
+            color: #ffffff;
+            font-family: "Playfair Display", serif;
+            font-size: 50px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-box p {
+            color: white;
+            font-family: "Poppins", sans-serif;
+            font-size: 20px;
+            margin: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Montserrat", Arial, sans-serif;
+            background: #FFF6EF;
+            color: #3C2A21;
+            line-height: 1.7;
+        }
+
+        /* ===== NAVBAR FIX ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+
+            background-color: #E9CBA7;
+            padding: 8px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow:
+                rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        nav .logo h1 {
+            font-size: 1.8rem;
+            margin: 0;
+            background: linear-gradient(to right, #2e2ec4 0%, #912727 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #3C2A21;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.95rem;
+            font-weight: 600;
+
+            padding: 6px 10px;
+            border-radius: 20px;
+            background-color: #FFF6EF;
+            border: 1px solid #A1673F;
+            transition: 0.2s;
+        }
+
+        nav ul li a:hover {
+            background-color: #D9B27C;
+            color: #3C2A21;
+            box-shadow: 0 4px 14px rgba(161, 103, 63, 0.3);
+        }
+
+        .active-nav {
+            background-color: #A1673F !important;
+            color: #FFF6EF !important;
+            border: none !important;
+            box-shadow: 0 0 12px rgba(161, 103, 63, 0.45);
+            font-weight: 700;
+        }
+
+        /* ===== MOBILE NAV (HAMBURGER) ===== */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger .line {
+            width: 25px;
+            height: 2px;
+            background-color: #1f1f1f;
+            display: block;
+            margin: 6px auto;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hamburger-active {
+            transform: rotate(45deg);
+            transition: all 0.3s ease-in-out;
+            transition-delay: 0.4s;
+        }
+
+        .hamburger-active .line:nth-child(2) {
+            width: 0;
+        }
+
+        .hamburger-active .line:nth-child(1),
+        .hamburger-active .line:nth-child(3) {
+            transition-delay: 0.2s;
+        }
+
+        .hamburger-active .line:nth-child(1) {
+            transform: translateY(8px);
+        }
+
+        .hamburger-active .line:nth-child(3) {
+            transform: translateY(-6px) rotate(90deg);
+        }
+
+        .menubar {
+            position: fixed;
+            top: 0;
+            left: -60%;
+            width: 60%;
+            height: 100vh;
+            padding-top: 100px;
+            background: #ffffff;
+            z-index: 900;
+            display: flex;
+            justify-content: center;
+            transition: all 0.4s ease-in-out;
+            box-shadow: none;
+        }
+
+        .menubar.active {
+            left: 0;
+            box-shadow: rgba(0, 0, 0, 0.25) 2px 0 10px;
+        }
+
+        .menubar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+
+        .menubar ul li {
+            margin-bottom: 24px;
+        }
+
+        .menubar ul li a {
+            text-decoration: none;
+            font-size: 1rem;
+            color: #3C2A21;
+            padding: 8px 14px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+
+        .menubar ul li a:hover,
+        .menubar ul li a.active-nav {
+            background-color: #f5f0e8;
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* ===== PAGE LAYOUT & HERO FIX ===== */
+
+        /* Push content below fixed navbar */
+        header {
+            padding-top: 90px;
+            padding-bottom: 10px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto 50px auto;
+            padding: 0 16px 40px;
+        }
+
+        /* Make contact layout breathe a bit more on small screens */
+        @media (max-width: 900px) {
+            header {
+                padding-top: 80px;
+            }
+
+            .hero-box {
+                margin: 30px 16px 10px !important;
+                padding: 18px 18px;
+            }
+
+            .container {
+                padding: 0 10px 30px;
+            }
+        }

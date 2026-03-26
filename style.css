@@ -2,12 +2,21 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
+/* body {
   font-family: "Montserrat", Arial, sans-serif;
   margin: 0;
   background: #FFF6EF;
   color: #3C2A21;
   line-height: 2;
+} */
+
+body {
+  font-family: "Montserrat", Arial, sans-serif;
+  margin: 0;
+  /* A softer, creamier pink-tinted white for better eye comfort */
+  background: #FFF9F6; 
+  color: #4A372E; /* Slightly softer dark brown for better readability */
+  line-height: 1.8; /* Reduced slightly from 2 for a tighter, professional look */
 }
 
 nav {
@@ -107,7 +116,6 @@ nav ul li a:hover {
   transform: translateY(-9px) rotate(-45deg);
 }
 
-
 .menubar {
   position: fixed;
   top: 0;
@@ -149,7 +157,7 @@ nav ul li a:hover {
   font-weight: 600;
   padding: 10px 20px;
   border-radius: 12px;
-  transition: background 0.3s, transform 0.25s, color 0.3s;
+  transition: transform 0.25s, color 0.3s, background 0.3s;
 }
 
 .menubar ul li a:hover {
@@ -355,6 +363,25 @@ header p {
   color: #A1673F;
 }
 
+.stat-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", sans-serif;
+}
+
+/* Specific colors */
+.sunny { color: gold; }
+.cloudy { color: gray; }
+.rainy { color: dodgerblue; }
+.snowy { color: rgb(220, 230, 173); }
+
+.other {
+  background: linear-gradient(45deg, #ff6ec4, #7873f5);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
 
 .section-title {
   font-size: 1.7em;
@@ -366,21 +393,6 @@ header p {
   position: relative;
   opacity: 0;
   animation: fadeUpTitle 1.2s forwards;
-}
-
-.section-title::before {
-  content: "";
-  position: absolute;
-  right: -25px;
-  top: -15px;
-  width: 140px;
-  height: 140px;
-  background: url('Mandala.png') no-repeat;
-  background-size: contain;
-  opacity: 0.075;
-  /* subtle */
-  pointer-events: none;
-  z-index: -1;
 }
 
 .section-title:nth-of-type(1) {
@@ -534,19 +546,6 @@ header p {
   backdrop-filter: blur(1px);
 }
 
-.desc-wrapper::before {
-  content: "";
-  position: absolute;
-  top: -30px;
-  right: -20px;
-  width: 120%;
-  height: 130%;
-  background: url(/Mandala.png) no-repeat center;
-  background-size: cover;
-  opacity: 0.2;
-  pointer-events: none;
-  z-index: 0;
-}
 
 .desc-wrapper p {
   position: relative;
@@ -930,4 +929,122 @@ footer::before {
 
     box-shadow: 0 8px 35px rgba(0,0,0,0.5);
     backdrop-filter: blur(8px);
+}
+
+/* --- PROFILE NAV ICON (The one in the header) --- */
+#nav-profile-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 15px;
+  vertical-align: middle;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* Perfect Circle */
+  overflow: hidden;   /* Clips the image to the circle */
+  border: 2px solid #A1673F;
+  background-color: #fff;
+}
+
+#nav-profile-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* IMPORTANT: Fills the circle without gaps or stretching */
+  display: block;
+}
+
+/* --- THE MODAL OVERLAY --- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-box {
+  background: #ffffff;
+  padding: 30px;
+  width: 90%;
+  max-width: 380px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* --- PHOTO UPLOAD CONTAINER (The large one in the form) --- */
+.photo-container {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 15px;
+  position: relative;
+}
+
+.photo-circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%; /* Perfect Circle */
+  border: 3px solid #E9CBA7;
+  overflow: hidden;   /* Clips the image */
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* IMPORTANT: Fills the large preview without gaps */
+}
+
+.cam-icon {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: #3C2A21;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid white;
+  cursor: pointer;
+  z-index: 10;
+}
+
+/* --- FORM INPUTS --- */
+.modal-box form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal-box input, 
+.modal-box select {
+  width: 100% !important;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-sizing: border-box; /* Ensures padding doesn't break width */
+  font-family: 'Montserrat', sans-serif;
+}
+
+.modal-box button {
+  background: #A1673F;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
 }
