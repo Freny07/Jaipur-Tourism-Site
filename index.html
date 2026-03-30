@@ -1,452 +1,541 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <title>Jaipur City Tourism</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&amp;display=swap" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700&amp;display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="style.css" />
     <link rel="shortcut icon" href="favicon.jpeg" type="image/x-icon/png" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link
-    rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap"
-        />
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap"
+    />
+  </head>
 
-</head>
-
-<body>
+  <body>
     <nav>
-        <div class="logo">
-            <div>
-                <img style="border-radius: 50%; margin: 0 12px 6px 0px;" src="favicon.jpeg" alt="JT" width="37"/>
-            </div>
-            <h1>JAIPUR-TOUR</h1>
+      <div class="logo">
+        <div>
+          <img
+            style="border-radius: 50%; margin: 0 12px 6px 0px"
+            src="favicon.jpeg"
+            alt="JT"
+            width="37"
+          />
         </div>
-        <ul>
-            <li>
-                <a href="index.html" class="active-nav">Home</a>
-            </li>
-            <li>
-                <a href="attractions.html">Attraction</a>
-            </li>
-            <li>
-                <a href="shopping.html">Shopping</a>
-            </li>
-            <li>
-                <a href="food.html">Cuisine</a>
-            </li>
-            <li>
-                <a href="contact.html">Package</a>
-            </li>
-            <li>
-                <a id="login-btn" style="cursor: pointer">
-                    <i class="fa-solid fa-user"></i>
-                </a>
-            </li>
-        </ul>
-        <div class="hamburger">
-            <span class="line"></span>
-            <span class="line"></span>
-            <span class="line"></span>
-        </div>
+        <h1>JAIPUR-TOUR</h1>
+      </div>
+      <ul>
+        <li>
+          <a href="index.html" class="active-nav">Home</a>
+        </li>
+        <li>
+          <a href="attractions.html">Attraction</a>
+        </li>
+        <li>
+          <a href="shopping.html">Shopping</a>
+        </li>
+        <li>
+          <a href="food.html">Cuisine</a>
+        </li>
+        <li>
+          <a href="contact.html">Package</a>
+        </li>
+        <li>
+          <a id="login-btn" style="cursor: pointer">
+            <span id="nav-profile-icon">
+              <i class="fa-solid fa-user"></i>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
     </nav>
     <div class="menubar">
-        <ul>
-            <li>
-                <a href="index.html" class="active-nav">Home</a>
-            </li>
-            <li>
-                <a href="#attractions">Attraction</a>
-            </li>
-            <li>
-                <a href="#shopping">Shopping</a>
-            </li>
+      <ul>
+        <li>
+          <a href="index.html" class="active-nav">Home</a>
+        </li>
+        <li>
+          <a href="#attractions">Attraction</a>
+        </li>
+        <li>
+          <a href="#shopping">Shopping</a>
+        </li>
 
-            <li>
-                <a href="#food">Cuisine</a>
-            </li>
-            <li>
-                <a href="#">Package</a>
-            </li>
-        </ul>
+        <li>
+          <a href="#cuisine">Cuisine</a>
+        </li>
+        <li>
+          <a href="#contact">Package</a>
+        </li>
+      </ul>
     </div>
     <header>
-        <div id="myCarousel" class="carousel slide pointer-event" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item">
-                    <img src="https://www.agoda.com/wp-content/uploads/2024/09/Featured-image-Royal-Palace-of-Jaipur-India.jpg"
-                        class="d-block w-100" alt="..." />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://i.pinimg.com/1200x/17/16/0c/17160cf3dcae938504300466062deedf.jpg"
-                        class="d-block w-100" alt="..." />
-                </div>
-                <div class="carousel-item active">
-                    <img src="https://www.refreshingholidays.com/uploads/blogs/1758105207.jpg" class="d-block w-100"
-                        alt="..." />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://i.pinimg.com/1200x/63/87/5a/63875ab4490b4128fd63901cbcc3bf79.jpg"
-                        class="d-block w-100" alt="..." />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://i.pinimg.com/1200x/22/84/79/22847951e521c8ef10021a3578ec2967.jpg"
-                        class="d-block w-100" alt="..." />
-                </div>
-                <div class="carousel-item">
-                    <img src="https://www.abhibus.com/blog/wp-content/uploads/2023/08/amer-Fort.jpg"
-                        class="d-block w-100" alt="..." />
-                </div>
-                class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000"
-                <div class="hero-box">
-                    <h1>Jaipur City Tourism</h1>
-                    <p>The Pink City – Heritage, Colors, Culture, Wonders &amp; More</p>
-                </div>
-            </div>
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-
-            <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
+      <div
+        id="myCarousel"
+        class="carousel slide pointer-event"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <div class="carousel-item">
+            <img
+              src="https://www.agoda.com/wp-content/uploads/2024/09/Featured-image-Royal-Palace-of-Jaipur-India.jpg"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://i.pinimg.com/1200x/17/16/0c/17160cf3dcae938504300466062deedf.jpg"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item active">
+            <img
+              src="https://www.refreshingholidays.com/uploads/blogs/1758105207.jpg"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://i.pinimg.com/1200x/63/87/5a/63875ab4490b4128fd63901cbcc3bf79.jpg"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src="https://i.pinimg.com/1200x/22/84/79/22847951e521c8ef10021a3578ec2967.jpg"
+              class="d-block w-100"
+              alt="..."
+            />
+          </div>
+          <div class="hero-box">
+            <h1>Jaipur City Tourism</h1>
+            <p>The Pink City – Heritage, Colors, Culture, Wonders &amp; More</p>
+          </div>
         </div>
+
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon"></span>
+        </button>
+      </div>
     </header>
 
     <div class="container">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon">🏰</div>
-                <div class="stat-title">Attractions</div>
-                <div class="stat-value">32</div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🏰</div>
+          <div class="stat-title">Attractions</div>
+          <div class="stat-value">32</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">👤</div>
+          <div class="stat-title">Tourists This Month</div>
+          <div class="stat-value">28,510</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" id="weatherIcon">☀</div>
+          <div class="stat-title">Current Weather</div>
+          <div class="stat-value" id="weatherValue">32°C Sunny</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎭</div>
+          <div class="stat-title">Today’s Events</div>
+          <div class="stat-value">6</div>
+        </div>
+      </div>
+
+      <script>
+        async function getWeather() {
+          const apiKey = "47a0d7b7b4449c79f6167bd2245b2755";
+          const url = `https://api.openweathermap.org/data/2.5/weather?q=Jaipur,IN&appid=${apiKey}&units=metric`;
+
+          try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            const temp = data.main.temp;
+            const description = data.weather[0].description;
+            const iconCode = data.weather[0].icon; // e.g. "01d" or "01n"
+            const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`;
+
+            // Update text
+            document.getElementById("weatherValue").innerText =
+              `${temp}°C ${description}`;
+
+            // Update icon
+            const iconDiv = document.getElementById("weatherIcon");
+            iconDiv.className = "stat-icon"; // reset classes
+            iconDiv.innerHTML = `<img src="${iconUrl}" alt="weather icon" style="width:50px;height:50px;">`;
+          } catch (error) {
+            document.getElementById("weatherValue").innerText =
+              "Unable to load weather";
+            console.error(error);
+          }
+        }
+
+        getWeather();
+        setInterval(getWeather, 900000); // refresh every 15 minutes
+      </script>
+
+      <div class="about-wrapper">
+        <div class="about-class">About Jaipur</div>
+
+        <div class="about-content">
+          <p>
+            Jaipur, the capital of Rajasthan, is famously known as the Pink City
+            due to its distinct pink-colored buildings. Founded in 1727 by
+            Maharaja Sawai Jai Singh II, it is India’s first planned city.
+            Jaipur is renowned for its rich history, royal palaces, and vibrant
+            culture, including the Amber Fort, Hawa Mahal, and City Palace. It’s
+            also part of the Golden Triangle tourist circuit with Delhi and
+            Agra. The city beautifully blends tradition and modernity,
+            attracting visitors from around the world.
+          </p>
+        </div>
+      </div>
+
+      <div class="section-title">Today's Featured Events</div>
+      <div class="cards-row">
+        <div class="card event-card">
+          <img
+            src="https://c4.wallpaperflare.com/wallpaper/132/50/490/laser-show-laser-light-lot-wallpaper-preview.jpg"
+            alt="Light &amp; Sound Show"
+          />
+          <div class="card-content">
+            <div class="card-title">Light &amp; Sound Show</div>
+            <div class="card-desc">Amber Fort, 7:00 PM</div>
+          </div>
+        </div>
+        <div class="card event-card">
+          <img
+            src="https://media.istockphoto.com/id/609720544/vector/couple-playing-garba-in-dandiya-night-navratri-dussehra-festival.jpg?s=612x612&amp;w=0&amp;k=20&amp;c=Aveqw-4ETGoS90quC5dJ6WyXLqu3bZfjeoUesCmleGE="
+            alt="Folk Dance Night"
+          />
+          <div class="card-content">
+            <div class="card-title">Folk Dance Night</div>
+            <div class="card-desc">Central Park, 8:30 PM</div>
+          </div>
+        </div>
+        <div class="card event-card">
+          <img
+            src="https://static.vecteezy.com/system/resources/thumbnails/050/808/926/small/bustling-outdoor-craft-and-artisan-market-of-handmade-products-traditional-artisanal-goods-photo.jpeg"
+            alt="Artisan Market"
+          />
+          <div class="card-content">
+            <div class="card-title">Artisan Market</div>
+            <div class="card-desc">Johari Bazaar, All Day</div>
+          </div>
+        </div>
+        <div class="card event-card">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH0xOmdbSBMfa_j-qFc6iozhBRLs1f4p55Gg&amp;s"
+            alt="Rajasthani Food Fest"
+          />
+          <div class="card-content">
+            <div class="card-title">Rajasthani Food Fest</div>
+            <div class="card-desc">Bapu Bazaar, 5:00 PM</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="attractions" class="section-title">Popular Attractions</div>
+
+      <div class="desc-wrapper">
+        <p>
+          Jaipur is celebrated for its magnificent forts, grand palaces, and
+          timeless architectural wonders. Every landmark reflects the proud
+          legacy of the Rajput kings and the artistic brilliance of the Pink
+          City. From hilltop fortresses to intricately crafted monuments, Jaipur
+          offers a journey through history, culture, and royal heritage. Explore
+          a few highlights below, and discover the full range of attractions
+          across the city.
+        </p>
+      </div>
+
+      <div class="cards-with-button">
+        <div class="cards-row two-cards">
+          <div class="card">
+            <img
+              src="https://media.istockphoto.com/id/469788052/photo/amer-fort-near-jaipur.jpg?s=612x612&w=0&k=20&c=Rsd9v_Ix39ce8U9QKo3UnWfEMG1DUq4hnzh3APPi3g8="
+              alt="Amber Fort"
+            />
+            <div class="card-content">
+              <div class="card-title">Amber Fort</div>
+              <div class="card-desc">
+                Majestic hilltop fort with stunning views.
+              </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon">👤</div>
-                <div class="stat-title">Tourists This Month</div>
-                <div class="stat-value">28,510</div>
+          </div>
+
+          <div class="card">
+            <img
+              src="https://media.istockphoto.com/id/482557081/photo/hawa-mahal-jaipur-india.jpg?s=612x612&w=0&k=20&c=A6qCUjoNH74nXCkB07RNgK3eIt2mun8PgsLPw9dNkVI="
+              alt="Hawa Mahal"
+            />
+            <div class="card-content">
+              <div class="card-title">Hawa Mahal</div>
+              <div class="card-desc">
+                Iconic pink palace with intricate lattice windows.
+              </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon">☀</div>
-                <div class="stat-title">Current Weather</div>
-                <div class="stat-value">32°C Sunny</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">🎭</div>
-                <div class="stat-title">Today’s Events</div>
-                <div class="stat-value">6</div>
-            </div>
+          </div>
         </div>
 
-        <div class="about-wrapper">
-            <div class="about-class">About Jaipur</div>
+        <div class="view-more-btn">
+          <a href="attractions.html">View All Attractions →</a>
+        </div>
+      </div>
 
-            <div class="about-content">
-                <p>
-                    Jaipur, the capital of Rajasthan, is famously known as the Pink City
-                    due to its distinct pink-colored buildings. Founded in 1727 by
-                    Maharaja Sawai Jai Singh II, it is India’s first planned city.
-                    Jaipur is renowned for its rich history, royal palaces, and vibrant
-                    culture, including the Amber Fort, Hawa Mahal, and City Palace. It’s
-                    also part of the Golden Triangle tourist circuit with Delhi and
-                    Agra. The city beautifully blends tradition and modernity,
-                    attracting visitors from around the world.
-                </p>
+      <div id="shopping" class="section-title">
+        Jaipur's Famous Shopping Spots
+      </div>
+
+      <div class="desc-wrapper">
+        <p>
+          Jaipur’s vibrant bazaars are filled with traditional crafts, colorful
+          textiles, handcrafted jewelry, and unique souvenirs. Each market has
+          its own charm and offers a glimpse into Rajasthan’s rich artistic
+          heritage. Explore two iconic markets below and discover many more
+          across the Pink City.
+        </p>
+      </div>
+
+      <div class="cards-with-button">
+        <div class="cards-row two-cards">
+          <div class="card shopping-spot">
+            <img
+              src="https://www.captureatrip.com/_next/image?url=https%3A%2F%2Fd1zvcmhypeawxj.cloudfront.net%2Fblogs%2Fcover_web%2Fjohari-bazar-webp-2dac12dc1a-1760116805911.webp&w=3840&q=50"
+              alt="Johari Bazaar"
+            />
+            <div class="card-content">
+              <div class="card-title">Johari Bazaar</div>
+              <div class="card-desc">
+                Famous for exquisite jewelry, gemstones, and handcrafted
+                ornaments.
+              </div>
             </div>
+          </div>
+
+          <div class="card shopping-spot">
+            <img
+              src="https://images.tv9hindi.com/wp-content/uploads/2022/10/Bapu-Bazar.jpg"
+              alt="Bapu Bazaar"
+            />
+            <div class="card-content">
+              <div class="card-title">Bapu Bazaar</div>
+              <div class="card-desc">
+                Popular for colorful textiles, handicrafts, and leather
+                products.
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div class="section-title">Today's Featured Events</div>
-        <div class="cards-row">
-            <div class="card event-card">
-                <img src="https://c4.wallpaperflare.com/wallpaper/132/50/490/laser-show-laser-light-lot-wallpaper-preview.jpg"
-                    alt="Light &amp; Sound Show" />
-                <div class="card-content">
-                    <div class="card-title">Light &amp; Sound Show</div>
-                    <div class="card-desc">Amber Fort, 7:00 PM</div>
-                </div>
+        <div class="view-more-btn">
+          <a href="shopping.html">Explore All Shopping Spots →</a>
+        </div>
+      </div>
+
+      <div id="food" class="section-title">Jaipur's Favorite Food</div>
+
+      <div class="desc-wrapper">
+        <p>
+          Jaipur’s food culture is a blend of royal Rajasthani flavors,
+          traditional recipes, and iconic street delights. From hearty dishes
+          like Dal-Baati-Churma and Laal Maas to sweet favorites like Ghewar,
+          the Pink City offers a rich culinary journey. By visiting our Food
+          page, you can explore Jaipur’s most loved dishes along with a curated
+          list of famous restaurants and must-try eateries across the city.
+        </p>
+      </div>
+
+      <div class="cards-with-button">
+        <div class="cards-row two-cards">
+          <div class="card food-card">
+            <img
+              src="https://i.redd.it/e9yo0utefpo61.jpg"
+              alt="Rajasthani Thali"
+            />
+            <div class="card-content">
+              <div class="card-title">Rajasthani Thali</div>
+              <div class="card-desc">
+                A wholesome royal platter of dal-baati, churma, kadhi, and more.
+              </div>
             </div>
-            <div class="card event-card">
-                <img src="https://media.istockphoto.com/id/609720544/vector/couple-playing-garba-in-dandiya-night-navratri-dussehra-festival.jpg?s=612x612&amp;w=0&amp;k=20&amp;c=Aveqw-4ETGoS90quC5dJ6WyXLqu3bZfjeoUesCmleGE="
-                    alt="Folk Dance Night" />
-                <div class="card-content">
-                    <div class="card-title">Folk Dance Night</div>
-                    <div class="card-desc">Central Park, 8:30 PM</div>
-                </div>
+          </div>
+
+          <div class="card food-card">
+            <img
+              src="https://www.olddelhifoods.com/wp-content/uploads/2024/08/Paneer-Ghewar.jpg"
+              alt="Ghewar"
+            />
+            <div class="card-content">
+              <div class="card-title">Ghewar</div>
+              <div class="card-desc">
+                A festival-special sweet known for its crispy texture and
+                saffron flavor.
+              </div>
             </div>
-            <div class="card event-card">
-                <img src="https://static.vecteezy.com/system/resources/thumbnails/050/808/926/small/bustling-outdoor-craft-and-artisan-market-of-handmade-products-traditional-artisanal-goods-photo.jpeg"
-                    alt="Artisan Market" />
-                <div class="card-content">
-                    <div class="card-title">Artisan Market</div>
-                    <div class="card-desc">Johari Bazaar, All Day</div>
-                </div>
-            </div>
-            <div class="card event-card">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTH0xOmdbSBMfa_j-qFc6iozhBRLs1f4p55Gg&amp;s"
-                    alt="Rajasthani Food Fest" />
-                <div class="card-content">
-                    <div class="card-title">Rajasthani Food Fest</div>
-                    <div class="card-desc">Bapu Bazaar, 5:00 PM</div>
-                </div>
-            </div>
+          </div>
         </div>
 
-        <div id="attractions" class="section-title">Popular Attractions</div>
-
-        <div class="desc-wrapper">
-            <p>
-                Jaipur is celebrated for its magnificent forts, grand palaces, and
-                timeless architectural wonders. Every landmark reflects the proud
-                legacy of the Rajput kings and the artistic brilliance of the Pink
-                City. From hilltop fortresses to intricately crafted monuments, Jaipur
-                offers a journey through history, culture, and royal heritage. Explore
-                a few highlights below, and discover the full range of attractions
-                across the city.
-            </p>
+        <div class="view-more-btn">
+          <a href="cuisine.html">See More Jaipur Dishes →</a>
         </div>
+      </div>
 
-        <div class="cards-with-button">
-            <div class="cards-row two-cards">
-                <div class="card">
-                    <img src="https://media.istockphoto.com/id/469788052/photo/amer-fort-near-jaipur.jpg?s=612x612&w=0&k=20&c=Rsd9v_Ix39ce8U9QKo3UnWfEMG1DUq4hnzh3APPi3g8="
-                        alt="Amber Fort" />
-                    <div class="card-content">
-                        <div class="card-title">Amber Fort</div>
-                        <div class="card-desc">
-                            Majestic hilltop fort with stunning views.
-                        </div>
-                    </div>
-                </div>
+      <hr />
+      <br />
 
-                <div class="card">
-                    <img src="https://media.istockphoto.com/id/482557081/photo/hawa-mahal-jaipur-india.jpg?s=612x612&w=0&k=20&c=A6qCUjoNH74nXCkB07RNgK3eIt2mun8PgsLPw9dNkVI="
-                        alt="Hawa Mahal" />
-                    <div class="card-content">
-                        <div class="card-title">Hawa Mahal</div>
-                        <div class="card-desc">
-                            Iconic pink palace with intricate lattice windows.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="view-more-btn">
-                <a href="attractions.html">View All Attractions →</a>
-            </div>
-        </div>
-
-        <div id="shopping" class="section-title">
-            Jaipur's Famous Shopping Spots
-        </div>
-
-        <div class="desc-wrapper">
-            <p>
-                Jaipur’s vibrant bazaars are filled with traditional crafts, colorful
-                textiles, handcrafted jewelry, and unique souvenirs. Each market has
-                its own charm and offers a glimpse into Rajasthan’s rich artistic
-                heritage. Explore two iconic markets below and discover many more
-                across the Pink City.
-            </p>
-        </div>
-
-        <div class="cards-with-button">
-            <div class="cards-row two-cards">
-                <div class="card shopping-spot">
-                    <img src="https://www.captureatrip.com/_next/image?url=https%3A%2F%2Fd1zvcmhypeawxj.cloudfront.net%2Fblogs%2Fcover_web%2Fjohari-bazar-webp-2dac12dc1a-1760116805911.webp&w=3840&q=50"
-                        alt="Johari Bazaar" />
-                    <div class="card-content">
-                        <div class="card-title">Johari Bazaar</div>
-                        <div class="card-desc">
-                            Famous for exquisite jewelry, gemstones, and handcrafted
-                            ornaments.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card shopping-spot">
-                    <img src="https://images.tv9hindi.com/wp-content/uploads/2022/10/Bapu-Bazar.jpg"
-                        alt="Bapu Bazaar" />
-                    <div class="card-content">
-                        <div class="card-title">Bapu Bazaar</div>
-                        <div class="card-desc">
-                            Popular for colorful textiles, handicrafts, and leather
-                            products.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="view-more-btn">
-                <a href="shopping.html">Explore All Shopping Spots →</a>
-            </div>
-        </div>
-
-        <div id="food" class="section-title">Jaipur's Favorite Food</div>
-
-        <div class="desc-wrapper">
-            <p>
-                Jaipur’s food culture is a blend of royal Rajasthani flavors,
-                traditional recipes, and iconic street delights. From hearty dishes
-                like Dal-Baati-Churma and Laal Maas to sweet favorites like Ghewar,
-                the Pink City offers a rich culinary journey. By visiting our Food
-                page, you can explore Jaipur’s most loved dishes along with a curated
-                list of famous restaurants and must-try eateries across the city.
-            </p>
-        </div>
-
-        <div class="cards-with-button">
-            <div class="cards-row two-cards">
-                <div class="card food-card">
-                    <img src="https://i.redd.it/e9yo0utefpo61.jpg" alt="Rajasthani Thali" />
-                    <div class="card-content">
-                        <div class="card-title">Rajasthani Thali</div>
-                        <div class="card-desc">
-                            A wholesome royal platter of dal-baati, churma, kadhi, and more.
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card food-card">
-                    <img src="https://www.olddelhifoods.com/wp-content/uploads/2024/08/Paneer-Ghewar.jpg"
-                        alt="Ghewar" />
-                    <div class="card-content">
-                        <div class="card-title">Ghewar</div>
-                        <div class="card-desc">
-                            A festival-special sweet known for its crispy texture and
-                            saffron flavor.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="view-more-btn">
-                <a href="cuisine.html">See More Jaipur Dishes →</a>
-            </div>
-        </div>
-
-        
-        <hr><br>
-
-        <div class="map-section">
-            <b>Explore Jaipur on the Map</b><br />
-            <section id="map">
-                <h3>Jaipur map</h3>
-                <!-- <p class="sub">Use the city map and “Open in Maps” buttons on cards for directions.</p> -->
-                <iframe class="map" title="Jaipur city map"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14223.780331040334!2d75.814578!3d26.912433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db14d7070f77b%3A0x3f6a7a3b6d5e7d75!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1710000000000"
-                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </section>
-        </div>
+      <div class="map-section">
+        <b>Explore Jaipur on the Map</b><br />
+        <section id="map">
+          <h3>Jaipur map</h3>
+          <iframe
+            class="map"
+            title="Jaipur city map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14223.780331040334!2d75.814578!3d26.912433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db14d7070f77b%3A0x3f6a7a3b6d5e7d75!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1710000000000"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            style="border:0; width:100%; height:500px;"
+          >
+          </iframe>
+        </section>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const packages = {
-            1: {
-                title: "Jaipur One-Day Tour",
-                details:
-                    "Amber Fort, Hawa Mahal, City Palace, Jantar Mantar, Shopping at Bapu Bazaar.",
-            },
-            2: {
-                title: "2 Days Heritage Tour",
-                details:
-                    "Day 1: Amber Fort, Jaigarh Fort, Nahargarh Fort.\nDay 2: City Palace, Albert Hall Museum, Birla Mandir, Chokhi Dhani.",
-            },
-            3: {
-                title: "3 Days Jaipur–Ajmer–Pushkar Tour",
-                details:
-                    "Day 1: Jaipur sightseeing.\nDay 2: Ajmer Sharif Dargah.\nDay 3: Pushkar Lake & Brahma Temple.",
-            },
-        };
 
-        function showPackage() {
-            const selected = document.getElementById("package").value;
-            if (!selected) {
-                alert("Please select a tourism package first!");
-                return;
-            }
-            document.getElementById("popupTitle").textContent =
-                packages[selected].title;
-            document.getElementById("popupDetails").textContent =
-                packages[selected].details;
-            document.getElementById("packagePopup").style.display = "flex";
-        }
-
-        function closePopup() {
-            document.getElementById("packagePopup").style.display = "none";
-        }
-
-        document
-            .getElementById("tourForm")
-            .addEventListener("submit", function (e) {
-                e.preventDefault();
-                const name = document.getElementById("name").value.trim();
-                const email = document.getElementById("email").value.trim();
-                const pkg = document.getElementById("package").value;
-                if (!pkg) {
-                    alert("Please select a tourism package!");
-                    return;
-                }
-                alert(
-                    `Thank you, ${name}! You have successfully registered for ${packages[pkg].title}. Confirmation will be sent to ${email}.`
-                );
-                this.reset();
-            });
-    </script>
-
-    <footer style="
-  background:#2c2c2c;
-  color:white;
-  padding:50px 20px;
-  margin-top:40px;
-  font-family:Montserrat, sans-serif;
-">
-        <div style="max-width:1300px; margin:auto; display:flex; flex-wrap:wrap; justify-content:space-between;">
-
-            <div style="flex:1 1 250px; margin-bottom:25px;">
-                <h3 style="color:#f4c27a; font-weight:700; margin-bottom:15px;">Jaipur Tourism</h3>
-                <p style="line-height:1.7;">
-                    Official Jaipur Tourism Portal — Explore attractions, food, culture, shopping & heritage of the Pink
-                    City.
-                </p>
-            </div>
-
-            <div style="flex:1 1 200px; margin-bottom:25px;">
-                <h4 style="color:#f4c27a; font-weight:700; margin-bottom:10px;">Quick Links</h4>
-                <ul style="line-height:2; padding-left:0; list-style:none;">
-                    <li><a href="#" style="color:white; text-decoration:none;">About Jaipur</a></li>
-                    <li><a href="#" style="color:white; text-decoration:none;">Tourist Spots</a></li>
-                    <li><a href="#" style="color:white; text-decoration:none;">Shopping Destinations</a></li>
-                    <li><a href="#" style="color:white; text-decoration:none;">Cuisines</a></li>
-                </ul>
-            </div>
-
-            <div style="flex:1 1 200px; margin-bottom:25px;">
-                <h4 style="color:#f4c27a; font-weight:700; margin-bottom:10px;">Help & Support</h4>
-                <ul style="line-height:2; padding-left:0; list-style:none;">
-                    <li><a href="#" style="color:white; text-decoration:none;">Contact Us</a></li>
-                    <li><a href="#" style="color:white; text-decoration:none;">Privacy Policy</a></li>
-                    <li><a href="#" style="color:white; text-decoration:none;">Terms & Conditions</a></li>
-                </ul>
-            </div>
-
-            <div style="flex:1 1 250px; margin-bottom:25px;">
-                <h4 style="color:#f4c27a; font-weight:700; margin-bottom:10px;">Contact Info</h4>
-                <p>📍 Jaipur Tourism Office,<br>Rajasthan, India</p>
-                <p>📞 +91 98765 43210</p>
-                <p>📧 info@jaipurtourism.in</p>
-            </div>
+    <footer
+      style="
+        background: #2c2c2c;
+        color: white;
+        padding: 50px 20px;
+        margin-top: 40px;
+        font-family: Montserrat, sans-serif;
+      "
+    >
+      <div
+        style="
+          max-width: 1300px;
+          margin: auto;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        "
+      >
+        <div style="flex: 1 1 250px; margin-bottom: 25px">
+          <h3 style="color: #f4c27a; font-weight: 700; margin-bottom: 15px">
+            Jaipur Tourism
+          </h3>
+          <p style="line-height: 1.7">
+            Official Jaipur Tourism Portal — Explore attractions, food, culture,
+            shopping & heritage of the Pink City.
+          </p>
         </div>
 
-        <hr style="border:0; height:1px; background:#555; margin:20px 0;">
+        <div style="flex: 1 1 200px; margin-bottom: 25px">
+          <h4 style="color: #f4c27a; font-weight: 700; margin-bottom: 10px">
+            Quick Links
+          </h4>
+          <ul style="line-height: 2; padding-left: 0; list-style: none">
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >About Jaipur</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Tourist Spots</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Shopping Destinations</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Cuisines</a
+              >
+            </li>
+          </ul>
+        </div>
 
-        <p style="text-align:center; margin-top:15px; font-size:14px;">
-            © 2025 Jaipur Tourism. All Rights Reserved.
-        </p>
+        <div style="flex: 1 1 200px; margin-bottom: 25px">
+          <h4 style="color: #f4c27a; font-weight: 700; margin-bottom: 10px">
+            Help & Support
+          </h4>
+          <ul style="line-height: 2; padding-left: 0; list-style: none">
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Contact Us</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Terms & Conditions</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div style="flex: 1 1 250px; margin-bottom: 25px">
+          <h4 style="color: #f4c27a; font-weight: 700; margin-bottom: 10px">
+            Contact Info
+          </h4>
+          <p>📍 Jaipur Tourism Office,<br />Rajasthan, India</p>
+          <p>📞 +91 98765 43210</p>
+          <p>📧 info@jaipurtourism.in</p>
+        </div>
+      </div>
+
+      <hr style="border: 0; height: 1px; background: #555; margin: 20px 0" />
+
+      <p style="text-align: center; margin-top: 15px; font-size: 14px">
+        © 2025 Jaipur Tourism. All Rights Reserved.
+      </p>
     </footer>
 
     <div id="user-modal"></div>
@@ -456,231 +545,292 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <script type="text/babel">
-        console.log("React is working!");
+      const root = ReactDOM.createRoot(document.getElementById("user-modal"));
 
-        const root = ReactDOM.createRoot(document.getElementById("user-modal"));
-        function getUser() {
-            return JSON.parse(localStorage.getItem("user"));
+      // Helper Functions
+      const getUser = () => JSON.parse(localStorage.getItem("user"));
+
+      const setUser = (user) => {
+        localStorage.setItem("user", JSON.stringify(user));
+        updateNavIcon(); // NEW: Update the navbar immediately
+      };
+
+      // --- NEW: FUNCTION TO SWAP NAVBAR ICON FOR PHOTO ---
+      function updateNavIcon() {
+        const user = getUser();
+        const iconContainer = document.getElementById("nav-profile-icon");
+        if (!iconContainer) return;
+
+        if (user && user.photo) {
+          iconContainer.innerHTML = `
+        <img src="${user.photo}" 
+             style="width:30px; height:30px; border-radius:50%; object-fit:cover; border:2px solid #f4c27a; vertical-align:middle;" 
+             alt="User">`;
+        } else {
+          iconContainer.innerHTML = `<i class="fa-solid fa-user"></i>`;
         }
-        function setUser(user) {
-            localStorage.setItem("user", JSON.stringify(user));
-        }
-        function logout() {
-            localStorage.removeItem("user");
-            root.render(null);
-            alert("Logged Out !!");
-        }
+      }
 
-        function LoginForm() {
-            const [name, setName] = React.useState("");
-            const [email, setEmail] = React.useState("");
-            const [phone, setPhone] = React.useState("");
-            const [age, setAge] = React.useState("");
-            const [city, setCity] = React.useState("");
-            const [travelType, setTravelType] = React.useState("");
-            const [interest, setInterest] = React.useState("");
+      function logout() {
+        localStorage.removeItem("user");
+        updateNavIcon(); // NEW: Reset the icon to default
+        root.render(null);
+        alert("Profile Deleted/Logged Out!");
+      }
 
-            function handleSubmit(e) {
-                e.preventDefault();
-                const user = { name, email, phone, age, city, travelType, interest };
-                setUser(user);
-                root.render(<UserProfile />);
-            }
-            return (
-                <div className="modal-backdrop">
-                    <div className="modal-box">
-                        <div className="modal-header">
-                            <h2>Create Account</h2>
-                            <span className="colse-btn" onClick={() => root.render("")}>
-                                ❌
-                            </span>
-                        </div>
-                        <form onSubmit={handleSubmit}>
-                            <input
-                                placeholder="Enter Full Name"
-                                required
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <input
-                                placeholder="Enter Email"
-                                required
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <input
-                                placeholder="Phone Number"
-                                type="tel"
-                                required
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                            />
-                            <input
-                                placeholder="Enter Age"
-                                type="number"
-                                required
-                                min="18"
-                                max="80"
-                                value={age}
-                                onChange={(e) => setAge(e.target.value)}
-                            />
-                            <input
-                                placeholder="Enter City"
-                                required
-                                value={city}
-                                onChange={(e) => setCity(e.target.value)}
-                            />
-                            <select
-                                required
-                                value={travelType}
-                                onChange={(e) => setTravelType(e.target.value)}
-                            >
-                                <option value="">Select Travel Type</option>
-                                <option value="Solo">Solo</option>
-                                <option value="Family">Family</option>
-                                <option value="Friends">Friends</option>
-                                <option value="Couple">Couple</option>
-                            </select>
-                            <select
-                                required
-                                value={interest}
-                                onChange={(e) => setInterest(e.target.value)}
-                            >
-                                <option value="">Select Interest</option>
-                                <option value="Culture">Culture</option>
-                                <option value="Food">Food</option>
-                                <option value="Adventure">Adventure</option>
-                                <option value="Shopping">Shopping</option>
-                                <option value="Heritage">Heritage</option>
-                            </select>
+      function closePortal() {
+        root.render(null);
+      }
 
-                            <button type="submit">Create</button>
-                        </form>
-                    </div>
+      // --- COMPONENT: PROFILE FORM (Creation & Edit) ---
+      function ProfileForm({ existingUser }) {
+        const [formData, setFormData] = React.useState(
+          existingUser || {
+            name: "",
+            email: "",
+            phone: "",
+            age: "",
+            city: "",
+            travelType: "",
+            interest: "",
+            photo: "",
+          },
+        );
+
+        const handleChange = (e) => {
+          setFormData({ ...formData, [e.target.name]: e.target.value });
+        };
+
+        const handlePhotoChange = (e) => {
+          const file = e.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              setFormData({ ...formData, photo: reader.result });
+            };
+            reader.readAsDataURL(file);
+          }
+        };
+
+        const handleSubmit = (e) => {
+          e.preventDefault();
+          setUser(formData);
+          root.render(<UserProfile />);
+        };
+
+        return (
+          <div className="modal-backdrop">
+            <div className="modal-box">
+              <div className="modal-header">
+                <h2>
+                  {existingUser ? "Update Profile" : "Create Your Profile"}
+                </h2>
+                <span
+                  className="close-btn"
+                  onClick={closePortal}
+                  style={{ cursor: "pointer" }}
+                >
+                  ❌
+                </span>
+              </div>
+              <form onSubmit={handleSubmit}>
+                <div style={{ textAlign: "center", marginBottom: "15px" }}>
+                  <div
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      borderRadius: "50%",
+                      background: "#f0f0f0",
+                      margin: "0 auto 10px",
+                      overflow: "hidden",
+                      border: "2px dashed #ccc",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {formData.photo ? (
+                      <img
+                        src={formData.photo}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    ) : (
+                      <i
+                        className="fa-solid fa-camera"
+                        style={{ color: "#ccc" }}
+                      ></i>
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoChange}
+                    style={{ fontSize: "12px" }}
+                  />
                 </div>
-            );
-        }
 
-        function UpdateForm({ user }) {
-            const [name, setName] = React.useState(user.name);
-            const [email, setEmail] = React.useState(user.email);
-            const [phone, setPhone] = React.useState(user.phone);
-            const [age, setAge] = React.useState(user.age);
-            const [city, setCity] = React.useState(user.city);
-            const [travelType, setTravelType] = React.useState(user.travelType);
-            const [interest, setInterest] = React.useState(user.interest);
+                <input
+                  name="name"
+                  placeholder="Full Name"
+                  required
+                  value={formData.name}
+                  onChange={handleChange}
+                />
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  required
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                <input
+                  name="phone"
+                  type="tel"
+                  placeholder="Phone"
+                  required
+                  value={formData.phone}
+                  onChange={handleChange}
+                />
+                <input
+                  name="age"
+                  type="number"
+                  placeholder="Age"
+                  required
+                  value={formData.age}
+                  onChange={handleChange}
+                />
+                <input
+                  name="city"
+                  placeholder="City"
+                  required
+                  value={formData.city}
+                  onChange={handleChange}
+                />
 
-            function handleUpdate(e) {
-                e.preventDefault();
+                <select
+                  name="travelType"
+                  required
+                  value={formData.travelType}
+                  onChange={handleChange}
+                >
+                  <option value="">Travel Type</option>
+                  <option value="Solo">Solo</option>
+                  <option value="Family">Family</option>
+                  <option value="Friends">Friends</option>
+                  <option value="Couple">Couple</option>
+                </select>
 
-                const updatedUser = {
-                    name,
-                    email,
-                    phone,
-                    age,
-                    city,
-                    travelType,
-                    interest,
-                };
+                <select
+                  name="interest"
+                  required
+                  value={formData.interest}
+                  onChange={handleChange}
+                >
+                  <option value="">Interest</option>
+                  <option value="Culture">Culture</option>
+                  <option value="Food">Food</option>
+                  <option value="Adventure">Adventure</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Heritage">Heritage</option>
+                </select>
 
-                setUser(updatedUser);
-                root.render(<UserProfile />);
-            }
+                <button type="submit">
+                  {existingUser ? "Save Changes" : "Create Profile"}
+                </button>
+              </form>
+            </div>
+          </div>
+        );
+      }
 
-            return (
-                <div className="modal-backdrop">
-                    <div className="modal-box">
-                        <div className="modal-header">
-                            <h2>Update Profile</h2>
-                            <span className="colse-btn" onClick={() => root.render("")}>
-                                ❌
-                            </span>
-                        </div>
-                        <form onSubmit={handleUpdate}>
-                            <input value={name} onChange={(e) => setName(e.target.value)} />
-                            <input
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <input
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                            />
-                            <input value={age} onChange={(e) => setAge(e.target.value)} />
-                            <input value={city} onChange={(e) => setCity(e.target.value)} />
+      // --- COMPONENT: USER PROFILE VIEW ---
+      function UserProfile() {
+        const user = getUser();
+        if (!user) return <ProfileForm />;
 
-                            <select
-                                value={travelType}
-                                onChange={(e) => setTravelType(e.target.value)}
-                            >
-                                <option value="">Select Travel Type</option>
-                                <option>Solo</option>
-                                <option>Family</option>
-                                <option>Friends</option>
-                                <option>Couple</option>
-                            </select>
+        return (
+          <div className="modal-backdrop">
+            <div className="modal-box" style={{ textAlign: "center" }}>
+              <div className="modal-header">
+                <h2>My Profile</h2>
+                <span
+                  className="close-btn"
+                  onClick={closePortal}
+                  style={{ cursor: "pointer" }}
+                >
+                  ❌
+                </span>
+              </div>
 
-                            <select
-                                value={interest}
-                                onChange={(e) => setInterest(e.target.value)}
-                            >
-                                <option value="">Select Interest</option>
-                                <option>Culture</option>
-                                <option>Food</option>
-                                <option>Adventure</option>
-                                <option>Shopping</option>
-                                <option>Heritage</option>
-                            </select>
+              {user.photo ? (
+                <img
+                  src={user.photo}
+                  alt="User"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    border: "3px solid #f4c27a",
+                    marginBottom: "15px",
+                  }}
+                />
+              ) : (
+                <div style={{ fontSize: "50px" }}>👤</div>
+              )}
 
-                            <button type="submit">Save Changes</button>
-                        </form>
-                    </div>
-                </div>
-            );
-        }
+              <div style={{ textAlign: "left", marginBottom: "20px" }}>
+                <p>
+                  <b>Name:</b> {user.name}
+                </p>
+                <p>
+                  <b>Email:</b> {user.email}
+                </p>
+                <p>
+                  <b>City:</b> {user.city}
+                </p>
+                <p>
+                  <b>Travel Type:</b> {user.travelType}
+                </p>
+              </div>
 
-        function UserProfile() {
-            const user = getUser();
+              <div
+                style={{
+                  display: "flex",
+                  gap: "10px",
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  onClick={() =>
+                    root.render(<ProfileForm existingUser={user} />)
+                  }
+                >
+                  Edit Profile
+                </button>
+                <button onClick={logout} style={{ background: "#ff4d4d" }}>
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      }
 
-            return (
-                <div className="modal-backdrop">
-                    <div className="modal-box">
-                        <div className="modal-header">
-                            <h2>Welcome, {user.name}</h2>
-                            <span className="colse-btn" onClick={() => root.render("")}>
-                                ❌
-                            </span>
-                        </div>
-                        <p>
-                            <b>Email:</b> {user.email}
-                        </p>
-                        <p>
-                            <b>Phone:</b> {user.phone}
-                        </p>
-                        <p>
-                            <b>Age:</b> {user.age}
-                        </p>
-                        <p>
-                            <b>City:</b> {user.city}
-                        </p>
-                        <p>
-                            <b>Travel Type:</b> {user.travelType}
-                        </p>
-                        <p>
-                            <b>Interest:</b> {user.interest}
-                        </p>
-                        <button onClick={openUpdateForm}>Edit Profile</button>
-                        <button onClick={logout}>Logout</button>
-                    </div>
-                </div>
-            );
-        }
-        document.getElementById("login-btn").addEventListener("click", () => {
-            const user = getUser();
-            if (user) root.render(<UserProfile />);
-            else root.render(<LoginForm />);
-        });
+      // Navbar Button Listener
+      document.getElementById("login-btn").addEventListener("click", () => {
+        const user = getUser();
+        if (user) root.render(<UserProfile />);
+        else root.render(<ProfileForm />);
+      });
+
+      // NEW: Initial load check to see if we should show a profile photo in the nav
+      updateNavIcon();
     </script>
-</body>
-
+  </body>
 </html>
