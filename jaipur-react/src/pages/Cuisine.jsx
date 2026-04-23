@@ -42,14 +42,22 @@ function Cuisine() {
         </div>
 
         <div className="section-title">Where to Eat</div>
-        <div className="desc-wrapper">
-          <p>
-            • Try local dhabas and roof-top restaurants in the old city for authentic taste and ambience.<br />
-            • Many thali restaurants near MI Road and C-Scheme serve unlimited Rajasthani thalis.<br />
-            • For street food, explore areas around Bapu Bazaar and Johari Bazaar in the evening.<br />
-            • Always check spice levels before ordering if you are not used to very spicy food!
-          </p>
-        </div>
+        <p
+          style={{
+            background: 'rgb(212, 188, 255)',
+            borderRadius: '16px',
+            padding: '14px 18px',
+            color: 'black',
+          }}
+        >
+          • Try local dhabas and roof-top restaurants in the old city for authentic taste and ambience.
+          <br />
+          • Many thali restaurants near MI Road and C-Scheme serve unlimited Rajasthani thalis.
+          <br />
+          • For street food, explore areas around Bapu Bazaar and Johari Bazaar in the evening.
+          <br />
+          • Always check spice levels before ordering if you are not used to very spicy food!
+        </p>
       </div>
     </>
   )

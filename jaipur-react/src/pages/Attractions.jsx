@@ -59,12 +59,19 @@ function Attractions() {
           </div>
         </div>
 
-        <div className="desc-wrapper">
-          <p>
-            Most attractions are open from morning till evening, with separate entry fees for Indian and foreign tourists.
-            Carry water, wear comfortable footwear, and book tickets online where possible to avoid queues.
-          </p>
-        </div>
+        <div className="section-title">Plan Your Visit</div>
+        <p
+          style={{
+            background: 'rgb(212, 188, 255)',
+            borderRadius: '16px',
+            padding: '14px 18px',
+            color: 'black',
+          }}
+        >
+          Most attractions are open from morning till evening, with separate entry
+          fees for Indian and foreign tourists. Carry water, wear comfortable
+          footwear, and book tickets online where possible to avoid queues.
+        </p>
       </div>
     </>
   )

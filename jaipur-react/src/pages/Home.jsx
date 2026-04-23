@@ -30,32 +30,28 @@ function Home() {
     <>
       <Carousel 
         title="Jaipur City Tourism" 
-        subtitle="The Pink City – Heritage, Colors, Culture, Wonders &amp; More" 
+        subtitle="The Pink City – Heritage, Colors, Culture, Wonders & More" 
       />
 
       <div className="container">
         <div className="stats-grid">
           <div className="stat-card">
-            <div className="stat-icon">🏰</div>
+            <div className="stat-icon" style={{ color: '#ff69b4' }}>🏰</div>
             <div className="stat-title">Attractions</div>
             <div className="stat-value">32</div>
           </div>
           <div className="stat-card">
-            <div className="stat-icon">👤</div>
+            <div className="stat-icon" style={{ color: '#4169e1' }}>👤</div>
             <div className="stat-title">Tourists This Month</div>
             <div className="stat-value">28,510</div>
           </div>
           <div className="stat-card">
-            <div className="stat-icon">
-              {weather.isImg ? (
-                <img src={weather.icon} alt="weather icon" style={{ width: '50px', height: '50px' }} />
-              ) : weather.icon}
-            </div>
+            <div className="stat-icon" style={{ color: '#ffa500' }}>☀️</div>
             <div className="stat-title">Current Weather</div>
-            <div className="stat-value">{weather.value}</div>
+            <div className="stat-value">32°C Sunny</div>
           </div>
           <div className="stat-card">
-            <div className="stat-icon">🎭</div>
+            <div className="stat-icon" style={{ color: '#9370db' }}>🎭</div>
             <div className="stat-title">Today's Events</div>
             <div className="stat-value">6</div>
           </div>
@@ -114,7 +110,11 @@ function Home() {
           <p>
             Jaipur is celebrated for its magnificent forts, grand palaces, and
             timeless architectural wonders. Every landmark reflects the proud
-            legacy of the Rajput kings and the artistic brilliance of the Pink City.
+            legacy of the Rajput kings and the artistic brilliance of the Pink
+            City. From hilltop fortresses to intricately crafted monuments, Jaipur
+            offers a journey through history, culture, and royal heritage. Explore
+            a few highlights below, and discover the full range of attractions
+            across the city.
           </p>
         </div>
         <div className="cards-with-button">
@@ -142,8 +142,11 @@ function Home() {
         <div id="shopping" className="section-title">Jaipur's Famous Shopping Spots</div>
         <div className="desc-wrapper">
           <p>
-            Jaipur's vibrant bazaars are filled with traditional crafts, colorful
-            textiles, handcrafted jewelry, and unique souvenirs.
+            Jaipur’s vibrant bazaars are filled with traditional crafts, colorful
+            textiles, handcrafted jewelry, and unique souvenirs. Each market has
+            its own charm and offers a glimpse into Rajasthan’s rich artistic
+            heritage. Explore two iconic markets below and discover many more
+            across the Pink City.
           </p>
         </div>
         <div className="cards-with-button">
@@ -171,7 +174,12 @@ function Home() {
         <div id="food" className="section-title">Jaipur's Favorite Food</div>
         <div className="desc-wrapper">
           <p>
-            Jaipur's food culture is a blend of royal Rajasthani flavors, traditional recipes, and iconic street delights.
+            Jaipur’s food culture is a blend of royal Rajasthani flavors,
+            traditional recipes, and iconic street delights. From hearty dishes
+            like Dal-Baati-Churma and Laal Maas to sweet favorites like Ghewar,
+            the Pink City offers a rich culinary journey. By visiting our Food
+            page, you can explore Jaipur’s most loved dishes along with a curated
+            list of famous restaurants and must-try eateries across the city.
           </p>
         </div>
         <div className="cards-with-button">
@@ -197,7 +205,7 @@ function Home() {
         </div>
 
         <div className="map-section">
-          <b>Explore Jaipur on the Map</b><br />
+          <b>Explore Jaipur on the Map</b>
           <section id="map">
             <h3>Jaipur map</h3>
             <iframe
@@ -207,8 +215,9 @@ function Home() {
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              style={{ border: '0', width: '100%', height: '500px' }}
-            ></iframe>
+              style={{ border: 0, width: '100%', height: '500px' }}
+            >
+            </iframe>
           </section>
         </div>
       </div>

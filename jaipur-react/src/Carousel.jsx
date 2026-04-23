@@ -17,7 +17,7 @@ function Carousel({ title, subtitle }) {
         <div className="carousel-inner">
           <div className="carousel-item">
             <img
-              src="https://www.agoda.com/wp-content/uploads/2024/09/Featured-image-Royal-Palace-of-Jaipur-India.jpg"
+              src="https://img.staticmb.com/mbcontent/images/crop/uploads/2022/12/Jaipur-City_0_1200.jpg"
               className="d-block w-100"
               alt="Jaipur Palace"
             />

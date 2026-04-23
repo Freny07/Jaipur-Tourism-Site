@@ -42,14 +42,22 @@ function Shopping() {
         </div>
 
         <div className="section-title">Shopping Tips</div>
-        <div className="desc-wrapper">
-          <p>
-            • Bargaining is common in local markets – start low and smile while negotiating.<br />
-            • Prefer fixed-price government emporiums for gemstones and expensive items.<br />
-            • Keep cash handy for small shops; many bigger stores accept UPI and cards.<br />
-            • Shop in the evening during summers – afternoons can be very hot.
-          </p>
-        </div>
+        <p
+          style={{
+            background: 'rgb(212, 188, 255)',
+            borderRadius: '16px',
+            padding: '14px 18px',
+            color: 'black',
+          }}
+        >
+          • Bargaining is common in local markets – start low and smile while negotiating.
+          <br />
+          • Prefer fixed-price government emporiums for gemstones and expensive items.
+          <br />
+          • Keep cash handy for small shops; many bigger stores accept UPI and cards.
+          <br />
+          • Shop in the evening during summers – afternoons can be very hot.
+        </p>
       </div>
     </>
   )

@@ -83,13 +83,25 @@ function Contact() {
 
       <div className="container">
         <div className="section-title">Get in Touch</div>
-        <div className="desc-wrapper">
-          <p>
-            <b>Address:</b> Jaipur Tourism Office, Pink City, Jaipur, Rajasthan<br />
-            <b>Email:</b> info@jaipurtourism.com<br />
-            <b>Phone:</b> +91-12345-67890<br />
+        <div
+          className="cards-row"
+          style={{
+            backgroundColor: '#ffd4b7',
+            borderRadius: '20px',
+            padding: '15px 10px',
+            color: 'black',
+            marginBottom: '20px',
+          }}
+        >
+          <div>
+            <b>Address:</b> Jaipur Tourism Office, Pink City, Jaipur, Rajasthan
+            <br />
+            <b>Email:</b> info@jaipurtourism.com
+            <br />
+            <b>Phone:</b> +91-12345-67890
+            <br />
             <b>Timings:</b> 9:00 AM – 7:00 PM (All days)
-          </p>
+          </div>
         </div>
 
         <div className="form-section">
