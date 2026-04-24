@@ -1,0 +1,107 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Profile</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #9face6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .profile-card {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      width: 350px;
+      text-align: center;
+    }
+    .profile-card h2 {
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    .profile-card input, .profile-card textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    .profile-card input[type="file"] {
+      border: none;
+    }
+    .profile-card button {
+      background: #6a5acd;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+    .profile-card button:hover {
+      background: #483d8b;
+    }
+    .preview {
+      margin-top: 15px;
+    }
+    .preview img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #6a5acd;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-card">
+    <h2>Create Your Profile</h2>
+    <input type="text" id="name" placeholder="User Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <textarea id="bio" placeholder="Short Bio"></textarea>
+    <input type="file" id="avatar" accept="image/*">
+    <div class="preview" id="preview"></div>
+    <button onclick="createProfile()">Submit</button>
+  </div>
+
+  <script>
+    const avatarInput = document.getElementById('avatar');
+    const previewDiv = document.getElementById('preview');
+
+    avatarInput.addEventListener('change', () => {
+      const file = avatarInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          previewDiv.innerHTML = `<img src="${e.target.result}" alt="Profile Picture">`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function createProfile() {
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const bio = document.getElementById('bio').value;
+
+      if (!name || !email) {
+        alert("Please fill in required fields!");
+        return;
+      }
+
+      alert(`Profile Created!\nName: ${name}\nEmail: ${email}\nBio: ${bio}`);
+    }
+  </script>
+</body>
+</html> -->

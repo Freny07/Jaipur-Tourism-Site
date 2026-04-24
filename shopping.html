@@ -1,472 +1,525 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shopping | Jaipur City Tourism</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="shortcut icon" href="favicon.jpeg" type="image/x-icon/png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="shop.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Shopping | Jaipur City Tourism</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="jai1.css" />
-  <link rel="shortcut icon" href="favicon.jpeg" type="image/x-icon/png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="jai1.css">
-  <style>
-    header {
-      position: relative;
-      margin: 40px auto;
-      max-width: 700px;
-    }
-
-    .hero-box {
-      position: absolute;
-      top: 65%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.45);
-      border: 3px solid #f2d872;
-      border-radius: 55px;
-      padding: 25px 45px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
-      backdrop-filter: blur(2px);
-
-    }
-
-    .hero-box h1 {
-      color: #ffffff;
-      font-family: "Playfair Display", serif;
-      font-size: 50px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-    }
-
-    .hero-box p {
-      color: white;
-      font-family: "Poppins", sans-serif;
-      font-size: 20px;
-      margin: 0;
-    }
-  </style>
-</head>
-
-<body>
-  <nav>
-    <div class="logo">
-      <div>
-        <img width="37" style="border-radius: 50%; margin: 0 12px 6px 0px" src="favicon.jpeg" alt="JT" />
-      </div>
-      <h1>JAIPUR-TOUR</h1>
-    </div>
-    <ul>
-      <li>
-        <a href="jai1.html">Home</a>
-      </li>
-      <li>
-        <a href="attractions.html">Attraction</a>
-      </li>
-      <li>
-        <a href="shopping.html" class="active-nav">Shopping</a>
-      </li>
-      <li>
-        <a href="cuisine.html">Cuisine</a>
-      </li>
-      <li>
-        <a href="contact.html">Package</a>
-      </li>
-      <li>
-        <a id="login-btn" style="cursor: pointer">
-          <i class="fa-solid fa-user"></i>
-        </a>
-      </li>
-    </ul>
-    <div class="hamburger">
-      <span class="line"></span>
-      <span class="line"></span>
-      <span class="line"></span>
-    </div>
-  </nav>
-  <div class="menubar">
-    <ul>
-      <li>
-        <a href="jai1.html">Home</a>
-      </li>
-      <li>
-        <a href="attractions.html">Attraction</a>
-      </li>
-      <li>
-        <a href="shopping.html" class="active-nav">Shopping</a>
-      </li>
-
-      <li>
-        <a href="cuisine.html">Cuisine</a>
-      </li>
-      <li>
-        <a href="contact.html">Package</a>
-      </li>
-    </ul>
-  </div>
-  <br><br><br><br>
-
-  <header>
-    <div class="hero-box" style="width: 50vw;">
-      <h1>Shopping in Jaipur</h1>
-      <p>From gemstones to handicrafts – take a piece of the Pink City home.</p>
-
-    </div>
-
-  </header>
-  <br>
-
-  <div class="container">
-    <div class="section-title">Popular Markets</div>
-    <div class="cards-row">
-      <div class="card">
-        <img
-          src="https://www.captureatrip.com/_next/image?url=https%3A%2F%2Fd1zvcmhypeawxj.cloudfront.net%2Fblogs%2Fcover_web%2Fjohari-bazar-webp-2dac12dc1a-1760116805911.webp&w=3840&q=50"
-          alt="Johari Bazaar">
-        <div class="card-content">
-          <div class="card-title">Johari Bazaar</div>
-          <div class="card-desc">Famous for gold, kundan, and meenakari jewellery. Perfect spot for wedding shopping.
-          </div>
+  <body>
+    <nav>
+      <div class="logo">
+        <div>
+          <img
+            width="37"
+            style="border-radius: 50%; margin: 0 12px 6px 0px"
+            src="favicon.jpeg"
+            alt="JT"
+          />
         </div>
+        <h1>JAIPUR-TOUR</h1>
       </div>
-      <div class="card">
-        <img src="https://images.tv9hindi.com/wp-content/uploads/2022/10/Bapu-Bazar.jpg" alt="Bapu Bazaar">
-        <div class="card-content">
-          <div class="card-title">Bapu Bazaar</div>
-          <div class="card-desc">Colorful market packed with mojris, bandhej sarees, kurtis, and Jaipuri quilts.</div>
-        </div>
+      <ul>
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+        <li>
+          <a href="attractions.html">Attraction</a>
+        </li>
+        <li>
+          <a href="shopping.html" class="active-nav">Shopping</a>
+        </li>
+        <li>
+          <a href="cuisine.html">Cuisine</a>
+        </li>
+        <li>
+          <a href="contact.html">Package</a>
+        </li>
+        <li>
+          <a id="login-btn" style="cursor: pointer">
+            <span id="nav-profile-icon">
+              <i class="fa-solid fa-user"></i>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
       </div>
-      <div class="card">
-        <img src="https://jaipurculture.com/wp-content/uploads/2025/05/Fun-Facts-Curiosities-About-Jaipur.jpg"
-          alt="Pink City Market">
-        <div class="card-content">
-          <div class="card-title">Pink City Market</div>
-          <div class="card-desc">Traditional Rajasthani attire, handicrafts, puppets, and decorative items.</div>
-        </div>
-      </div>
-      <div class="card">
-        <img
-          src="https://jaipurtourism.co.in/images/places-to-visit/header/tripolia-bazar-jaipur-header-jaipur-tourism.jpg.jpg"
-          alt="Tripolia Bazaar">
-        <div class="card-content">
-          <div class="card-title">Tripolia Bazaar</div>
-          <div class="card-desc">Renowned for lac bangles, brassware, and premium textiles at wholesale prices.</div>
-        </div>
-      </div>
+    </nav>
+    <div class="menubar">
+      <ul>
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+        <li>
+          <a href="attractions.html">Attraction</a>
+        </li>
+        <li>
+          <a href="shopping.html" class="active-nav">Shopping</a>
+        </li>
+
+        <li>
+          <a href="cuisine.html">Cuisine</a>
+        </li>
+        <li>
+          <a href="contact.html">Package</a>
+        </li>
+      </ul>
     </div>
+    <br /><br /><br /><br /><br />
 
-    <div class="section-title">Shopping Tips</div>
-    <p style="background:rgb(212,188,255); border-radius:16px; padding:14px 18px; color:black;">
-      • Bargaining is common in local markets – start low and smile while negotiating.<br>
-      • Prefer fixed-price government emporiums for gemstones and expensive items.<br>
-      • Keep cash handy for small shops; many bigger stores accept UPI and cards.<br>
-      • Shop in the evening during summers – afternoons can be very hot.
-    </p>
-  </div>
-
-  <footer style="
-    background:#2c2c2c;
-    color:white;
-    padding:50px 20px;
-    margin-top:40px;
-    font-family:Montserrat, sans-serif;
-  ">
-    <div style="max-width:1300px; margin:auto; display:flex; flex-wrap:wrap; justify-content:space-between;">
-  
-      <div style="flex:1 1 250px; margin-bottom:25px;">
-        <h3 style="color:#f4c27a; font-weight:700; margin-bottom:15px;">Jaipur Tourism</h3>
-        <p style="line-height:1.7;">
-          Official Jaipur Tourism Portal — Explore attractions, food, culture, shopping & heritage of the Pink
-          City.
+    <header>
+      <div class="hero-box" style="width: 50vw">
+        <h1>Shopping in Jaipur</h1>
+        <p>
+          From gemstones to handicrafts – take a piece of the Pink City home.
         </p>
       </div>
-  
-      <div style="flex:1 1 200px; margin-bottom:25px;">
-        <h4 style="color:#f4c27a; font-weight:700; margin-bottom:10px;">Quick Links</h4>
-        <ul style="line-height:2; padding-left:0; list-style:none;">
-          <li><a href="#" style="color:white; text-decoration:none;">About Jaipur</a></li>
-          <li><a href="#" style="color:white; text-decoration:none;">Tourist Spots</a></li>
-          <li><a href="#" style="color:white; text-decoration:none;">Shopping Destinations</a></li>
-          <li><a href="#" style="color:white; text-decoration:none;">Cuisines</a></li>
-        </ul>
+    </header>
+    <br />
+
+    <div class="container">
+      <div class="section-title">Popular Markets</div>
+      <div class="cards-row">
+        <div class="card">
+          <img
+            src="https://www.captureatrip.com/_next/image?url=https%3A%2F%2Fd1zvcmhypeawxj.cloudfront.net%2Fblogs%2Fcover_web%2Fjohari-bazar-webp-2dac12dc1a-1760116805911.webp&w=3840&q=50"
+            alt="Johari Bazaar"
+          />
+          <div class="card-content">
+            <div class="card-title">Johari Bazaar</div>
+            <div class="card-desc">
+              Famous for gold, kundan, and meenakari jewellery. Perfect spot for
+              wedding shopping.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://images.tv9hindi.com/wp-content/uploads/2022/10/Bapu-Bazar.jpg"
+            alt="Bapu Bazaar"
+          />
+          <div class="card-content">
+            <div class="card-title">Bapu Bazaar</div>
+            <div class="card-desc">
+              Colorful market packed with mojris, bandhej sarees, kurtis, and
+              Jaipuri quilts.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://jaipurculture.com/wp-content/uploads/2025/05/Fun-Facts-Curiosities-About-Jaipur.jpg"
+            alt="Pink City Market"
+          />
+          <div class="card-content">
+            <div class="card-title">Pink City Market</div>
+            <div class="card-desc">
+              Traditional Rajasthani attire, handicrafts, puppets, and
+              decorative items.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://jaipurtourism.co.in/images/places-to-visit/header/tripolia-bazar-jaipur-header-jaipur-tourism.jpg.jpg"
+            alt="Tripolia Bazaar"
+          />
+          <div class="card-content">
+            <div class="card-title">Tripolia Bazaar</div>
+            <div class="card-desc">
+              Renowned for lac bangles, brassware, and premium textiles at
+              wholesale prices.
+            </div>
+          </div>
+        </div>
       </div>
-  
-      <div style="flex:1 1 200px; margin-bottom:25px;">
-        <h4 style="color:#f4c27a; font-weight:700; margin-bottom:10px;">Help & Support</h4>
-        <ul style="line-height:2; padding-left:0; list-style:none;">
-          <li><a href="#" style="color:white; text-decoration:none;">Contact Us</a></li>
-          <li><a href="#" style="color:white; text-decoration:none;">Privacy Policy</a></li>
-          <li><a href="#" style="color:white; text-decoration:none;">Terms & Conditions</a></li>
-        </ul>
-      </div>
-  
-      <div style="flex:1 1 250px; margin-bottom:25px;">
-        <h4 style="color:#f4c27a; font-weight:700; margin-bottom:10px;">Contact Info</h4>
-        <p>📍 Jaipur Tourism Office,<br>Rajasthan, India</p>
-        <p>📞 +91 98765 43210</p>
-        <p>📧 info@jaipurtourism.in</p>
-      </div>
+
+      <div class="section-title">Shopping Tips</div>
+      <p
+        style="
+          background: rgb(212, 188, 255);
+          border-radius: 16px;
+          padding: 14px 18px;
+          color: black;
+        "
+      >
+        • Bargaining is common in local markets – start low and smile while
+        negotiating.<br />
+        • Prefer fixed-price government emporiums for gemstones and expensive
+        items.<br />
+        • Keep cash handy for small shops; many bigger stores accept UPI and
+        cards.<br />
+        • Shop in the evening during summers – afternoons can be very hot.
+      </p>
     </div>
-  
-    <hr style="border:0; height:1px; background:#555; margin:20px 0;">
-  
-    <p style="text-align:center; margin-top:15px; font-size:14px;">
-      © 2025 Jaipur Tourism. All Rights Reserved.
-    </p>
-  </footer>
-  <div id="user-modal"></div>
 
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <footer
+      style="
+        background: #2c2c2c;
+        color: white;
+        padding: 50px 20px;
+        margin-top: 40px;
+        font-family: Montserrat, sans-serif;
+      "
+    >
+      <div
+        style="
+          max-width: 1300px;
+          margin: auto;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        "
+      >
+        <div style="flex: 1 1 250px; margin-bottom: 25px">
+          <h3 style="color: #f4c27a; font-weight: 700; margin-bottom: 15px">
+            Jaipur Tourism
+          </h3>
+          <p style="line-height: 1.7">
+            Official Jaipur Tourism Portal — Explore attractions, food, culture,
+            shopping & heritage of the Pink City.
+          </p>
+        </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const mobileNav = document.querySelector(".hamburger");
-    const navbarMenu = document.querySelector(".menubar");
-    mobileNav.addEventListener("click", () => {
-      navbarMenu.classList.toggle("active");
-      mobileNav.classList.toggle("hamburger-active");
-    });
+        <div style="flex: 1 1 200px; margin-bottom: 25px">
+          <h4 style="color: #f4c27a; font-weight: 700; margin-bottom: 10px">
+            Quick Links
+          </h4>
+          <ul style="line-height: 2; padding-left: 0; list-style: none">
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >About Jaipur</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Tourist Spots</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Shopping Destinations</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Cuisines</a
+              >
+            </li>
+          </ul>
+        </div>
 
-    (function setActiveNav() {
-      const current = window.location.pathname.split("/").pop() || "index.html";
-      document.querySelectorAll("nav ul li a, .menubar ul li a").forEach(link => {
-        if (link.getAttribute("href") === current) {
-          link.classList.add("active-link");
-        }
+        <div style="flex: 1 1 200px; margin-bottom: 25px">
+          <h4 style="color: #f4c27a; font-weight: 700; margin-bottom: 10px">
+            Help & Support
+          </h4>
+          <ul style="line-height: 2; padding-left: 0; list-style: none">
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Contact Us</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Terms & Conditions</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div style="flex: 1 1 250px; margin-bottom: 25px">
+          <h4 style="color: #f4c27a; font-weight: 700; margin-bottom: 10px">
+            Contact Info
+          </h4>
+          <p>📍 Jaipur Tourism Office,<br />Rajasthan, India</p>
+          <p>📞 +91 98765 43210</p>
+          <p>📧 info@jaipurtourism.in</p>
+        </div>
+      </div>
+
+      <hr style="border: 0; height: 1px; background: #555; margin: 20px 0" />
+
+      <p style="text-align: center; margin-top: 15px; font-size: 14px">
+        © 2025 Jaipur Tourism. All Rights Reserved.
+      </p>
+    </footer>
+    <div id="user-modal"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const mobileNav = document.querySelector(".hamburger");
+      const navbarMenu = document.querySelector(".menubar");
+      mobileNav.addEventListener("click", () => {
+        navbarMenu.classList.toggle("active");
+        mobileNav.classList.toggle("hamburger-active");
       });
-    })();
-  </script>
-  <script type="text/babel">
-    console.log("React is working!");
 
-    const root = ReactDOM.createRoot(document.getElementById("user-modal"));
-    function getUser() {
-      return JSON.parse(localStorage.getItem("user"));
-    }
-    function setUser(user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    }
-    function logout() {
-      localStorage.removeItem("user");
-      root.render(null);
-      alert("Logged Out !!");
-    }
+      (function setActiveNav() {
+        const current =
+          window.location.pathname.split("/").pop() || "index.html";
+        document
+          .querySelectorAll("nav ul li a, .menubar ul li a")
+          .forEach((link) => {
+            if (link.getAttribute("href") === current) {
+              link.classList.add("active-link");
+            }
+          });
+      })();
+    </script>
+    <script type="text/babel">
+      console.log("React is working!");
 
-    function LoginForm() {
-      const [name, setName] = React.useState("");
-      const [email, setEmail] = React.useState("");
-      const [phone, setPhone] = React.useState("");
-      const [age, setAge] = React.useState("");
-      const [city, setCity] = React.useState("");
-      const [travelType, setTravelType] = React.useState("");
-      const [interest, setInterest] = React.useState("");
-
-      function handleSubmit(e) {
-        e.preventDefault();
-        const user = { name, email, phone, age, city, travelType, interest };
-        setUser(user);
-        root.render(<UserProfile />);
+      const root = ReactDOM.createRoot(document.getElementById("user-modal"));
+      function getUser() {
+        return JSON.parse(localStorage.getItem("user"));
       }
-      return (
-        <div className="modal-backdrop">
-          <div className="modal-box">
-            <div className="modal-header">
-              <h2>Create Account</h2>
-              <span className="colse-btn" onClick={() => root.render("")}>
-                ❌
-              </span>
-            </div>
-            <form onSubmit={handleSubmit}>
-              <input
-                placeholder="Enter Full Name"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                placeholder="Enter Email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                placeholder="Phone Number"
-                type="tel"
-                required
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-              <input
-                placeholder="Enter Age"
-                type="number"
-                required
-                min="18"
-                max="80"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-              />
-              <input
-                placeholder="Enter City"
-                required
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-              <select
-                required
-                value={travelType}
-                onChange={(e) => setTravelType(e.target.value)}
-              >
-                <option value="">Select Travel Type</option>
-                <option value="Solo">Solo</option>
-                <option value="Family">Family</option>
-                <option value="Friends">Friends</option>
-                <option value="Couple">Couple</option>
-              </select>
-              <select
-                required
-                value={interest}
-                onChange={(e) => setInterest(e.target.value)}
-              >
-                <option value="">Select Interest</option>
-                <option value="Culture">Culture</option>
-                <option value="Food">Food</option>
-                <option value="Adventure">Adventure</option>
-                <option value="Shopping">Shopping</option>
-                <option value="Heritage">Heritage</option>
-              </select>
-
-              <button type="submit">Create</button>
-            </form>
-          </div>
-        </div>
-      );
-    }
-
-    function UpdateForm({ user }) {
-      const [name, setName] = React.useState(user.name);
-      const [email, setEmail] = React.useState(user.email);
-      const [phone, setPhone] = React.useState(user.phone);
-      const [age, setAge] = React.useState(user.age);
-      const [city, setCity] = React.useState(user.city);
-      const [travelType, setTravelType] = React.useState(user.travelType);
-      const [interest, setInterest] = React.useState(user.interest);
-
-      function handleUpdate(e) {
-        e.preventDefault();
-
-        const updatedUser = {
-          name,
-          email,
-          phone,
-          age,
-          city,
-          travelType,
-          interest,
-        };
-
-        setUser(updatedUser);
-        root.render(<UserProfile />);
+      function setUser(user) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+      function logout() {
+        localStorage.removeItem("user");
+        root.render(null);
+        alert("Logged Out !!");
       }
 
-      return (
-        <div className="modal-backdrop">
-          <div className="modal-box">
-            <div className="modal-header">
-              <h2>Update Profile</h2>
-              <span className="colse-btn" onClick={() => root.render("")}>
-                ❌
-              </span>
+      function LoginForm() {
+        const [name, setName] = React.useState("");
+        const [email, setEmail] = React.useState("");
+        const [phone, setPhone] = React.useState("");
+        const [age, setAge] = React.useState("");
+        const [city, setCity] = React.useState("");
+        const [travelType, setTravelType] = React.useState("");
+        const [interest, setInterest] = React.useState("");
+
+        function handleSubmit(e) {
+          e.preventDefault();
+          const user = { name, email, phone, age, city, travelType, interest };
+          setUser(user);
+          root.render(<UserProfile />);
+        }
+        return (
+          <div className="modal-backdrop">
+            <div className="modal-box">
+              <div className="modal-header">
+                <h2>Create Account</h2>
+                <span className="colse-btn" onClick={() => root.render("")}>
+                  ❌
+                </span>
+              </div>
+              <form onSubmit={handleSubmit}>
+                <input
+                  placeholder="Enter Full Name"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <input
+                  placeholder="Enter Email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  placeholder="Phone Number"
+                  type="tel"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+                <input
+                  placeholder="Enter Age"
+                  type="number"
+                  required
+                  min="18"
+                  max="80"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                />
+                <input
+                  placeholder="Enter City"
+                  required
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+                <select
+                  required
+                  value={travelType}
+                  onChange={(e) => setTravelType(e.target.value)}
+                >
+                  <option value="">Select Travel Type</option>
+                  <option value="Solo">Solo</option>
+                  <option value="Family">Family</option>
+                  <option value="Friends">Friends</option>
+                  <option value="Couple">Couple</option>
+                </select>
+                <select
+                  required
+                  value={interest}
+                  onChange={(e) => setInterest(e.target.value)}
+                >
+                  <option value="">Select Interest</option>
+                  <option value="Culture">Culture</option>
+                  <option value="Food">Food</option>
+                  <option value="Adventure">Adventure</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Heritage">Heritage</option>
+                </select>
+
+                <button type="submit">Create</button>
+              </form>
             </div>
-            <form onSubmit={handleUpdate}>
-              <input value={name} onChange={(e) => setName(e.target.value)} />
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-              <input value={age} onChange={(e) => setAge(e.target.value)} />
-              <input value={city} onChange={(e) => setCity(e.target.value)} />
-
-              <select
-                value={travelType}
-                onChange={(e) => setTravelType(e.target.value)}
-              >
-                <option value="">Select Travel Type</option>
-                <option>Solo</option>
-                <option>Family</option>
-                <option>Friends</option>
-                <option>Couple</option>
-              </select>
-
-              <select
-                value={interest}
-                onChange={(e) => setInterest(e.target.value)}
-              >
-                <option value="">Select Interest</option>
-                <option>Culture</option>
-                <option>Food</option>
-                <option>Adventure</option>
-                <option>Shopping</option>
-                <option>Heritage</option>
-              </select>
-
-              <button type="submit">Save Changes</button>
-            </form>
           </div>
-        </div>
-      );
-    }
+        );
+      }
 
-    function UserProfile() {
-      const user = getUser();
+      function UpdateForm({ user }) {
+        const [name, setName] = React.useState(user.name);
+        const [email, setEmail] = React.useState(user.email);
+        const [phone, setPhone] = React.useState(user.phone);
+        const [age, setAge] = React.useState(user.age);
+        const [city, setCity] = React.useState(user.city);
+        const [travelType, setTravelType] = React.useState(user.travelType);
+        const [interest, setInterest] = React.useState(user.interest);
 
-      return (
-        <div className="modal-backdrop">
-          <div className="modal-box">
-            <div className="modal-header">
-              <h2>Welcome, {user.name}</h2>
-              <span className="colse-btn" onClick={() => root.render("")}>
-                ❌
-              </span>
+        function handleUpdate(e) {
+          e.preventDefault();
+
+          const updatedUser = {
+            name,
+            email,
+            phone,
+            age,
+            city,
+            travelType,
+            interest,
+          };
+
+          setUser(updatedUser);
+          root.render(<UserProfile />);
+        }
+
+        return (
+          <div className="modal-backdrop">
+            <div className="modal-box">
+              <div className="modal-header">
+                <h2>Update Profile</h2>
+                <span className="colse-btn" onClick={() => root.render("")}>
+                  ❌
+                </span>
+              </div>
+              <form onSubmit={handleUpdate}>
+                <input value={name} onChange={(e) => setName(e.target.value)} />
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+                <input value={age} onChange={(e) => setAge(e.target.value)} />
+                <input value={city} onChange={(e) => setCity(e.target.value)} />
+
+                <select
+                  value={travelType}
+                  onChange={(e) => setTravelType(e.target.value)}
+                >
+                  <option value="">Select Travel Type</option>
+                  <option>Solo</option>
+                  <option>Family</option>
+                  <option>Friends</option>
+                  <option>Couple</option>
+                </select>
+
+                <select
+                  value={interest}
+                  onChange={(e) => setInterest(e.target.value)}
+                >
+                  <option value="">Select Interest</option>
+                  <option>Culture</option>
+                  <option>Food</option>
+                  <option>Adventure</option>
+                  <option>Shopping</option>
+                  <option>Heritage</option>
+                </select>
+
+                <button type="submit">Save Changes</button>
+              </form>
             </div>
-            <p>
-              <b>Email:</b> {user.email}
-            </p>
-            <p>
-              <b>Phone:</b> {user.phone}
-            </p>
-            <p>
-              <b>Age:</b> {user.age}
-            </p>
-            <p>
-              <b>City:</b> {user.city}
-            </p>
-            <p>
-              <b>Travel Type:</b> {user.travelType}
-            </p>
-            <p>
-              <b>Interest:</b> {user.interest}
-            </p>
-            <button onClick={openUpdateForm}>Edit Profile</button>
-            <button onClick={logout}>Logout</button>
           </div>
-        </div>
-      );
-    }
-    document.getElementById("login-btn").addEventListener("click", () => {
-      const user = getUser();
-      if (user) root.render(<UserProfile />);
-      else root.render(<LoginForm />);
-    });
-  </script>
-</body>
+        );
+      }
 
+      function UserProfile() {
+        const user = getUser();
+
+        return (
+          <div className="modal-backdrop">
+            <div className="modal-box">
+              <div className="modal-header">
+                <h2>Welcome, {user.name}</h2>
+                <span className="colse-btn" onClick={() => root.render("")}>
+                  ❌
+                </span>
+              </div>
+              <p>
+                <b>Email:</b> {user.email}
+              </p>
+              <p>
+                <b>Phone:</b> {user.phone}
+              </p>
+              <p>
+                <b>Age:</b> {user.age}
+              </p>
+              <p>
+                <b>City:</b> {user.city}
+              </p>
+              <p>
+                <b>Travel Type:</b> {user.travelType}
+              </p>
+              <p>
+                <b>Interest:</b> {user.interest}
+              </p>
+              <button onClick={openUpdateForm}>Edit Profile</button>
+              <button onClick={logout}>Logout</button>
+            </div>
+          </div>
+        );
+      }
+      document.getElementById("login-btn").addEventListener("click", () => {
+        const user = getUser();
+        if (user) root.render(<UserProfile />);
+        else root.render(<LoginForm />);
+      });
+    </script>
+  </body>
 </html>

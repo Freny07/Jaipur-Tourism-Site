@@ -1,742 +1,551 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Attractions | Jaipur City Tourism</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="favicon.jpeg" type="image/x-icon/png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="attr.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <title>Attractions | Jaipur City Tourism</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&amp;display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="jai1.css" />
-  <link rel="shortcut icon" href="favicon.jpeg" type="image/x-icon/png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <style>
-    header {
-      position: relative;
-      margin: 40px auto;
-      max-width: 700px;
-    }
-
-    .hero-box {
-      position: absolute;
-      top: 65%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.45);
-      border: 3px solid #f2d872;
-      border-radius: 55px;
-      padding: 25px 45px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
-      backdrop-filter: blur(2px);
-
-    }
-
-    .hero-box h1 {
-      color: #ffffff;
-      font-family: "Playfair Display", serif;
-      font-size: 50px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-    }
-
-    .hero-box p {
-      color: white;
-      font-family: "Poppins", sans-serif;
-      font-size: 20px;
-      margin: 0;
-    }
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      margin: 0;
-      font-family: "Montserrat", Arial, sans-serif;
-      background: #FFF6EF;
-      color: #3C2A21;
-      line-height: 1.7;
-    }
-
-    /* ===== NAVBAR (same look as other pages) ===== */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-
-      background-color: #E9CBA7;
-      padding: 8px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      box-shadow:
-        rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-        rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    }
-
-    nav .logo {
-      display: flex;
-      align-items: center;
-    }
-
-    nav .logo h1 {
-      font-size: 1.8rem;
-      margin: 0;
-      background: linear-gradient(to right, #2e2ec4 0%, #912727 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    nav ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-
-    nav ul li a {
-      text-decoration: none;
-      color: #3C2A21;
-      font-family: "Courier New", Courier, monospace;
-      font-size: 0.95rem;
-      font-weight: 600;
-
-      padding: 6px 10px;
-      border-radius: 20px;
-      background-color: #FFF6EF;
-      border: 1px solid #A1673F;
-      transition: 0.2s;
-    }
-
-    nav ul li a:hover {
-      background-color: #D9B27C;
-      color: #3C2A21;
-      box-shadow: 0 4px 14px rgba(161, 103, 63, 0.3);
-    }
-
-    .active-nav,
-    nav ul li a.active-link {
-      background-color: #A1673F !important;
-      color: #FFF6EF !important;
-      border: none !important;
-      box-shadow: 0 0 12px rgba(161, 103, 63, 0.45);
-      font-weight: 700;
-    }
-
-    /* ===== MOBILE NAV (HAMBURGER) ===== */
-    .hamburger {
-      display: none;
-      cursor: pointer;
-    }
-
-    .hamburger .line {
-      width: 25px;
-      height: 2px;
-      background-color: #1f1f1f;
-      display: block;
-      margin: 6px auto;
-      transition: all 0.3s ease-in-out;
-    }
-
-    .hamburger-active {
-      transform: rotate(45deg);
-      transition: all 0.3s ease-in-out;
-      transition-delay: 0.4s;
-    }
-
-    .hamburger-active .line:nth-child(2) {
-      width: 0;
-    }
-
-    .hamburger-active .line:nth-child(1),
-    .hamburger-active .line:nth-child(3) {
-      transition-delay: 0.2s;
-    }
-
-    .hamburger-active .line:nth-child(1) {
-      transform: translateY(8px);
-    }
-
-    .hamburger-active .line:nth-child(3) {
-      transform: translateY(-6px) rotate(90deg);
-    }
-
-    .menubar {
-      position: fixed;
-      top: 0;
-      left: -60%;
-      width: 60%;
-      height: 100vh;
-      padding-top: 100px;
-      background: #ffffff;
-      z-index: 900;
-      display: flex;
-      justify-content: center;
-      transition: all 0.4s ease-in-out;
-      box-shadow: none;
-    }
-
-    .menubar.active {
-      left: 0;
-      box-shadow: rgba(0, 0, 0, 0.25) 2px 0 10px;
-    }
-
-    .menubar ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      text-align: left;
-    }
-
-    .menubar ul li {
-      margin-bottom: 24px;
-    }
-
-    .menubar ul li a {
-      text-decoration: none;
-      font-size: 1rem;
-      color: #3C2A21;
-      padding: 8px 14px;
-      border-radius: 8px;
-      display: inline-block;
-    }
-
-    .menubar ul li a:hover,
-    .menubar ul li a.active-nav {
-      background-color: #f5f0e8;
-    }
-
-    @media (max-width: 768px) {
-      nav ul {
-        display: none;
-      }
-
-      .hamburger {
-        display: block;
-      }
-    }
-
-    /* ===== PAGE LAYOUT & HERO (fixed, centered) ===== */
-
-    /* Push content below fixed navbar */
-    header {
-      padding-top: 90px;
-      padding-bottom: 10px;
-    }
-
-    .container {
-      max-width: 1100px;
-      margin: 0 auto 50px auto;
-      padding: 0 16px 40px;
-    }
-
-    /* Override old hero-box so it doesn’t float in a corner */
-    /* .hero-box {
-      position: relative !important;
-      top: auto !important;
-      right: auto !important;
-      left: auto !important;
-      transform: none !important;
-
-      margin: 40px auto 20px !important;
-      max-width: 720px;
-
-      text-align: center;
-      background: rgba(0, 0, 0, 0.55);
-      border: 3px solid #f2d872;
-      border-radius: 40px;
-      padding: 22px 32px;
-
-      box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
-      backdrop-filter: blur(2px);
-    }
-
-    .hero-box h1 {
-      color: #ffffff;
-      font-size: 2rem;
-      margin: 0 0 6px;
-      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-    }
-
-    .hero-box p {
-      color: #ffffff;
-      margin: 0;
-      font-size: 1rem;
-    } */
-
-    /* Make layout nicer on small screens */
-    @media (max-width: 900px) {
-      header {
-        padding-top: 80px;
-      }
-
-      .hero-box {
-        margin: 30px 16px 10px !important;
-        padding: 18px 18px;
-      }
-
-      .container {
-        padding: 0 10px 30px;
-      }
-    }
-  </style>
-
-
-</head>
-
-<body>
-
-  <!-- NAVBAR -->
-  <nav>
-    <div class="logo">
-      <div>
-        <img width="37" style="border-radius: 50%; margin: 0 12px 6px 0px" src="favicon.jpeg" alt="JT" />
+  <body>
+    <!-- NAVBAR -->
+    <nav>
+      <div class="logo">
+        <div>
+          <img
+            width="37"
+            style="border-radius: 50%; margin: 0 12px 6px 0px"
+            src="favicon.jpeg"
+            alt="JT"
+          />
+        </div>
+        <h1>JAIPUR-TOUR</h1>
       </div>
-      <h1>JAIPUR-TOUR</h1>
+      <ul>
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+        <li>
+          <a href="attractions.html" class="active-nav">Attraction</a>
+        </li>
+        <li>
+          <a href="shopping.html">Shopping</a>
+        </li>
+        <li>
+          <a href="cuisine.html">Cuisine</a>
+        </li>
+        <li>
+          <a href="contact.html">Package</a>
+        </li>
+        <li>
+          <a id="login-btn" style="cursor: pointer">
+            <span id="nav-profile-icon">
+              <i class="fa-solid fa-user"></i>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+      </div>
+    </nav>
+    <div class="menubar">
+      <ul>
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+        <li>
+          <a href="attractions.html" class="active-nav">Attraction</a>
+        </li>
+        <li>
+          <a href="shopping.html">Shopping</a>
+        </li>
+
+        <li>
+          <a href="cuisine.html">Cuisine</a>
+        </li>
+        <li>
+          <a href="contact.html">Package</a>
+        </li>
+      </ul>
     </div>
-    <ul>
-      <li>
-        <a href="jai1.html">Home</a>
-      </li>
-      <li>
-        <a href="attractions.html" class="active-nav">Attraction</a>
-      </li>
-      <li>
-        <a href="shopping.html">Shopping</a>
-      </li>
-      <li>
-        <a href="cuisine.html">Cuisine</a>
-      </li>
-      <li>
-        <a href="contact.html">Package</a>
-      </li>
-      <li>
-        <a id="login-btn" style="cursor: pointer">
-          <i class="fa-solid fa-user"></i>
-        </a>
-      </li>
-    </ul>
-    <div class="hamburger">
-      <span class="line"></span>
-      <span class="line"></span>
-      <span class="line"></span>
-    </div>
-  </nav>
-  <div class="menubar">
-    <ul>
-      <li>
-        <a href="jai1.html">Home</a>
-      </li>
-      <li>
-        <a href="attractions.html" class="active-nav">Attraction</a>
-      </li>
-      <li>
-        <a href="shopping.html">Shopping</a>
-      </li>
+    <br /><br /><br />
 
-      <li>
-        <a href="cuisine.html">Cuisine</a>
-      </li>
-      <li>
-        <a href="contact.html">Package</a>
-      </li>
-    </ul>
-  </div>
-  <br><br><br><br>
-
-  <header>
-    <div class="hero-box" style="width: 50vw;">
-      <h1>Top Attractions in Jaipur</h1>
-      <p>Explore forts, palaces, and heritage sites that define the Pink City.</p>
-    </div>
-  </header>
-  <br>
-
-
-
-  <div class="container">
-    <div class="section-title">Forts & Palaces</div>
-    <div class="cards-row">
-      <div class="card">
-        <img
-          src="https://media.istockphoto.com/id/469788052/photo/amer-fort-near-jaipur.jpg?s=612x612&w=0&k=20&c=Rsd9v_Ix39ce8U9QKo3UnWfEMG1DUq4hnzh3APPi3g8="
-          alt="Amber Fort">
-        <div class="card-content">
-          <div class="card-title">Amber Fort</div>
-          <div class="card-desc">A majestic hilltop fort offering elephant rides, light & sound shows, and stunning
-            views of Maota Lake.</div>
-        </div>
-      </div>
-      <div class="card">
-        <img
-          src="https://media.istockphoto.com/id/482557081/photo/hawa-mahal-jaipur-india.jpg?s=612x612&w=0&k=20&c=A6qCUjoNH74nXCkB07RNgK3eIt2mun8PgsLPw9dNkVI="
-          alt="Hawa Mahal">
-        <div class="card-content">
-          <div class="card-title">Hawa Mahal</div>
-          <div class="card-desc">The “Palace of Winds” with 953 windows, built for royal ladies to view street
-            processions.</div>
-        </div>
-      </div>
-      <div class="card">
-        <img
-          src="https://media.istockphoto.com/id/487804438/photo/jaipur-india-chandra-mahal-palace-within-the-city-palace.jpg?s=612x612&w=0&k=20&c=nMPsdxL9iCyKhDFHmh8cE2ItkC8gp7awos6pL_t076s="
-          alt="City Palace">
-        <div class="card-content">
-          <div class="card-title">City Palace</div>
-          <div class="card-desc">A royal residence complex with courtyards, museums, and beautiful gateways like the
-            Peacock Gate.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-title">Science & Heritage</div>
-    <div class="cards-row">
-      <div class="card">
-        <img
-          src="https://plus.unsplash.com/premium_photo-1697730309688-cc2a3a573494?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8amFudGFyJTIwbWFudGFyfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000"
-          alt="Jantar Mantar">
-        <div class="card-content">
-          <div class="card-title">Jantar Mantar</div>
-          <div class="card-desc">An astronomical observatory featuring the world’s largest stone sundial and precise
-            instruments.</div>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/7a/c9/89/photo0jpg.jpg?w=900&h=500&s=1"
-          alt="Albert Hall Museum">
-        <div class="card-content">
-          <div class="card-title">Albert Hall Museum</div>
-          <div class="card-desc">Houses an impressive collection of paintings, carpets, ivory, stone, and metal
-            sculptures.</div>
-        </div>
-      </div>
-      <div class="card">
-        <img
-          src="https://s7ap1.scene7.com/is/image/incredibleindia/birla-temple-hyderabad-secunderabad-telangana-1-attr-hero?qlt=82&ts=1742170051392"
-          alt="Birla Mandir">
-        <div class="card-content">
-          <div class="card-title">Birla Mandir</div>
-          <div class="card-desc">A modern temple built in white marble, glowing beautifully under the Jaipur evening
-            sky.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="section-title">Plan Your Visit</div>
-    <p style="background:rgb(212,188,255); border-radius:16px; padding:14px 18px; color:black;">
-      Most attractions are open from morning till evening, with separate entry fees for Indian and foreign tourists.
-      Carry water, wear comfortable footwear, and book tickets online where possible to avoid queues.
-    </p>
-  </div>
-
-  <footer style="
-    background:#2c2c2c;
-    color:white;
-    padding:50px 20px;
-    margin-top:40px;
-    font-family:Montserrat, sans-serif;
-  ">
-    <div style="max-width:1300px; margin:auto; display:flex; flex-wrap:wrap; justify-content:space-between;">
-  
-      <div style="flex:1 1 250px; margin-bottom:25px;">
-        <h3 style="color:#f4c27a; font-weight:700; margin-bottom:15px;">Jaipur Tourism</h3>
-        <p style="line-height:1.7;">
-          Official Jaipur Tourism Portal — Explore attractions, food, culture, shopping & heritage of the Pink
-          City.
+    <header>
+      <div class="hero-box" style="width: 50vw">
+        <h1>Top Attractions in Jaipur</h1>
+        <p>
+          Explore forts, palaces, and heritage sites that define the Pink City.
         </p>
       </div>
-  
-      <div style="flex:1 1 200px; margin-bottom:25px;">
-        <h4 style="color:#f4c27a; font-weight:700; margin-bottom:10px;">Quick Links</h4>
-        <ul style="line-height:2; padding-left:0; list-style:none;">
-          <li><a href="#" style="color:white; text-decoration:none;">About Jaipur</a></li>
-          <li><a href="#" style="color:white; text-decoration:none;">Tourist Spots</a></li>
-          <li><a href="#" style="color:white; text-decoration:none;">Shopping Destinations</a></li>
-          <li><a href="#" style="color:white; text-decoration:none;">Cuisines</a></li>
-        </ul>
+    </header>
+    <br />
+
+    <div class="container">
+      <div class="section-title">Forts & Palaces</div>
+      <div class="cards-row">
+        <div class="card">
+          <img
+            src="https://media.istockphoto.com/id/469788052/photo/amer-fort-near-jaipur.jpg?s=612x612&w=0&k=20&c=Rsd9v_Ix39ce8U9QKo3UnWfEMG1DUq4hnzh3APPi3g8="
+            alt="Amber Fort"
+          />
+          <div class="card-content">
+            <div class="card-title">Amber Fort</div>
+            <div class="card-desc">
+              A majestic hilltop fort offering elephant rides, light & sound
+              shows, and stunning views of Maota Lake.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://media.istockphoto.com/id/482557081/photo/hawa-mahal-jaipur-india.jpg?s=612x612&w=0&k=20&c=A6qCUjoNH74nXCkB07RNgK3eIt2mun8PgsLPw9dNkVI="
+            alt="Hawa Mahal"
+          />
+          <div class="card-content">
+            <div class="card-title">Hawa Mahal</div>
+            <div class="card-desc">
+              The “Palace of Winds” with 953 windows, built for royal ladies to
+              view street processions.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://media.istockphoto.com/id/487804438/photo/jaipur-india-chandra-mahal-palace-within-the-city-palace.jpg?s=612x612&w=0&k=20&c=nMPsdxL9iCyKhDFHmh8cE2ItkC8gp7awos6pL_t076s="
+            alt="City Palace"
+          />
+          <div class="card-content">
+            <div class="card-title">City Palace</div>
+            <div class="card-desc">
+              A royal residence complex with courtyards, museums, and beautiful
+              gateways like the Peacock Gate.
+            </div>
+          </div>
+        </div>
       </div>
-  
-      <div style="flex:1 1 200px; margin-bottom:25px;">
-        <h4 style="color:#f4c27a; font-weight:700; margin-bottom:10px;">Help & Support</h4>
-        <ul style="line-height:2; padding-left:0; list-style:none;">
-          <li><a href="#" style="color:white; text-decoration:none;">Contact Us</a></li>
-          <li><a href="#" style="color:white; text-decoration:none;">Privacy Policy</a></li>
-          <li><a href="#" style="color:white; text-decoration:none;">Terms & Conditions</a></li>
-        </ul>
+
+      <div class="section-title">Science & Heritage</div>
+      <div class="cards-row">
+        <div class="card">
+          <img
+            src="https://plus.unsplash.com/premium_photo-1697730309688-cc2a3a573494?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8amFudGFyJTIwbWFudGFyfGVufDB8fDB8fHww&fm=jpg&q=60&w=3000"
+            alt="Jantar Mantar"
+          />
+          <div class="card-content">
+            <div class="card-title">Jantar Mantar</div>
+            <div class="card-desc">
+              An astronomical observatory featuring the world’s largest stone
+              sundial and precise instruments.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/7a/c9/89/photo0jpg.jpg?w=900&h=500&s=1"
+            alt="Albert Hall Museum"
+          />
+          <div class="card-content">
+            <div class="card-title">Albert Hall Museum</div>
+            <div class="card-desc">
+              Houses an impressive collection of paintings, carpets, ivory,
+              stone, and metal sculptures.
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <img
+            src="https://s7ap1.scene7.com/is/image/incredibleindia/birla-temple-hyderabad-secunderabad-telangana-1-attr-hero?qlt=82&ts=1742170051392"
+            alt="Birla Mandir"
+          />
+          <div class="card-content">
+            <div class="card-title">Birla Mandir</div>
+            <div class="card-desc">
+              A modern temple built in white marble, glowing beautifully under
+              the Jaipur evening sky.
+            </div>
+          </div>
+        </div>
       </div>
-  
-      <div style="flex:1 1 250px; margin-bottom:25px;">
-        <h4 style="color:#f4c27a; font-weight:700; margin-bottom:10px;">Contact Info</h4>
-        <p>📍 Jaipur Tourism Office,<br>Rajasthan, India</p>
-        <p>📞 +91 98765 43210</p>
-        <p>📧 info@jaipurtourism.in</p>
-      </div>
+
+      <div class="section-title">Plan Your Visit</div>
+      <p
+        style="
+          background: rgb(212, 188, 255);
+          border-radius: 16px;
+          padding: 14px 18px;
+          color: black;
+        "
+      >
+        Most attractions are open from morning till evening, with separate entry
+        fees for Indian and foreign tourists. Carry water, wear comfortable
+        footwear, and book tickets online where possible to avoid queues.
+      </p>
     </div>
-  
-    <hr style="border:0; height:1px; background:#555; margin:20px 0;">
-  
-    <p style="text-align:center; margin-top:15px; font-size:14px;">
-      © 2025 Jaipur Tourism. All Rights Reserved.
-    </p>
-  </footer>
-  <div id="user-modal"></div>
 
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <footer
+      style="
+        background: #2c2c2c;
+        color: white;
+        padding: 50px 20px;
+        margin-top: 40px;
+        font-family: Montserrat, sans-serif;
+      "
+    >
+      <div
+        style="
+          max-width: 1300px;
+          margin: auto;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+        "
+      >
+        <div style="flex: 1 1 250px; margin-bottom: 25px">
+          <h3 style="color: #f4c27a; font-weight: 700; margin-bottom: 15px">
+            Jaipur Tourism
+          </h3>
+          <p style="line-height: 1.7">
+            Official Jaipur Tourism Portal — Explore attractions, food, culture,
+            shopping & heritage of the Pink City.
+          </p>
+        </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const mobileNav = document.querySelector(".hamburger");
-    const navbarMenu = document.querySelector(".menubar");
-    mobileNav.addEventListener("click", () => {
-      navbarMenu.classList.toggle("active");
-      mobileNav.classList.toggle("hamburger-active");
-    });
+        <div style="flex: 1 1 200px; margin-bottom: 25px">
+          <h4 style="color: #f4c27a; font-weight: 700; margin-bottom: 10px">
+            Quick Links
+          </h4>
+          <ul style="line-height: 2; padding-left: 0; list-style: none">
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >About Jaipur</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Tourist Spots</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Shopping Destinations</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Cuisines</a
+              >
+            </li>
+          </ul>
+        </div>
 
-    (function setActiveNav() {
-      const current = window.location.pathname.split("/").pop() || "index.html";
-      document.querySelectorAll("nav ul li a, .menubar ul li a").forEach(link => {
-        if (link.getAttribute("href") === current) {
-          link.classList.add("active-link");
-        }
+        <div style="flex: 1 1 200px; margin-bottom: 25px">
+          <h4 style="color: #f4c27a; font-weight: 700; margin-bottom: 10px">
+            Help & Support
+          </h4>
+          <ul style="line-height: 2; padding-left: 0; list-style: none">
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Contact Us</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" style="color: white; text-decoration: none"
+                >Terms & Conditions</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <div style="flex: 1 1 250px; margin-bottom: 25px">
+          <h4 style="color: #f4c27a; font-weight: 700; margin-bottom: 10px">
+            Contact Info
+          </h4>
+          <p>📍 Jaipur Tourism Office,<br />Rajasthan, India</p>
+          <p>📞 +91 98765 43210</p>
+          <p>📧 info@jaipurtourism.in</p>
+        </div>
+      </div>
+
+      <hr style="border: 0; height: 1px; background: #555; margin: 20px 0" />
+
+      <p style="text-align: center; margin-top: 15px; font-size: 14px">
+        © 2025 Jaipur Tourism. All Rights Reserved.
+      </p>
+    </footer>
+    <div id="user-modal"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const mobileNav = document.querySelector(".hamburger");
+      const navbarMenu = document.querySelector(".menubar");
+      mobileNav.addEventListener("click", () => {
+        navbarMenu.classList.toggle("active");
+        mobileNav.classList.toggle("hamburger-active");
       });
-    })();
-  </script>
-  <script type="text/babel">
-    console.log("React is working!");
 
-    const root = ReactDOM.createRoot(document.getElementById("user-modal"));
-    function getUser() {
-      return JSON.parse(localStorage.getItem("user"));
-    }
-    function setUser(user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    }
-    function logout() {
-      localStorage.removeItem("user");
-      root.render(null);
-      alert("Logged Out !!");
-    }
+      (function setActiveNav() {
+        const current =
+          window.location.pathname.split("/").pop() || "index.html";
+        document
+          .querySelectorAll("nav ul li a, .menubar ul li a")
+          .forEach((link) => {
+            if (link.getAttribute("href") === current) {
+              link.classList.add("active-link");
+            }
+          });
+      })();
+    </script>
+    <script type="text/babel">
+      console.log("React is working!");
 
-    function LoginForm() {
-      const [name, setName] = React.useState("");
-      const [email, setEmail] = React.useState("");
-      const [phone, setPhone] = React.useState("");
-      const [age, setAge] = React.useState("");
-      const [city, setCity] = React.useState("");
-      const [travelType, setTravelType] = React.useState("");
-      const [interest, setInterest] = React.useState("");
-
-      function handleSubmit(e) {
-        e.preventDefault();
-        const user = { name, email, phone, age, city, travelType, interest };
-        setUser(user);
-        root.render(<UserProfile />);
+      const root = ReactDOM.createRoot(document.getElementById("user-modal"));
+      function getUser() {
+        return JSON.parse(localStorage.getItem("user"));
       }
-      return (
-        <div className="modal-backdrop">
-          <div className="modal-box">
-            <div className="modal-header">
-              <h2>Create Account</h2>
-              <span className="colse-btn" onClick={() => root.render("")}>
-                ❌
-              </span>
-            </div>
-            <form onSubmit={handleSubmit}>
-              <input
-                placeholder="Enter Full Name"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <input
-                placeholder="Enter Email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                placeholder="Phone Number"
-                type="tel"
-                required
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-              <input
-                placeholder="Enter Age"
-                type="number"
-                required
-                min="18"
-                max="80"
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-              />
-              <input
-                placeholder="Enter City"
-                required
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-              <select
-                required
-                value={travelType}
-                onChange={(e) => setTravelType(e.target.value)}
-              >
-                <option value="">Select Travel Type</option>
-                <option value="Solo">Solo</option>
-                <option value="Family">Family</option>
-                <option value="Friends">Friends</option>
-                <option value="Couple">Couple</option>
-              </select>
-              <select
-                required
-                value={interest}
-                onChange={(e) => setInterest(e.target.value)}
-              >
-                <option value="">Select Interest</option>
-                <option value="Culture">Culture</option>
-                <option value="Food">Food</option>
-                <option value="Adventure">Adventure</option>
-                <option value="Shopping">Shopping</option>
-                <option value="Heritage">Heritage</option>
-              </select>
-
-              <button type="submit">Create</button>
-            </form>
-          </div>
-        </div>
-      );
-    }
-
-    function UpdateForm({ user }) {
-      const [name, setName] = React.useState(user.name);
-      const [email, setEmail] = React.useState(user.email);
-      const [phone, setPhone] = React.useState(user.phone);
-      const [age, setAge] = React.useState(user.age);
-      const [city, setCity] = React.useState(user.city);
-      const [travelType, setTravelType] = React.useState(user.travelType);
-      const [interest, setInterest] = React.useState(user.interest);
-
-      function handleUpdate(e) {
-        e.preventDefault();
-
-        const updatedUser = {
-          name,
-          email,
-          phone,
-          age,
-          city,
-          travelType,
-          interest,
-        };
-
-        setUser(updatedUser);
-        root.render(<UserProfile />);
+      function setUser(user) {
+        localStorage.setItem("user", JSON.stringify(user));
+      }
+      function logout() {
+        localStorage.removeItem("user");
+        root.render(null);
+        alert("Logged Out !!");
       }
 
-      return (
-        <div className="modal-backdrop">
-          <div className="modal-box">
-            <div className="modal-header">
-              <h2>Update Profile</h2>
-              <span className="colse-btn" onClick={() => root.render("")}>
-                ❌
-              </span>
+      function LoginForm() {
+        const [name, setName] = React.useState("");
+        const [email, setEmail] = React.useState("");
+        const [phone, setPhone] = React.useState("");
+        const [age, setAge] = React.useState("");
+        const [city, setCity] = React.useState("");
+        const [travelType, setTravelType] = React.useState("");
+        const [interest, setInterest] = React.useState("");
+
+        function handleSubmit(e) {
+          e.preventDefault();
+          const user = { name, email, phone, age, city, travelType, interest };
+          setUser(user);
+          root.render(<UserProfile />);
+        }
+        return (
+          <div className="modal-backdrop">
+            <div className="modal-box">
+              <div className="modal-header">
+                <h2>Create Account</h2>
+                <span className="colse-btn" onClick={() => root.render("")}>
+                  ❌
+                </span>
+              </div>
+              <form onSubmit={handleSubmit}>
+                <input
+                  placeholder="Enter Full Name"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <input
+                  placeholder="Enter Email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  placeholder="Phone Number"
+                  type="tel"
+                  required
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+                <input
+                  placeholder="Enter Age"
+                  type="number"
+                  required
+                  min="18"
+                  max="80"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                />
+                <input
+                  placeholder="Enter City"
+                  required
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                />
+                <select
+                  required
+                  value={travelType}
+                  onChange={(e) => setTravelType(e.target.value)}
+                >
+                  <option value="">Select Travel Type</option>
+                  <option value="Solo">Solo</option>
+                  <option value="Family">Family</option>
+                  <option value="Friends">Friends</option>
+                  <option value="Couple">Couple</option>
+                </select>
+                <select
+                  required
+                  value={interest}
+                  onChange={(e) => setInterest(e.target.value)}
+                >
+                  <option value="">Select Interest</option>
+                  <option value="Culture">Culture</option>
+                  <option value="Food">Food</option>
+                  <option value="Adventure">Adventure</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Heritage">Heritage</option>
+                </select>
+
+                <button type="submit">Create</button>
+              </form>
             </div>
-            <form onSubmit={handleUpdate}>
-              <input value={name} onChange={(e) => setName(e.target.value)} />
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <input
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-              <input value={age} onChange={(e) => setAge(e.target.value)} />
-              <input value={city} onChange={(e) => setCity(e.target.value)} />
-
-              <select
-                value={travelType}
-                onChange={(e) => setTravelType(e.target.value)}
-              >
-                <option value="">Select Travel Type</option>
-                <option>Solo</option>
-                <option>Family</option>
-                <option>Friends</option>
-                <option>Couple</option>
-              </select>
-
-              <select
-                value={interest}
-                onChange={(e) => setInterest(e.target.value)}
-              >
-                <option value="">Select Interest</option>
-                <option>Culture</option>
-                <option>Food</option>
-                <option>Adventure</option>
-                <option>Shopping</option>
-                <option>Heritage</option>
-              </select>
-
-              <button type="submit">Save Changes</button>
-            </form>
           </div>
-        </div>
-      );
-    }
+        );
+      }
 
-    function UserProfile() {
-      const user = getUser();
+      function UpdateForm({ user }) {
+        const [name, setName] = React.useState(user.name);
+        const [email, setEmail] = React.useState(user.email);
+        const [phone, setPhone] = React.useState(user.phone);
+        const [age, setAge] = React.useState(user.age);
+        const [city, setCity] = React.useState(user.city);
+        const [travelType, setTravelType] = React.useState(user.travelType);
+        const [interest, setInterest] = React.useState(user.interest);
 
-      return (
-        <div className="modal-backdrop">
-          <div className="modal-box">
-            <div className="modal-header">
-              <h2>Welcome, {user.name}</h2>
-              <span className="colse-btn" onClick={() => root.render("")}>
-                ❌
-              </span>
+        function handleUpdate(e) {
+          e.preventDefault();
+
+          const updatedUser = {
+            name,
+            email,
+            phone,
+            age,
+            city,
+            travelType,
+            interest,
+          };
+
+          setUser(updatedUser);
+          root.render(<UserProfile />);
+        }
+
+        return (
+          <div className="modal-backdrop">
+            <div className="modal-box">
+              <div className="modal-header">
+                <h2>Update Profile</h2>
+                <span className="colse-btn" onClick={() => root.render("")}>
+                  ❌
+                </span>
+              </div>
+              <form onSubmit={handleUpdate}>
+                <input value={name} onChange={(e) => setName(e.target.value)} />
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <input
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+                <input value={age} onChange={(e) => setAge(e.target.value)} />
+                <input value={city} onChange={(e) => setCity(e.target.value)} />
+
+                <select
+                  value={travelType}
+                  onChange={(e) => setTravelType(e.target.value)}
+                >
+                  <option value="">Select Travel Type</option>
+                  <option>Solo</option>
+                  <option>Family</option>
+                  <option>Friends</option>
+                  <option>Couple</option>
+                </select>
+
+                <select
+                  value={interest}
+                  onChange={(e) => setInterest(e.target.value)}
+                >
+                  <option value="">Select Interest</option>
+                  <option>Culture</option>
+                  <option>Food</option>
+                  <option>Adventure</option>
+                  <option>Shopping</option>
+                  <option>Heritage</option>
+                </select>
+
+                <button type="submit">Save Changes</button>
+              </form>
             </div>
-            <p>
-              <b>Email:</b> {user.email}
-            </p>
-            <p>
-              <b>Phone:</b> {user.phone}
-            </p>
-            <p>
-              <b>Age:</b> {user.age}
-            </p>
-            <p>
-              <b>City:</b> {user.city}
-            </p>
-            <p>
-              <b>Travel Type:</b> {user.travelType}
-            </p>
-            <p>
-              <b>Interest:</b> {user.interest}
-            </p>
-            <button onClick={openUpdateForm}>Edit Profile</button>
-            <button onClick={logout}>Logout</button>
           </div>
-        </div>
-      );
-    }
-    document.getElementById("login-btn").addEventListener("click", () => {
-      const user = getUser();
-      if (user) root.render(<UserProfile />);
-      else root.render(<LoginForm />);
-    });
-  </script>
-</body>
+        );
+      }
 
+      function UserProfile() {
+        const user = getUser();
+
+        return (
+          <div className="modal-backdrop">
+            <div className="modal-box">
+              <div className="modal-header">
+                <h2>Welcome, {user.name}</h2>
+                <span className="colse-btn" onClick={() => root.render("")}>
+                  ❌
+                </span>
+              </div>
+              <p>
+                <b>Email:</b> {user.email}
+              </p>
+              <p>
+                <b>Phone:</b> {user.phone}
+              </p>
+              <p>
+                <b>Age:</b> {user.age}
+              </p>
+              <p>
+                <b>City:</b> {user.city}
+              </p>
+              <p>
+                <b>Travel Type:</b> {user.travelType}
+              </p>
+              <p>
+                <b>Interest:</b> {user.interest}
+              </p>
+              <button onClick={openUpdateForm}>Edit Profile</button>
+              <button onClick={logout}>Logout</button>
+            </div>
+          </div>
+        );
+      }
+      document.getElementById("login-btn").addEventListener("click", () => {
+        const user = getUser();
+        if (user) root.render(<UserProfile />);
+        else root.render(<LoginForm />);
+      });
+    </script>
+  </body>
 </html>
