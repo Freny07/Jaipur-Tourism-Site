@@ -40,6 +40,9 @@ function Navbar({ user }) {
           <li>
             <Link to="/cuisine" className={location.pathname === '/cuisine' ? 'active-nav' : ''}>Cuisine</Link>
           </li>
+          <li>
+            <Link to="/contact" className={location.pathname === '/contact' ? 'active-nav' : ''}>Packages</Link>
+          </li>
           <li style={{ marginLeft: '10px' }}>
             {user ? (
               <Link
@@ -75,6 +78,7 @@ function Navbar({ user }) {
           <li><Link to="/attractions" onClick={() => setActive(false)}>Attractions</Link></li>
           <li><Link to="/shopping" onClick={() => setActive(false)}>Shopping</Link></li>
           <li><Link to="/cuisine" onClick={() => setActive(false)}>Cuisine</Link></li>
+          <li><Link to="/contact" onClick={() => setActive(false)}>Packages</Link></li>
           <li><Link to="/profile" onClick={() => setActive(false)}>Profile</Link></li>
         </ul>
       </div>

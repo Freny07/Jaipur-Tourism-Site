@@ -165,7 +165,7 @@ function Contact() {
           </div>
         </div>
 
-        <div className="form-section">
+        <div id="packages" className="form-section">
           <h2>Register for a Tourism Package</h2>
           <form onSubmit={handleSubmit}>
             <input name="name" type="text" placeholder="Full Name" required value={form.name} onChange={handleChange} />
