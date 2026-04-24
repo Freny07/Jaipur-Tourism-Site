@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Carousel from '../Carousel'
+import InteractiveMap from '../InteractiveMap'
 
 function Home() {
   const [weather, setWeather] = useState({ value: '32°C Sunny', icon: '☀', isImg: false })
@@ -188,7 +189,7 @@ function Home() {
               <img src="https://i.redd.it/e9yo0utefpo61.jpg" alt="Rajasthani Thali" />
               <div className="card-content">
                 <div className="card-title">Rajasthani Thali</div>
-                <div className="card-desc">A wholesome royal platter of dal-baati, churma, kadhi, and more.</div>
+                <div className="card-desc">A wholesome royal platter of dal-baati, churma, kadi, and more.</div>
               </div>
             </div>
             <div className="card food-card">
@@ -205,20 +206,10 @@ function Home() {
         </div>
 
         <div className="map-section">
-          <b>Explore Jaipur on the Map</b>
-          <section id="map">
-            <h3>Jaipur map</h3>
-            <iframe
-              className="map"
-              title="Jaipur city map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14223.780331040334!2d75.814578!3d26.912433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396db14d7070f77b%3A0x3f6a7a3b6d5e7d75!2sJaipur%2C%20Rajasthan!5e0!3m2!1sen!2sin!4v1710000000000"
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              style={{ border: 0, width: '100%', height: '500px' }}
-            >
-            </iframe>
-          </section>
+          <b style={{ display: 'block', marginBottom: '20px', fontSize: '1.5rem', color: '#A1673F' }}>
+            Interactive Jaipur Travel Map
+          </b>
+          <InteractiveMap />
         </div>
       </div>
     </>

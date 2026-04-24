@@ -42,4 +42,27 @@ public class UserController {
     public List<User> getUsers() {
         return userRepository.findAll();
     }
+
+    @PutMapping("/update")
+    public Map<String, Object> update(@RequestBody User updatedUser) {
+        Optional<User> existingUser = userRepository.findByEmail(updatedUser.getEmail());
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            user.setName(updatedUser.getName());
+            user.setPhone(updatedUser.getPhone());
+            user.setAge(updatedUser.getAge());
+            user.setCity(updatedUser.getCity());
+            user.setTravelType(updatedUser.getTravelType());
+            user.setInterest(updatedUser.getInterest());
+            user.setPhoto(updatedUser.getPhoto());
+            if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
+                user.setPassword(updatedUser.getPassword());
+            }
+            
+            userRepository.save(user);
+            return Map.of("message", "Profile updated successfully", "user", user);
+        } else {
+            return Map.of("error", "User not found");
+        }
+    }
 }

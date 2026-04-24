@@ -8,15 +8,22 @@ function Navbar({ user }) {
   return (
     <>
       <nav>
-        <div className="logo">
-          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-            <img
-              style={{ borderRadius: '50%', margin: '0 12px 6px 0px' }}
-              src="/favicon.jpeg"
-              alt="JT"
-              width="37"
-            />
-            <h1>JAIPUR-TOUR</h1>
+        <div className="logo-area">
+          <div className="logo">
+            <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+              <img
+                style={{ borderRadius: '50%', margin: '0 12px 6px 0px' }}
+                src="/favicon.jpeg"
+                alt="JT"
+                width="37"
+              />
+              <h1>JAIPUR-TOUR</h1>
+            </Link>
+          </div>
+
+          <Link to="/explorer" className="nav-map-pill explorer-link">
+            <i className="fa-solid fa-map-location-dot"></i>
+            <span>Explorer Map</span>
           </Link>
         </div>
 
@@ -25,7 +32,7 @@ function Navbar({ user }) {
             <Link to="/" className={location.pathname === '/' ? 'active-nav' : ''}>Home</Link>
           </li>
           <li>
-            <Link to="/attractions" className={location.pathname === '/attractions' ? 'active-nav' : ''}>Attraction</Link>
+            <Link to="/attractions" className={location.pathname === '/attractions' ? 'active-nav' : ''}>Attractions</Link>
           </li>
           <li>
             <Link to="/shopping" className={location.pathname === '/shopping' ? 'active-nav' : ''}>Shopping</Link>
@@ -33,17 +40,24 @@ function Navbar({ user }) {
           <li>
             <Link to="/cuisine" className={location.pathname === '/cuisine' ? 'active-nav' : ''}>Cuisine</Link>
           </li>
-          <li>
-            <Link to="/contact" className={location.pathname === '/contact' ? 'active-nav' : ''}>Package</Link>
-          </li>
-          <li>
-            <Link to="/profile" className={location.pathname === '/profile' ? 'active-nav' : ''}>
-              {user ? (
-                <img src={user.picture} alt="Profile" style={{ width: '30px', height: '30px', borderRadius: '50%', border: '2px solid #A1673F' }} />
-              ) : (
-                <i className="fa-solid fa-user"></i>
-              )}
-            </Link>
+          <li style={{ marginLeft: '10px' }}>
+            {user ? (
+              <Link
+                to="/profile"
+                className="nav-profile-circle"
+                title={`${user.name}'s Profile`}
+              >
+                <img
+                  src={user.photo || user.picture || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}
+                  alt="Profile"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </Link>
+            ) : (
+              <Link to="/profile" className="nav-login-btn">
+                Log In
+              </Link>
+            )}
           </li>
         </ul>
 
@@ -56,24 +70,12 @@ function Navbar({ user }) {
 
       <div className={active ? 'menubar active' : 'menubar'}>
         <ul>
-          <li>
-            <Link to="/" onClick={() => setActive(false)}>Home</Link>
-          </li>
-          <li>
-            <Link to="/attractions" onClick={() => setActive(false)}>Attraction</Link>
-          </li>
-          <li>
-            <Link to="/shopping" onClick={() => setActive(false)}>Shopping</Link>
-          </li>
-          <li>
-            <Link to="/cuisine" onClick={() => setActive(false)}>Cuisine</Link>
-          </li>
-          <li>
-            <Link to="/contact" onClick={() => setActive(false)}>Package</Link>
-          </li>
-          <li>
-            <Link to="/profile" onClick={() => setActive(false)}>Profile</Link>
-          </li>
+          <li><Link to="/" onClick={() => setActive(false)}>Home</Link></li>
+          <li><Link to="/explorer" onClick={() => setActive(false)}>Explorer Map</Link></li>
+          <li><Link to="/attractions" onClick={() => setActive(false)}>Attractions</Link></li>
+          <li><Link to="/shopping" onClick={() => setActive(false)}>Shopping</Link></li>
+          <li><Link to="/cuisine" onClick={() => setActive(false)}>Cuisine</Link></li>
+          <li><Link to="/profile" onClick={() => setActive(false)}>Profile</Link></li>
         </ul>
       </div>
     </>
