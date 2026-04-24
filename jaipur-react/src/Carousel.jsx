@@ -17,11 +17,19 @@ function Carousel({ title, subtitle }) {
         <div className="carousel-inner">
           <div className="carousel-item">
             <img
-              src="https://img.staticmb.com/mbcontent/images/crop/uploads/2022/12/Jaipur-City_0_1200.jpg"
+              src="https://www.thelalit.com/wp-content/uploads/2017/02/City-Highlight-Jaipur-760-320.jpeg"
               className="d-block w-100"
-              alt="Jaipur Palace"
+              alt="Jaipur City Highlight"
             />
           </div>
+          <div className="carousel-item">
+            <img
+              src="https://d3vp2rl7047vsp.cloudfront.net/articles/article_images/000/000/022/original/Bike-Trip-Exploring-Jaipur-City-Palace_%28Large%29.jpg?1726214295"
+              className="d-block w-100"
+              alt="Exploring City Palace"
+            />
+          </div>
+
           <div className="carousel-item">
             <img
               src="https://i.pinimg.com/1200x/17/16/0c/17160cf3dcae938504300466062deedf.jpg"

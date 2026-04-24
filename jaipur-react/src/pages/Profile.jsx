@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGoogleLogin } from '@react-oauth/google'
 import { jwtDecode } from 'jwt-decode'
+import ImageCropper from '../ImageCropper'
 
 function Profile({ onUserChange }) {
   const navigate = useNavigate()
@@ -24,13 +25,30 @@ function Profile({ onUserChange }) {
     setLoginData({ ...loginData, [e.target.name]: e.target.value })
   }
 
+  const [tempImage, setTempImage] = useState(null)
+  const [isCropping, setIsCropping] = useState(false)
+
   function handlePhotoChange(e) {
     const file = e.target.files[0]
     if (file) {
       const reader = new FileReader()
-      reader.onloadend = () => setFormData({ ...formData, photo: reader.result })
+      reader.onloadend = () => {
+        setTempImage(reader.result)
+        setIsCropping(true)
+      }
       reader.readAsDataURL(file)
     }
+  }
+
+  function onCropComplete(croppedImage) {
+    setFormData({ ...formData, photo: croppedImage })
+    setIsCropping(false)
+    setTempImage(null)
+  }
+
+  function onCropCancel() {
+    setIsCropping(false)
+    setTempImage(null)
   }
 
   const API_URL = 'http://localhost:8080/api';
@@ -53,7 +71,7 @@ function Profile({ onUserChange }) {
       setAuthMode('profile')
       alert("Account created successfully!");
     } catch (err) {
-      alert("Backend error. Make sure the Java server is running and MySQL is active!");
+      alert("Backend error: Connection Refused. Please make sure the Java server is running (run.ps1)!");
     }
   }
 
@@ -74,7 +92,7 @@ function Profile({ onUserChange }) {
         alert(result.error || "Invalid credentials");
       }
     } catch (err) {
-      alert("Backend error. Make sure the Java server is running and MySQL is active!");
+      alert("Backend error: Connection Refused. Please make sure the Java server is running (run.ps1)!");
     }
   }
 
@@ -106,13 +124,36 @@ function Profile({ onUserChange }) {
     alert('Google Login Failed');
   };
 
-  function handleEditSave(e) {
+  async function handleEditSave(e) {
     e.preventDefault()
-    // For simplicity, we just update local storage here, but in a real app, you'd have a PUT endpoint
-    localStorage.setItem('user', JSON.stringify(formData))
-    onUserChange(formData)
-    setAuthMode('profile')
-    alert("Profile updated locally!")
+    try {
+      const response = await fetch(`${API_URL}/update`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      const result = await response.json();
+      
+      if (response.ok && !result.error) {
+        localStorage.setItem('user', JSON.stringify(result.user))
+        onUserChange(result.user)
+        setAuthMode('profile')
+        alert("Profile updated successfully!")
+      } else {
+        // If user not in DB (e.g. Google user who hasn't "signed up" to our DB yet), just save locally
+        localStorage.setItem('user', JSON.stringify(formData))
+        onUserChange(formData)
+        setAuthMode('profile')
+        alert("Profile updated locally!")
+      }
+    } catch (err) {
+      console.error("Update failed", err);
+      // Fallback to local storage if backend is reaching
+      localStorage.setItem('user', JSON.stringify(formData))
+      onUserChange(formData)
+      setAuthMode('profile')
+      alert("Profile updated locally (Backend unreachable)!")
+    }
   }
 
   function logout() {
@@ -130,6 +171,21 @@ function Profile({ onUserChange }) {
 
   const user = getLoggedInUser()
 
+  if (isCropping) {
+    return (
+      <div className="profile-page">
+        <div className="profile-card futuristic" style={{ maxWidth: '600px', height: '550px' }}>
+          <h2 style={{ marginBottom: '10px' }}>Adjust Profile Picture</h2>
+          <ImageCropper 
+            image={tempImage} 
+            onCropComplete={onCropComplete} 
+            onCancel={onCropCancel} 
+          />
+        </div>
+      </div>
+    )
+  }
+
   if (authMode === 'profile' && user) {
     return (
       <div className="profile-page">
@@ -137,7 +193,13 @@ function Profile({ onUserChange }) {
           <h2>My Profile</h2>
 
           {user.photo ? (
-            <img src={user.photo} alt="User" className="profile-photo" />
+            <img 
+              src={user.photo} 
+              alt="User" 
+              className="profile-photo clickable" 
+              onClick={() => { setTempImage(user.photo); setIsCropping(true); }}
+              title="Click to re-crop photo"
+            />
           ) : (
             <div className="profile-avatar">👤</div>
           )}
@@ -168,20 +230,33 @@ function Profile({ onUserChange }) {
           <h2>Update Profile</h2>
           
           <div className="photo-upload-area">
-            <div className="photo-preview">
+            <div 
+              className="photo-preview clickable" 
+              onClick={() => { if (formData.photo) { setTempImage(formData.photo); setIsCropping(true); } }}
+              title={formData.photo ? "Click to re-crop photo" : ""}
+            >
               {formData.photo ? (
                 <img src={formData.photo} alt="preview" />
               ) : (
                 <i className="fa-solid fa-camera"></i>
               )}
             </div>
-            <input type="file" accept="image/*" onChange={handlePhotoChange} style={{ fontSize: '12px' }} />
+            <label htmlFor="edit-photo-input" className="cool-upload-btn">
+              <i className="fa-solid fa-cloud-arrow-up"></i> Upload Photo
+            </label>
+            <input 
+              id="edit-photo-input"
+              type="file" 
+              accept="image/*" 
+              onChange={handlePhotoChange} 
+              style={{ display: 'none' }} 
+            />
           </div>
 
           <form onSubmit={handleEditSave} style={{ width: '100%' }}>
             <input name="name" placeholder="Full Name" required value={formData.name} onChange={handleFormChange} />
             <input name="email" type="email" placeholder="Email" required value={formData.email} onChange={handleFormChange} readOnly title="Email cannot be changed" style={{ background: '#eee' }} />
-            <input name="password" type="password" placeholder="Password" required value={formData.password} onChange={handleFormChange} />
+            <input name="password" type="password" placeholder="Password (Optional)" value={formData.password} onChange={handleFormChange} />
             <input name="phone" type="tel" placeholder="Phone" value={formData.phone} onChange={handleFormChange} />
             <input name="age" type="number" placeholder="Age" value={formData.age} onChange={handleFormChange} />
             <input name="city" placeholder="City" required value={formData.city} onChange={handleFormChange} />
@@ -260,7 +335,16 @@ function Profile({ onUserChange }) {
                   <i className="fa-solid fa-camera"></i>
                 )}
               </div>
-              <input type="file" accept="image/*" onChange={handlePhotoChange} style={{ fontSize: '12px' }} />
+              <label htmlFor="signup-photo-input" className="cool-upload-btn">
+                <i className="fa-solid fa-cloud-arrow-up"></i> Choose Profile Picture
+              </label>
+              <input 
+                id="signup-photo-input"
+                type="file" 
+                accept="image/*" 
+                onChange={handlePhotoChange} 
+                style={{ display: 'none' }} 
+              />
             </div>
 
             <form onSubmit={handleSignup} style={{ width: '100%' }}>
