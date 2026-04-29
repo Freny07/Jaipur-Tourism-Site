@@ -16,5 +16,20 @@ if (-not (Test-Path "$MAVEN_DIR\apache-maven-$MAVEN_VERSION")) {
     Remove-Item $MAVEN_ZIP
 }
 
+# Load environment variables from .env file
+$ENV_FILE = "$PSScriptRoot\..\.env"
+if (Test-Path $ENV_FILE) {
+    echo "Loading environment variables from $ENV_FILE..."
+    Get-Content $ENV_FILE | ForEach-Object {
+        if ($_ -match "^\s*([^#\s][^=]*)\s*=\s*(.*)$") {
+            $name = $Matches[1].Trim()
+            $value = $Matches[2].Trim()
+            # Remove quotes if present
+            $value = $value -replace "^['""]|['""]$", ""
+            [Environment]::SetEnvironmentVariable($name, $value, "Process")
+        }
+    }
+}
+
 echo "Starting Spring Boot Application..."
 & "$MAVEN_DIR\apache-maven-$MAVEN_VERSION\bin\mvn.cmd" spring-boot:run

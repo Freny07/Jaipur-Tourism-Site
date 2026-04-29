@@ -8,7 +8,7 @@ function Home() {
 
   useEffect(() => {
     async function getWeather() {
-      const apiKey = 'REPLACE_WITH_YOUR_OPENWEATHERMAP_API_KEY'
+      const apiKey = import.meta.env.VITE_WEATHER_API_KEY
       const url = `https://api.openweathermap.org/data/2.5/weather?q=Jaipur,IN&appid=${apiKey}&units=metric`
       try {
         const res = await fetch(url)
@@ -47,9 +47,15 @@ function Home() {
             <div className="stat-value">28,510</div>
           </div>
           <div className="stat-card">
-            <div className="stat-icon" style={{ color: '#ffa500' }}>☀️</div>
+            <div className="stat-icon" style={{ color: '#ffa500' }}>
+              {weather.isImg ? (
+                <img src={weather.icon} alt="weather" style={{ width: '40px', height: '40px' }} />
+              ) : (
+                weather.icon
+              )}
+            </div>
             <div className="stat-title">Current Weather</div>
-            <div className="stat-value">32°C Sunny</div>
+            <div className="stat-value">{weather.value}</div>
           </div>
           <div className="stat-card">
             <div className="stat-icon" style={{ color: '#9370db' }}>🎭</div>
