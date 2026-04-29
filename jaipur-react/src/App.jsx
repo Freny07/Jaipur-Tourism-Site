@@ -10,6 +10,7 @@ import Cuisine from './pages/Cuisine'
 import Contact from './pages/Contact'
 import Profile from './pages/Profile'
 import Explorer from './pages/Explorer'
+import Chatbot from './components/Chatbot'
 import './App.css'
 
 function ScrollToTop() {
@@ -45,6 +46,7 @@ function App() {
                 <Route path="/profile" element={<Profile onUserChange={handleUserChange} />} />
               </Routes>
               <Footer />
+              <Chatbot />
             </>
           } />
         </Routes>
