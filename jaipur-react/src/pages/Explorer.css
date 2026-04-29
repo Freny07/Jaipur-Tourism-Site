@@ -1,0 +1,27 @@
+.explorer-page-dedicated {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #0f0a09; /* Matches the Midnight Heritage theme */
+}
+
+/* Ensure the map inside takes up the full space */
+.explorer-page-dedicated .interactive-map-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+/* Premium Entrance Animation */
+.explorer-page-dedicated {
+  animation: pageFadeIn 1s ease-out;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: scale(1.05); }
+  to { opacity: 1; transform: scale(1); }
+}

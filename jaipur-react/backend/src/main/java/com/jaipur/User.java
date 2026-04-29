@@ -21,7 +21,7 @@ public class User {
     private String travelType;
     private String interest;
     
-    @Column(columnDefinition = "LONGTEXT")
+    @Column(columnDefinition = "CLOB")
     private String photo;
 
     // Getters and Setters
