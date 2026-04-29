@@ -142,7 +142,7 @@ function Home() {
             </div>
           </div>
           <div className="view-more-btn">
-            <Link to="/attractions">View All Attractions →</Link>
+            <Link to="/attractions" className="action-btn">View All Attractions →</Link>
           </div>
         </div>
 
@@ -174,7 +174,7 @@ function Home() {
             </div>
           </div>
           <div className="view-more-btn">
-            <Link to="/shopping">Explore All Shopping Spots →</Link>
+            <Link to="/shopping" className="action-btn">Explore All Shopping Spots →</Link>
           </div>
         </div>
 
@@ -207,7 +207,7 @@ function Home() {
             </div>
           </div>
           <div className="view-more-btn">
-            <Link to="/cuisine">See More Jaipur Dishes →</Link>
+            <Link to="/cuisine" className="action-btn">See More Jaipur Dishes →</Link>
           </div>
         </div>
 
