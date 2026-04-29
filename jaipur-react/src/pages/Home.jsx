@@ -8,7 +8,7 @@ function Home() {
 
   useEffect(() => {
     async function getWeather() {
-      const apiKey = '47a0d7b7b4449c79f6167bd2245b2755'
+      const apiKey = 'REPLACE_WITH_YOUR_OPENWEATHERMAP_API_KEY'
       const url = `https://api.openweathermap.org/data/2.5/weather?q=Jaipur,IN&appid=${apiKey}&units=metric`
       try {
         const res = await fetch(url)
