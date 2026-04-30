@@ -14,6 +14,9 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class UserController {
 
+
+@Autowired
+private UserRepository userRepository;
     @Autowired
     private UserRepository userRepository;
 
@@ -78,6 +81,8 @@ public class UserController {
 
         return Map.of("error", "User not found");
     }
+}
+
 
     // Set password for Google users
     @PostMapping("/set-password")

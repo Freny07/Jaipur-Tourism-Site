@@ -1,0 +1,22 @@
+# Build artifacts
+target/
+*.jar
+*.war
+*.ear
+
+# Frontend build
+dist/
+build/
+node_modules/
+
+# Zips
+*.zip
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
