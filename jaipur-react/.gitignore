@@ -29,3 +29,13 @@ dist-ssr
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Java / Maven
+target/
+*.class
+
+# Build outputs
+build/
+
+# OS junk
+Thumbs.db
