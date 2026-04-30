@@ -117,4 +117,39 @@ public class UserController {
         users.forEach(u -> u.setPassword(null));
         return users;
     }
+
+    @PutMapping("/update")
+    public Map<String, Object> updateUser(@RequestBody User updateData) {
+        if (updateData.getEmail() == null || updateData.getEmail().isEmpty()) {
+            return Map.of("error", "Email is required to update profile");
+        }
+
+        Optional<User> userOpt = userRepository.findByEmail(updateData.getEmail());
+
+        if (userOpt.isPresent()) {
+            User existingUser = userOpt.get();
+            
+            // Update fields (except email and provider)
+            if (updateData.getName() != null) existingUser.setName(updateData.getName());
+            if (updateData.getPhone() != null) existingUser.setPhone(updateData.getPhone());
+            if (updateData.getAge() != null) existingUser.setAge(updateData.getAge());
+            if (updateData.getCity() != null) existingUser.setCity(updateData.getCity());
+            if (updateData.getTravelType() != null) existingUser.setTravelType(updateData.getTravelType());
+            if (updateData.getInterest() != null) existingUser.setInterest(updateData.getInterest());
+            if (updateData.getPhoto() != null) existingUser.setPhoto(updateData.getPhoto());
+            
+            // Only update password if provided and not empty
+            if (updateData.getPassword() != null && !updateData.getPassword().isEmpty()) {
+                existingUser.setPassword(updateData.getPassword());
+                existingUser.setPasswordSet(true);
+            }
+
+            User savedUser = userRepository.save(existingUser);
+            savedUser.setPassword(null);
+
+            return Map.of("message", "Profile updated successfully", "user", savedUser);
+        }
+
+        return Map.of("error", "User not found");
+    }
 }

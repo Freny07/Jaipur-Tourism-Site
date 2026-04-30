@@ -65,6 +65,7 @@ function Profile({ user: userProp, onUserChange }) {
       const response = await fetch(`${API_URL}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(formData)
       });
       const result = await response.json();
@@ -87,6 +88,7 @@ function Profile({ user: userProp, onUserChange }) {
       const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(loginData)
       });
       const result = await response.json();
@@ -112,6 +114,7 @@ function Profile({ user: userProp, onUserChange }) {
       const response = await fetch(`${API_URL}/update`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(formData)
       });
       const result = await response.json();

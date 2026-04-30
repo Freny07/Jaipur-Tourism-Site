@@ -54,14 +54,25 @@ function Chatbot() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({ message: inputText }),
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Server Error:', response.status, errorText);
+        throw new Error(`Server returned ${response.status}`);
+      }
 
       const data = await response.json();
       const botMsg = { sender: 'bot', text: data.reply };
       setMessages((prev) => [...prev, botMsg]);
     } catch (error) {
-      const errorMsg = { sender: 'bot', text: 'Oops! The servers are currently resting. Please try again later.' };
+      console.error('Chat Error:', error);
+      const errorMsg = { 
+        sender: 'bot', 
+        text: `Technical issue: ${error.message}. Please ensure the backend is restarted and running on port 8080.` 
+      };
       setMessages((prev) => [...prev, errorMsg]);
     }
 
