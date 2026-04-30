@@ -22,6 +22,7 @@ function ScrollToTop() {
 
 function App() {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     fetch("http://localhost:8080/api/me", {
@@ -32,10 +33,26 @@ function App() {
         if (data.user) {
           setUser(data.user)
           localStorage.setItem("user", JSON.stringify(data.user))
+        } else {
+          // If not logged in on backend, also check local storage as fallback
+          const localUser = localStorage.getItem('user')
+          if (localUser) setUser(JSON.parse(localUser))
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        const localUser = localStorage.getItem('user')
+        if (localUser) setUser(JSON.parse(localUser))
+      })
+      .finally(() => setLoading(false));
   }, []);
+
+  if (loading) {
+    return <div className="loading-screen">
+      <div className="loader"></div>
+      <p>Verifying Royal Credentials...</p>
+    </div>
+  }
+
 
   function handleUserChange(u) {
     setUser(u)

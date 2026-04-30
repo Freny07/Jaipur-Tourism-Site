@@ -1,8 +1,7 @@
-package com.jaipur.service;
+package com.jaipur;
 
-import com.jaipur.User;
-import com.jaipur.UserRepository;
 import org.springframework.security.oauth2.client.userinfo.*;
+
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 

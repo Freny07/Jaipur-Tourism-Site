@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ImageCropper from '../ImageCropper'
 
@@ -10,6 +10,12 @@ function Profile({ user: userProp, onUserChange }) {
   const user = userProp || getLoggedInUser()
   
   const [authMode, setAuthMode] = useState(() => (user ? 'profile' : 'signin'))
+
+  useEffect(() => {
+    if (user && (authMode === 'signin' || authMode === 'signup')) {
+      setAuthMode('profile')
+    }
+  }, [user])
   
   const [formData, setFormData] = useState({
     name: '', email: '', password: '', phone: '', age: '', city: '', travelType: '', interest: '', photo: ''

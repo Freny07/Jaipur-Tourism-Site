@@ -9,23 +9,40 @@ function Home() {
   useEffect(() => {
     async function getWeather() {
       const apiKey = import.meta.env.VITE_WEATHER_API_KEY
+      
+      if (!apiKey) {
+        console.warn("Weather API Key is missing in .env file");
+        setWeather({ value: 'API Key Missing', icon: '☀', isImg: false });
+        return;
+      }
+
       const url = `https://api.openweathermap.org/data/2.5/weather?q=Jaipur,IN&appid=${apiKey}&units=metric`
       try {
         const res = await fetch(url)
         const data = await res.json()
-        const temp = data.main.temp
-        const desc = data.weather[0].description
+        
+        if (!res.ok || !data.main) {
+          console.error("Weather API Error:", data.message || "Unknown error");
+          throw new Error('Weather API not working')
+        }
+        
+        const temp = Math.round(data.main.temp)
+        const rawDesc = data.weather[0].description
+        const desc = rawDesc.charAt(0).toUpperCase() + rawDesc.slice(1) // Capitalize
         const iconCode = data.weather[0].icon
         const iconUrl = `https://openweathermap.org/img/wn/${iconCode}@2x.png`
+        
         setWeather({ value: `${temp}°C ${desc}`, icon: iconUrl, isImg: true })
-      } catch {
-        setWeather({ value: 'Unable to load weather', icon: '☀', isImg: false })
+      } catch (err) {
+        console.error("Weather Fetch Failed:", err);
+        setWeather({ value: 'Weather Offline', icon: '☀', isImg: false })
       }
     }
     getWeather()
     const interval = setInterval(getWeather, 900000)
     return () => clearInterval(interval)
   }, [])
+
 
   return (
     <>

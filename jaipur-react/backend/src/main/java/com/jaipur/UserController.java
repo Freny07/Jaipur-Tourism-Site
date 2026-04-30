@@ -14,13 +14,9 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class UserController {
 
-
-@Autowired
-private UserRepository userRepository;
     @Autowired
     private UserRepository userRepository;
 
-    // Signup
     @PostMapping("/signup")
     public Map<String, Object> signup(@RequestBody User newUser) {
 
@@ -37,7 +33,6 @@ private UserRepository userRepository;
         return Map.of("message", "User registered successfully", "user", savedUser);
     }
 
-    // Login
     @PostMapping("/login")
     public Map<String, Object> login(@RequestBody Map<String, String> credentials) {
 
@@ -63,13 +58,24 @@ private UserRepository userRepository;
     }
 
     @GetMapping("/me")
-    public Map<String, Object> getCurrentUser(@AuthenticationPrincipal OAuth2User oAuth2User) {
+    public Map<String, Object> getCurrentUser(@AuthenticationPrincipal Object principal) {
 
-        if (oAuth2User == null) {
+        if (principal == null) {
             return Map.of("error", "Not logged in");
         }
 
-        String email = oAuth2User.getAttribute("email");
+        String email = null;
+        if (principal instanceof OAuth2User) {
+            email = ((OAuth2User) principal).getAttribute("email");
+        } else if (principal instanceof org.springframework.security.core.userdetails.UserDetails) {
+            email = ((org.springframework.security.core.userdetails.UserDetails) principal).getUsername();
+        } else if (principal instanceof String) {
+            email = (String) principal;
+        }
+
+        if (email == null) {
+            return Map.of("error", "Principal identification failed");
+        }
 
         Optional<User> user = userRepository.findByEmail(email);
 
@@ -79,12 +85,10 @@ private UserRepository userRepository;
             return Map.of("user", u);
         }
 
-        return Map.of("error", "User not found");
+        return Map.of("error", "User not found in database");
     }
-}
 
 
-    // Set password for Google users
     @PostMapping("/set-password")
     public Map<String, Object> setPassword(@RequestBody Map<String, String> data) {
 
@@ -107,7 +111,6 @@ private UserRepository userRepository;
         return Map.of("error", "User not found");
     }
 
-    // Get all users
     @GetMapping("/users")
     public List<User> getUsers() {
         List<User> users = userRepository.findAll();
