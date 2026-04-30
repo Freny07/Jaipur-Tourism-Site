@@ -2,3 +2,6 @@ com\jaipur\UserRepository.class
 com\jaipur\JaipurBackendApplication.class
 com\jaipur\UserController.class
 com\jaipur\User.class
+com\jaipur\ChatController.class
+com\jaipur\config\SecurityConfig.class
+com\jaipur\service\CustomOAuth2UserService.class

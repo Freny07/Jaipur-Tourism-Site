@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useGoogleLogin } from '@react-oauth/google'
-import { jwtDecode } from 'jwt-decode'
 import ImageCropper from '../ImageCropper'
 
-function Profile({ onUserChange }) {
+function Profile({ user: userProp, onUserChange }) {
   const navigate = useNavigate()
 
   const getLoggedInUser = () => JSON.parse(localStorage.getItem('user'))
   
-  const [authMode, setAuthMode] = useState(() => (getLoggedInUser() ? 'profile' : 'signin'))
+  const user = userProp || getLoggedInUser()
+  
+  const [authMode, setAuthMode] = useState(() => (user ? 'profile' : 'signin'))
   
   const [formData, setFormData] = useState({
     name: '', email: '', password: '', phone: '', age: '', city: '', travelType: '', interest: '', photo: ''
@@ -96,33 +96,9 @@ function Profile({ onUserChange }) {
     }
   }
 
-  const loginWithGoogle = useGoogleLogin({
-    onSuccess: async (tokenResponse) => {
-      // Fetch user info using the access token
-      const res = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-        headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-      });
-      const decoded = await res.json();
-      
-      const googleUser = {
-        name: decoded.name,
-        email: decoded.email,
-        photo: decoded.picture,
-        city: 'Jaipur (Auto)',
-        interest: 'Heritage'
-      };
-      
-      localStorage.setItem('user', JSON.stringify(googleUser));
-      onUserChange(googleUser);
-      setAuthMode('profile');
-      alert(`Welcome ${decoded.name}!`);
-    },
-    onError: () => alert('Google Login Failed'),
-  });
-
-  const handleGoogleError = () => {
-    alert('Google Login Failed');
-  };
+  function loginWithGoogle() {
+    window.location.href = "http://localhost:8080/oauth2/authorization/google"
+  }
 
   async function handleEditSave(e) {
     e.preventDefault()
@@ -140,7 +116,6 @@ function Profile({ onUserChange }) {
         setAuthMode('profile')
         alert("Profile updated successfully!")
       } else {
-        // If user not in DB (e.g. Google user who hasn't "signed up" to our DB yet), just save locally
         localStorage.setItem('user', JSON.stringify(formData))
         onUserChange(formData)
         setAuthMode('profile')
@@ -148,7 +123,6 @@ function Profile({ onUserChange }) {
       }
     } catch (err) {
       console.error("Update failed", err);
-      // Fallback to local storage if backend is reaching
       localStorage.setItem('user', JSON.stringify(formData))
       onUserChange(formData)
       setAuthMode('profile')
@@ -168,8 +142,6 @@ function Profile({ onUserChange }) {
     setFormData(getLoggedInUser())
     setAuthMode('edit')
   }
-
-  const user = getLoggedInUser()
 
   if (isCropping) {
     return (
