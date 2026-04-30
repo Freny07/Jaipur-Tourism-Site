@@ -22,6 +22,9 @@ public class User {
     private String travelType;
     private String interest;
 
+    private String provider; // LOCAL or GOOGLE
+    private boolean passwordSet;
+
     @Lob
     @Column(columnDefinition = "LONGTEXT")
     private String photo;
@@ -56,4 +59,10 @@ public class User {
 
     public String getPhoto() { return photo; }
     public void setPhoto(String photo) { this.photo = photo; }
+
+    public String getProvider() { return provider; }
+    public void setProvider(String provider) { this.provider = provider; }
+
+    public boolean isPasswordSet() { return passwordSet; }
+    public void setPasswordSet(boolean passwordSet) { this.passwordSet = passwordSet; }
 }

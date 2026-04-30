@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import { GoogleOAuthProvider } from '@react-oauth/google'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import Home from './pages/Home'
@@ -22,36 +21,53 @@ function ScrollToTop() {
 }
 
 function App() {
-  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem('user')))
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    fetch("http://localhost:8080/api/me", {
+      credentials: "include"
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.user) {
+          setUser(data.user)
+          localStorage.setItem("user", JSON.stringify(data.user))
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   function handleUserChange(u) {
     setUser(u)
+    localStorage.setItem('user', JSON.stringify(u))
   }
 
   return (
-    <GoogleOAuthProvider clientId="841581793985-rlaalqdfbbkr11c3cdoj2qvrlhftoa62.apps.googleusercontent.com">
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/explorer" element={<Explorer />} />
-          <Route path="*" element={
-            <>
-              <Navbar user={user} />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/attractions" element={<Attractions />} />
-                <Route path="/shopping" element={<Shopping />} />
-                <Route path="/cuisine" element={<Cuisine />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/profile" element={<Profile onUserChange={handleUserChange} />} />
-              </Routes>
-              <Footer />
-              <Chatbot />
-            </>
-          } />
-        </Routes>
-      </BrowserRouter>
-    </GoogleOAuthProvider>
+    <BrowserRouter>
+      <ScrollToTop />
+
+      <Routes>
+        <Route path="/explorer" element={<Explorer />} />
+
+        <Route path="*" element={
+          <>
+            <Navbar user={user} />
+
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/attractions" element={<Attractions />} />
+              <Route path="/shopping" element={<Shopping />} />
+              <Route path="/cuisine" element={<Cuisine />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/profile" element={<Profile user={user} onUserChange={handleUserChange} />} />
+            </Routes>
+
+            <Footer />
+            <Chatbot />
+          </>
+        } />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
