@@ -11,7 +11,7 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class UserController {
 
-```
+
 @Autowired
 private UserRepository userRepository;
 
@@ -92,6 +92,6 @@ public Map<String, Object> update(@RequestBody User updatedUser) {
         return Map.of("error", "User not found");
     }
 }
-```
+
 
 }
