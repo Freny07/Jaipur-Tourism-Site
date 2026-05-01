@@ -113,7 +113,7 @@ public class ChatController {
 
         String combinedSystemPrompt = demoSystemPrompt + knowledgeBase;
 
-        // System Instruction — hidden from user, prevents AI from repeating the prompt
+        // System Instruction
         Map<String, Object> systemInstruction = new HashMap<>();
         Map<String, Object> systemPart = new HashMap<>();
         systemPart.put("text", combinedSystemPrompt);
@@ -132,10 +132,20 @@ public class ChatController {
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
 
         try {
+            System.out.println("Sending request to Gemini API...");
             ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
             Map<String, Object> responseBody = response.getBody();
+            System.out.println("Received response: " + responseBody);
+
+            if (responseBody == null || !responseBody.containsKey("candidates")) {
+                throw new RuntimeException("No candidates in response");
+            }
 
             List<Map<String, Object>> candidates = (List<Map<String, Object>>) responseBody.get("candidates");
+            if (candidates.isEmpty()) {
+                throw new RuntimeException("Candidates list is empty");
+            }
+
             Map<String, Object> firstCandidate = candidates.get(0);
             Map<String, Object> contentMap = (Map<String, Object>) firstCandidate.get("content");
             List<Map<String, Object>> partsList = (List<Map<String, Object>>) contentMap.get("parts");
@@ -145,12 +155,15 @@ public class ChatController {
             result.put("reply", botText);
             return result;
         } catch (org.springframework.web.client.HttpStatusCodeException e) {
+            System.err.println("Gemini API Error: " + e.getResponseBodyAsString());
             Map<String, String> error = new HashMap<>();
             error.put("reply", "API Error: " + e.getResponseBodyAsString());
             return error;
         } catch (Exception e) {
+            System.err.println("Chatbot Internal Error: " + e.getMessage());
+            e.printStackTrace();
             Map<String, String> error = new HashMap<>();
-            error.put("reply", "Sorry, I am having trouble connecting right now. Please try again!");
+            error.put("reply", "Sorry, I am having trouble connecting to the AI. Error: " + e.getMessage());
             return error;
         }
     }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ImageCropper from '../ImageCropper'
+import { API_BASE_URL, getAuthUrl } from '../apiConfig'
 
 function Profile({ user: userProp, onUserChange }) {
   const navigate = useNavigate()
@@ -57,8 +58,7 @@ function Profile({ user: userProp, onUserChange }) {
     setTempImage(null)
   }
 
-  const API_URL = '/api';
-
+  const API_URL = API_BASE_URL;
 
   async function handleSignup(e) {
     e.preventDefault()
@@ -66,6 +66,7 @@ function Profile({ user: userProp, onUserChange }) {
       const response = await fetch(`${API_URL}/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(formData)
       });
       const result = await response.json();
@@ -88,6 +89,7 @@ function Profile({ user: userProp, onUserChange }) {
       const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(loginData)
       });
       const result = await response.json();
@@ -104,7 +106,7 @@ function Profile({ user: userProp, onUserChange }) {
   }
 
   function loginWithGoogle() {
-    window.location.href = "/oauth2/authorization/google"
+    window.location.href = getAuthUrl('google')
   }
 
 
@@ -114,6 +116,7 @@ function Profile({ user: userProp, onUserChange }) {
       const response = await fetch(`${API_URL}/update`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(formData)
       });
       const result = await response.json();

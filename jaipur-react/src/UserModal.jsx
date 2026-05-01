@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { API_BASE_URL } from './apiConfig'
 
 function UserModal({ onClose, onUserChange }) {
 
@@ -41,10 +42,8 @@ try {
   const isUpdate = !!getUser()
 
   const url = isUpdate
-    ? "/api/update"
-    : "/api/signup"
-
-
+    ? `${API_BASE_URL}/update`
+    : `${API_BASE_URL}/signup`
 
   const method = isUpdate ? "PUT" : "POST"
 
@@ -53,6 +52,7 @@ try {
     headers: {
       "Content-Type": "application/json"
     },
+    credentials: 'include',
     body: JSON.stringify(formData)
   })
 
