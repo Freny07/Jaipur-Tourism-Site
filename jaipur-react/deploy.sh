@@ -79,7 +79,9 @@ fi
 
 
 # Restart Tomcat
-sudo /opt/tomcat/bin/shutdown.sh
+sudo fuser -k 8005/tcp || true
+sudo fuser -k 8080/tcp || true
+sleep 2
 sudo /opt/tomcat/bin/startup.sh
 
 echo "Royal Deployment Complete!"

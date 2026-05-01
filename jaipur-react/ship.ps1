@@ -28,15 +28,16 @@ Compress-Archive -Path dist\* -DestinationPath dist.zip
 
 echo "`n--- STEP 4: Uploading to AWS ($IP) ---"
 # Upload Backend
-scp -i "$PEM_FILE" backend/target/*.war "$REMOTE":/home/ubuntu/backend.war
+scp -i "$PEM_FILE" -o StrictHostKeyChecking=no backend/target/*.war "${REMOTE}:/home/ubuntu/backend.war"
 # Upload Frontend
-scp -i "$PEM_FILE" dist.zip "$REMOTE":/home/ubuntu/dist.zip
+scp -i "$PEM_FILE" -o StrictHostKeyChecking=no dist.zip "${REMOTE}:/home/ubuntu/dist.zip"
 # Upload Deployment Script
-scp -i "$PEM_FILE" deploy.sh "$REMOTE":/home/ubuntu/deploy.sh
+scp -i "$PEM_FILE" -o StrictHostKeyChecking=no deploy.sh "${REMOTE}:/home/ubuntu/deploy.sh"
 
 echo "`n--- STEP 5: Executing Remote Deployment ---"
-ssh -i "$PEM_FILE" "$REMOTE" @"
+ssh -i "$PEM_FILE" -o StrictHostKeyChecking=no "$REMOTE" @"
     chmod +x deploy.sh
+    # Pass the password to deploy.sh if it uses it, but we'll also fix things here
     ./deploy.sh
     
     # Deploy Backend
@@ -47,10 +48,12 @@ ssh -i "$PEM_FILE" "$REMOTE" @"
     sudo apt install unzip -y
     sudo unzip -o /home/ubuntu/dist.zip -d /var/www/jaipur/frontend
     
-    # Fix Database for teammates
-    sudo mysql -e "CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY 'Assignment56@';"
-    sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;"
-    sudo mysql -e "FLUSH PRIVILEGES;"
+    # Fix Database for teammates (using the password we set)
+    sudo mysql -u root -p'Assignment56@' -e "CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY 'Assignment56@';"
+    sudo mysql -u root -p'Assignment56@' -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;"
+    sudo mysql -u root -p'Assignment56@' -e "FLUSH PRIVILEGES;"
+    
+    # Ensure MySQL allows remote connections
     echo '[mysqld]' | sudo tee /etc/mysql/conf.d/allow_remote.cnf
     echo 'bind-address = 0.0.0.0' | sudo tee -a /etc/mysql/conf.d/allow_remote.cnf
     sudo systemctl restart mysql
