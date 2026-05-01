@@ -57,7 +57,8 @@ function Profile({ user: userProp, onUserChange }) {
     setTempImage(null)
   }
 
-  const API_URL = 'http://localhost:8080/api';
+  const API_URL = '/api';
+
 
   async function handleSignup(e) {
     e.preventDefault()
@@ -103,8 +104,9 @@ function Profile({ user: userProp, onUserChange }) {
   }
 
   function loginWithGoogle() {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google"
+    window.location.href = "/oauth2/authorization/google"
   }
+
 
   async function handleEditSave(e) {
     e.preventDefault()

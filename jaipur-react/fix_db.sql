@@ -1,0 +1,5 @@
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'Assignment56@';
+CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY 'Assignment56@';
+ALTER USER 'root'@'%' IDENTIFIED BY 'Assignment56@';
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;

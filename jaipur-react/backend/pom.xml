@@ -11,7 +11,9 @@
 	<groupId>com.jaipur</groupId>
 	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>jaipur-backend</name>
+
 	<description>Java Backend for Jaipur Tourism</description>
 	<properties>
 		<java.version>17</java.version>

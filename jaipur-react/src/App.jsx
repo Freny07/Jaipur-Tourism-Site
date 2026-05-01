@@ -25,7 +25,7 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/me", {
+    fetch("/api/me", {
       credentials: "include"
     })
       .then(res => res.json())

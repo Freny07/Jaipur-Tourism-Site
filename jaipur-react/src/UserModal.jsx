@@ -41,8 +41,10 @@ try {
   const isUpdate = !!getUser()
 
   const url = isUpdate
-    ? "http://localhost:8080/api/update"
-    : "http://localhost:8080/api/signup"
+    ? "/api/update"
+    : "/api/signup"
+
+
 
   const method = isUpdate ? "PUT" : "POST"
 
