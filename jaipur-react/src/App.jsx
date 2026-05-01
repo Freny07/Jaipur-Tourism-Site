@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { API_BASE_URL } from './apiConfig'
 import Navbar from './Navbar'
 import Footer from './Footer'
 import Home from './pages/Home'
@@ -25,7 +26,7 @@ function App() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/me", {
+    fetch(`${API_BASE_URL}/me`, {
       credentials: "include"
     })
       .then(res => res.json())

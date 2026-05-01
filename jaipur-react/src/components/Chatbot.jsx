@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_BASE_URL } from '../apiConfig';
 
 function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +50,7 @@ function Chatbot() {
     setIsBotTyping(true);
 
     try {
-      const response = await fetch('http://localhost:8080/api/chat', {
+      const response = await fetch(`${API_BASE_URL}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +72,7 @@ function Chatbot() {
       console.error('Chat Error:', error);
       const errorMsg = { 
         sender: 'bot', 
-        text: `Technical issue: ${error.message}. Please ensure the backend is restarted and running on port 8080.` 
+        text: `Technical issue: ${error.message}. Please ensure the backend is running and accessible.` 
       };
       setMessages((prev) => [...prev, errorMsg]);
     }

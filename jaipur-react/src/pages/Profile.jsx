@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ImageCropper from '../ImageCropper'
+import { API_BASE_URL, getAuthUrl } from '../apiConfig'
 
 function Profile({ user: userProp, onUserChange }) {
   const navigate = useNavigate()
@@ -57,7 +58,7 @@ function Profile({ user: userProp, onUserChange }) {
     setTempImage(null)
   }
 
-  const API_URL = 'http://localhost:8080/api';
+  const API_URL = API_BASE_URL;
 
   async function handleSignup(e) {
     e.preventDefault()
@@ -105,7 +106,7 @@ function Profile({ user: userProp, onUserChange }) {
   }
 
   function loginWithGoogle() {
-    window.location.href = "http://localhost:8080/oauth2/authorization/google"
+    window.location.href = getAuthUrl('google')
   }
 
   async function handleEditSave(e) {
