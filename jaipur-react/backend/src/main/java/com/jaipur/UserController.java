@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/signup")
     public Map<String, Object> signup(@RequestBody User newUser) {
 
@@ -26,6 +30,7 @@ public class UserController {
 
         newUser.setProvider("LOCAL");
         newUser.setPasswordSet(true);
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
         User savedUser = userRepository.save(newUser);
         savedUser.setPassword(null);
@@ -48,7 +53,7 @@ public class UserController {
                 return Map.of("error", "Please set password first");
             }
 
-            if (user.getPassword() != null && user.getPassword().equals(password)) {
+            if (user.getPassword() != null && passwordEncoder.matches(password, user.getPassword())) {
                 user.setPassword(null);
                 return Map.of("message", "Login successful", "user", user);
             }
@@ -100,7 +105,7 @@ public class UserController {
         if (userOpt.isPresent()) {
             User user = userOpt.get();
 
-            user.setPassword(password);
+            user.setPassword(passwordEncoder.encode(password));
             user.setPasswordSet(true);
 
             userRepository.save(user);
@@ -140,7 +145,7 @@ public class UserController {
             
             // Only update password if provided and not empty
             if (updateData.getPassword() != null && !updateData.getPassword().isEmpty()) {
-                existingUser.setPassword(updateData.getPassword());
+                existingUser.setPassword(passwordEncoder.encode(updateData.getPassword()));
                 existingUser.setPasswordSet(true);
             }
 
