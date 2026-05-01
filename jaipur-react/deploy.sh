@@ -5,12 +5,11 @@ sudo apt install openjdk-17-jdk mysql-server nginx unzip -y
 
 # Database Setup
 sudo systemctl start mysql
-sudo mysql -e "CREATE DATABASE IF NOT EXISTS jaipur_tourism;"
-sudo mysql -e "CREATE USER IF NOT EXISTS 'root'@'localhost' IDENTIFIED BY 'Assignment56@';"
-sudo mysql -e "GRANT ALL PRIVILEGES ON jaipur_tourism.* TO 'root'@'localhost';"
-sudo mysql -e "CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY 'Assignment56@';"
-sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;"
-sudo mysql -e "FLUSH PRIVILEGES;"
+# Try with password, if it fails (because not set yet), try without
+sudo mysql -u root -p'Assignment56@' -e "CREATE DATABASE IF NOT EXISTS jaipur_tourism;" 2>/dev/null || sudo mysql -e "CREATE DATABASE IF NOT EXISTS jaipur_tourism;"
+sudo mysql -u root -p'Assignment56@' -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Assignment56@';" 2>/dev/null || sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Assignment56@';"
+sudo mysql -u root -p'Assignment56@' -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;" 2>/dev/null || sudo mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;"
+sudo mysql -u root -p'Assignment56@' -e "FLUSH PRIVILEGES;" 2>/dev/null || sudo mysql -e "FLUSH PRIVILEGES;"
 
 # MySQL Remote Config
 echo "[mysqld]" | sudo tee /etc/mysql/conf.d/allow_remote.cnf
@@ -35,9 +34,33 @@ server {
     root /var/www/jaipur/frontend;
     index index.html;
     location / { try_files \$uri \$uri/ /index.html; }
-    location /api { proxy_pass http://localhost:8080/api; proxy_set_header Host \$host; }
-    location /login { proxy_pass http://localhost:8080/login; proxy_set_header Host \$host; }
-    location /oauth2 { proxy_pass http://localhost:8080/oauth2; proxy_set_header Host \$host; }
+    location /api { 
+        proxy_pass http://localhost:8080/api; 
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header X-Forwarded-Host \$host;
+        proxy_set_header X-Forwarded-Port \$server_port;
+    }
+    location /login { 
+        proxy_pass http://localhost:8080/login; 
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header X-Forwarded-Host \$host;
+        proxy_set_header X-Forwarded-Port \$server_port;
+    }
+    location /oauth2 { 
+        proxy_pass http://localhost:8080/oauth2; 
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+        proxy_set_header X-Forwarded-Host \$host;
+        proxy_set_header X-Forwarded-Port \$server_port;
+    }
 }
 EOF
 [ ! -L /etc/nginx/sites-enabled/jaipur ] && sudo ln -s /etc/nginx/sites-available/jaipur /etc/nginx/sites-enabled/
