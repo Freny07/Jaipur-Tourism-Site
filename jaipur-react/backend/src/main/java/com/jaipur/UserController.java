@@ -5,10 +5,12 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
@@ -20,6 +22,12 @@ public class UserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private PasswordResetTokenRepository tokenRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/signup")
     public Map<String, Object> signup(@RequestBody User newUser) {
@@ -156,5 +164,75 @@ public class UserController {
         }
 
         return Map.of("error", "User not found");
+    }
+
+    // ─── FORGOT PASSWORD ────────────────────────────────────────────
+
+    @Transactional
+    @PostMapping("/forgot-password")
+    public Map<String, Object> forgotPassword(@RequestBody Map<String, String> body) {
+        String email = body.get("email");
+
+        // Always return the same message to avoid user enumeration
+        if (email == null || email.isBlank()) {
+            return Map.of("message", "If this email is registered, a reset link has been sent.");
+        }
+
+        Optional<User> userOpt = userRepository.findByEmail(email);
+        if (userOpt.isPresent()) {
+            // Delete any existing token for this email first
+            tokenRepository.deleteByEmail(email);
+
+            String token = UUID.randomUUID().toString();
+            PasswordResetToken resetToken = new PasswordResetToken(token, email);
+            tokenRepository.save(resetToken);
+
+            try {
+                emailService.sendPasswordResetEmail(email, token);
+            } catch (Exception e) {
+                return Map.of("error", "Failed to send email. Please try again later.");
+            }
+        }
+
+        return Map.of("message", "If this email is registered, a reset link has been sent.");
+    }
+
+    @Transactional
+    @PostMapping("/reset-password")
+    public Map<String, Object> resetPassword(@RequestBody Map<String, String> body) {
+        String token = body.get("token");
+        String newPassword = body.get("newPassword");
+
+        if (token == null || newPassword == null || newPassword.length() < 6) {
+            return Map.of("error", "Invalid request. Password must be at least 6 characters.");
+        }
+
+        Optional<PasswordResetToken> tokenOpt = tokenRepository.findByToken(token);
+
+        if (tokenOpt.isEmpty()) {
+            return Map.of("error", "Invalid or already used reset link.");
+        }
+
+        PasswordResetToken resetToken = tokenOpt.get();
+
+        if (resetToken.isExpired()) {
+            tokenRepository.delete(resetToken);
+            return Map.of("error", "This reset link has expired. Please request a new one.");
+        }
+
+        Optional<User> userOpt = userRepository.findByEmail(resetToken.getEmail());
+        if (userOpt.isEmpty()) {
+            return Map.of("error", "User not found.");
+        }
+
+        User user = userOpt.get();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setPasswordSet(true);
+        userRepository.save(user);
+
+        // Invalidate the token after use
+        tokenRepository.delete(resetToken);
+
+        return Map.of("message", "Password reset successfully! You can now sign in.");
     }
 }

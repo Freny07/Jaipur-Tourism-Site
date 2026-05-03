@@ -11,6 +11,9 @@ function Profile({ user: userProp, onUserChange }) {
   const user = userProp || getLoggedInUser()
   
   const [authMode, setAuthMode] = useState(() => (user ? 'profile' : 'signin'))
+  const [forgotEmail, setForgotEmail] = useState('')
+  const [forgotMsg, setForgotMsg] = useState('')
+  const [forgotLoading, setForgotLoading] = useState(false)
 
   useEffect(() => {
     if (user && (authMode === 'signin' || authMode === 'signup')) {
@@ -107,6 +110,30 @@ function Profile({ user: userProp, onUserChange }) {
 
   function loginWithGoogle() {
     window.location.href = getAuthUrl('google')
+  }
+
+  async function handleForgotPassword(e) {
+    e.preventDefault()
+    setForgotLoading(true)
+    setForgotMsg('')
+    try {
+      const response = await fetch(`${API_URL}/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: forgotEmail })
+      })
+      const result = await response.json()
+      if (result.error) {
+        setForgotMsg('❌ ' + result.error)
+      } else {
+        setForgotMsg('✅ ' + result.message)
+        setForgotEmail('')
+      }
+    } catch (err) {
+      setForgotMsg('❌ Server error. Is the backend running?')
+    } finally {
+      setForgotLoading(false)
+    }
   }
 
 
@@ -239,7 +266,7 @@ function Profile({ user: userProp, onUserChange }) {
           <form onSubmit={handleEditSave} style={{ width: '100%' }}>
             <input name="name" placeholder="Full Name" required value={formData.name} onChange={handleFormChange} />
             <input name="email" type="email" placeholder="Email" required value={formData.email} onChange={handleFormChange} readOnly title="Email cannot be changed" style={{ background: '#eee' }} />
-            <input name="password" type="password" placeholder="Password (Optional)" value={formData.password} onChange={handleFormChange} />
+            <input name="password" type="password" placeholder="New Password (min 6 chars, optional)" minLength={6} value={formData.password} onChange={handleFormChange} />
             <input name="phone" type="tel" placeholder="Phone" value={formData.phone} onChange={handleFormChange} />
             <input name="age" type="number" placeholder="Age" value={formData.age} onChange={handleFormChange} />
             <input name="city" placeholder="City" required value={formData.city} onChange={handleFormChange} />
@@ -300,13 +327,55 @@ function Profile({ user: userProp, onUserChange }) {
           </h2>
         </div>
 
-        {authMode === 'signin' ? (
+        {authMode === 'forgot' ? (
+          <>
+            <h3 style={{ textAlign: 'center', color: '#A1673F', marginBottom: '8px' }}>🔑 Forgot Password</h3>
+            <p style={{ textAlign: 'center', fontSize: '13px', color: '#aaa', marginBottom: '16px' }}>
+              Enter your email and we'll send a reset link.
+            </p>
+            <form onSubmit={handleForgotPassword} style={{ width: '100%' }}>
+              <input
+                type="email"
+                placeholder="Your registered email"
+                required
+                value={forgotEmail}
+                onChange={e => setForgotEmail(e.target.value)}
+              />
+              <button type="submit" style={{ marginTop: '10px' }} disabled={forgotLoading}>
+                {forgotLoading ? 'Sending...' : 'Send Reset Link'}
+              </button>
+            </form>
+            {forgotMsg && (
+              <p style={{ marginTop: '12px', textAlign: 'center', fontSize: '13px',
+                color: forgotMsg.startsWith('✅') ? '#2ecc71' : '#e74c3c' }}>
+                {forgotMsg}
+              </p>
+            )}
+            <p style={{ textAlign: 'center', marginTop: '14px', fontSize: '13px', color: '#aaa' }}>
+              <span
+                style={{ color: '#A1673F', cursor: 'pointer' }}
+                onClick={() => { setAuthMode('signin'); setForgotMsg(''); }}
+              >
+                ← Back to Sign In
+              </span>
+            </p>
+          </>
+        ) : authMode === 'signin' ? (
           <>
             <form onSubmit={handleSignin} style={{ width: '100%' }}>
               <input name="email" type="email" placeholder="Email" required value={loginData.email} onChange={handleLoginChange} />
               <input name="password" type="password" placeholder="Password" required value={loginData.password} onChange={handleLoginChange} />
               <button type="submit" style={{ marginTop: '10px' }}>Sign In</button>
             </form>
+            <p style={{ textAlign: 'right', marginTop: '6px' }}>
+              <span
+                id="forgot-password-link"
+                style={{ fontSize: '13px', color: '#A1673F', cursor: 'pointer' }}
+                onClick={() => { setAuthMode('forgot'); setForgotMsg(''); setForgotEmail(''); }}
+              >
+                Forgot Password?
+              </span>
+            </p>
           </>
         ) : (
           <>
@@ -333,7 +402,7 @@ function Profile({ user: userProp, onUserChange }) {
             <form onSubmit={handleSignup} style={{ width: '100%' }}>
               <input name="name" placeholder="Full Name" required value={formData.name} onChange={handleFormChange} />
               <input name="email" type="email" placeholder="Email" required value={formData.email} onChange={handleFormChange} />
-              <input name="password" type="password" placeholder="Password" required value={formData.password} onChange={handleFormChange} />
+              <input name="password" type="password" placeholder="Password (min 6 chars)" required minLength={6} value={formData.password} onChange={handleFormChange} />
               <input name="phone" type="tel" placeholder="Phone" value={formData.phone} onChange={handleFormChange} />
               <input name="age" type="number" placeholder="Age" value={formData.age} onChange={handleFormChange} />
               <input name="city" placeholder="City" required value={formData.city} onChange={handleFormChange} />
@@ -360,13 +429,16 @@ function Profile({ user: userProp, onUserChange }) {
           </>
         )}
 
-        <div className="divider"><span>or</span></div>
-
-        <div className="google-auth-container" style={{ padding: '0', background: 'none', border: 'none', boxShadow: 'none' }}>
-          <button className="google-btn" onClick={() => loginWithGoogle()}>
-            {authMode === 'signin' ? 'Sign in with Google' : 'Sign up with Google'}
-          </button>
-        </div>
+        {authMode !== 'forgot' && (
+          <>
+            <div className="divider"><span>or</span></div>
+            <div className="google-auth-container" style={{ padding: '0', background: 'none', border: 'none', boxShadow: 'none' }}>
+              <button className="google-btn" onClick={() => loginWithGoogle()}>
+                {authMode === 'signin' ? 'Sign in with Google' : 'Sign up with Google'}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

@@ -9,6 +9,7 @@ import Shopping from './pages/Shopping'
 import Cuisine from './pages/Cuisine'
 import Contact from './pages/Contact'
 import Profile from './pages/Profile'
+import ResetPassword from './pages/ResetPassword'
 import Explorer from './pages/Explorer'
 import Chatbot from './components/Chatbot'
 import './App.css'
@@ -78,6 +79,7 @@ function App() {
               <Route path="/cuisine" element={<Cuisine />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/profile" element={<Profile user={user} onUserChange={handleUserChange} />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
             </Routes>
 
             <Footer />
