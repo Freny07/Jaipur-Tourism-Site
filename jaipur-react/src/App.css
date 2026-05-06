@@ -1986,13 +1986,17 @@ footer {
   background: #fff;
   font-family: monospace;
   font-size: 1.1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 .card-details-row {
   display: flex;
   gap: 15px;
+  width: 100%;
 }
 .card-details-row input {
   flex: 1;
+  min-width: 0; /* Prevents input from pushing out of flex container */
 }
 .pay-btn {
   background: #4caf50;

@@ -417,15 +417,11 @@ function Profile({ user: userProp, onUserChange }) {
             <form onSubmit={handleSignin} style={{ width: '100%' }}>
               <input name="email" type="email" placeholder="Email" required value={loginData.email} onChange={handleLoginChange} />
               <input name="password" type="password" placeholder="Password" required value={loginData.password} onChange={handleLoginChange} />
-              <div style={{ textAlign: 'right', width: '100%', marginBottom: '10px' }}>
-                <a href="#" onClick={(e) => { e.preventDefault(); setAuthMode('forgot-password') }} style={{ fontSize: '0.9rem', color: '#A1673F', textDecoration: 'none' }}>Forgot Password?</a>
-              </div>
               <button type="submit" style={{ marginTop: '10px' }}>Sign In</button>
             </form>
-            <p style={{ textAlign: 'right', marginTop: '6px' }}>
+            <p style={{ textAlign: 'right', marginTop: '10px' }}>
               <span
-                id="forgot-password-link"
-                style={{ fontSize: '13px', color: '#A1673F', cursor: 'pointer' }}
+                style={{ fontSize: '14px', color: '#A1673F', cursor: 'pointer', fontWeight: '500' }}
                 onClick={() => { setAuthMode('forgot'); setForgotMsg(''); setForgotEmail(''); }}
               >
                 Forgot Password?

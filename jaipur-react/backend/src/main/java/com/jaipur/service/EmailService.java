@@ -2,6 +2,7 @@ package com.jaipur.service;
 
 import com.jaipur.dto.BookingRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,9 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Value("${app.frontend.url:http://localhost:5173}")
+    private String frontendUrl;
 
     public void sendBookingConfirmation(BookingRequest request) {
         String startDateFormatted = request.getStartDate();
@@ -81,6 +85,25 @@ public class EmailService {
                     + "Your One-Time Password (OTP) for " + context + " is: " + otp + "\n\n"
                     + "Please enter this code to proceed. This OTP is valid for a short duration.\n\n"
                     + "If you didn't request this, please ignore this email.\n\n"
+                    + "Best Regards,\nJaipur Tourism Team";
+                    
+        message.setText(body);
+        
+        mailSender.send(message);
+    }
+
+    public void sendPasswordResetEmail(String email, String token) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Reset Your Password - Jaipur Tourism");
+        
+        String resetUrl = frontendUrl + "/reset-password?token=" + token;
+        
+        String body = "Hello,\n\n"
+                    + "You requested to reset your password. Click the link below to set a new password:\n\n"
+                    + resetUrl + "\n\n"
+                    + "This link will expire in 24 hours.\n\n"
+                    + "If you didn't request this, you can safely ignore this email.\n\n"
                     + "Best Regards,\nJaipur Tourism Team";
                     
         message.setText(body);

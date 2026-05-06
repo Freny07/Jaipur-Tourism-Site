@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Carousel from '../Carousel'
+import { API_BASE_URL } from '../apiConfig'
 
 const STORAGE_KEY = 'jaipur_users'
 
@@ -9,6 +10,20 @@ const getFutureDate = (days) => {
   d.setDate(d.getDate() + days)
   d.setHours(9, 0, 0, 0)
   return d.toISOString()
+}
+
+// Get min travel date in IST (must be after today)
+const getMinTravelDateIST = () => {
+  // Current time in UTC
+  const now = new Date();
+  // IST is UTC + 5:30
+  const istOffset = 5.5 * 60 * 60 * 1000;
+  const istTime = new Date(now.getTime() + istOffset);
+  
+  // To allow only dates AFTER today (tomorrow onwards)
+  istTime.setDate(istTime.getDate() + 1);
+  
+  return istTime.toISOString().split('T')[0];
 }
 
 const PACKAGES = [
@@ -114,7 +129,7 @@ function CountdownTimer({ targetDate }) {
 
 function Contact() {
   const [users, setUsers] = useState(loadUsers)
-  const [form, setForm] = useState({ name: '', email: '', phone: '', pkg: '' })
+  const [form, setForm] = useState({ name: '', email: '', phone: '', pkg: '', travelDate: '' })
   const [editingId, setEditingId] = useState(null)
   
   // Modal State
@@ -128,6 +143,24 @@ function Contact() {
 
   // Custom Package State
   const [customPlaces, setCustomPlaces] = useState([])
+  
+  // Payment Formatting State
+  const [cardNumber, setCardNumber] = useState('')
+  const [expiryDate, setExpiryDate] = useState('')
+
+  function handleCardNumberChange(e) {
+    let val = e.target.value.replace(/\D/g, '') // Remove non-digits
+    let formatted = val.match(/.{1,4}/g)?.join(' ') || ''
+    setCardNumber(formatted)
+  }
+
+  function handleExpiryChange(e) {
+    let val = e.target.value.replace(/\D/g, '') // Remove non-digits
+    if (val.length > 2) {
+      val = val.substring(0, 2) + '/' + val.substring(2, 4)
+    }
+    setExpiryDate(val)
+  }
   
   const totalCustomPrice = customPlaces.reduce((sum, id) => sum + PLACES.find(p => p.id === id).price, 0)
   
@@ -161,7 +194,7 @@ function Contact() {
 
   function openBookingModal(pkg) {
     setSelectedPackage(pkg)
-    setForm({ ...form, pkg: pkg.id })
+    setForm({ ...form, pkg: pkg.id, travelDate: pkg.startDate ? pkg.startDate.split('T')[0] : '' })
     setIsModalOpen(true)
     setPaymentStep(false)
     setPaymentSuccess(false)
@@ -174,14 +207,14 @@ function Contact() {
     setPaymentSuccess(false)
     setIsProcessing(false)
     if (!editingId) {
-      setForm({ name: '', email: '', phone: '', pkg: '' })
+      setForm({ name: '', email: '', phone: '', pkg: '', travelDate: '' })
     }
   }
 
   function handleDetailsSubmit(e) {
     e.preventDefault()
-    const { name, email, phone, pkg } = form
-    if (!name || !email || !phone || !pkg) { alert('Please complete all fields.'); return }
+    const { name, email, phone, pkg, travelDate } = form
+    if (!name || !email || !phone || !pkg || !travelDate) { alert('Please complete all fields.'); return }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email.'); return }
     if (!/^[0-9+\-\s()]{6,20}$/.test(phone)) { alert('Please enter a valid phone number.'); return }
     
@@ -206,11 +239,11 @@ function Contact() {
   }
 
   async function finalizeBooking() {
-    const { name, email, phone, pkg } = form
+    const { name, email, phone, pkg, travelDate } = form
     const pkgData = selectedPackage || PACKAGES.find(p => p.id === pkg)
     const packageName = pkgData ? pkgData.title : pkg
     const price = pkgData ? pkgData.price : 'Custom'
-    const startDate = pkgData ? pkgData.startDate : new Date().toISOString()
+    const startDate = travelDate ? new Date(travelDate).toISOString() : (pkgData ? pkgData.startDate : new Date().toISOString())
 
     let updated
     if (editingId) {
@@ -226,7 +259,7 @@ function Contact() {
     
     // Call backend to send email
     try {
-      await fetch('http://localhost:8080/api/send-booking-email', {
+      await fetch(`${API_BASE_URL}/send-booking-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, email, phone, packageName, startDate })
@@ -240,7 +273,7 @@ function Contact() {
   }
 
   function startEdit(u) {
-    setForm({ name: u.name, email: u.email, phone: u.phone, pkg: u.packageValue || '' })
+    setForm({ name: u.name, email: u.email, phone: u.phone, pkg: u.packageValue || '', travelDate: u.startDate ? u.startDate.split('T')[0] : '' })
     setEditingId(u.id)
     
     let pkgData = PACKAGES.find(p => p.id === u.packageValue)
@@ -282,7 +315,7 @@ function Contact() {
     
     setIsSendingOtp(true)
     try {
-      const res = await fetch('http://localhost:8080/api/send-cancellation-otp', {
+      const res = await fetch(`${API_BASE_URL}/send-cancellation-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: u.email, packageName: u.packageName })
@@ -307,7 +340,7 @@ function Contact() {
     }
 
     try {
-      const otpRes = await fetch('http://localhost:8080/api/verify-cancellation-otp', {
+      const otpRes = await fetch(`${API_BASE_URL}/verify-cancellation-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: u.email, otp: cancelOtp })
@@ -324,7 +357,7 @@ function Contact() {
 
     // Call backend to send cancellation email
     try {
-      await fetch('http://localhost:8080/api/send-cancellation-email', {
+      await fetch(`${API_BASE_URL}/send-cancellation-email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: u.name, email: u.email, phone: u.phone, packageName: u.packageName, startDate: u.startDate })
@@ -528,14 +561,60 @@ function Contact() {
               </div>
             ) : paymentStep ? (
               <form onSubmit={handlePaymentSubmit} className="payment-gateway-container">
+                {/* Hidden dummy fields to trick aggressive browser autofill */}
+                <input type="text" name="prevent_autofill_user" style={{ display: 'none' }} tabIndex="-1" aria-hidden="true" />
+                <input type="password" name="prevent_autofill_pass" style={{ display: 'none' }} tabIndex="-1" aria-hidden="true" />
+
                 <p style={{ fontSize: '0.9rem', color: '#665', textAlign: 'center', marginBottom: '10px' }}><i className="fa-solid fa-lock"></i> Mock Payment Gateway (Do not enter real card details)</p>
                 
-                <input type="text" placeholder="Cardholder Name" required defaultValue={form.name} />
-                <input type="text" placeholder="Card Number" maxLength="19" required pattern="\d{4}\s?\d{4}\s?\d{4}\s?\d{4}" title="16 digit card number" />
+                <input 
+                  id="real-card-name-field"
+                  name="user_specified_card_name" 
+                  type="text" 
+                  placeholder="Cardholder Name" 
+                  required 
+                  autoComplete="new-password" 
+                />
+                <input 
+                  id="real-card-num-field"
+                  name="user_specified_card_number"
+                  type="text" 
+                  placeholder="Card Number" 
+                  maxLength="19" 
+                  required 
+                  value={cardNumber}
+                  onChange={handleCardNumberChange}
+                  pattern="\d{4}\s\d{4}\s\d{4}\s\d{4}" 
+                  title="16 digit card number (4 groups of 4)" 
+                  autoComplete="new-password"
+                />
                 
                 <div className="card-details-row">
-                  <input type="text" placeholder="MM/YY" maxLength="5" required pattern="(0[1-9]|1[0-2])\/[0-9]{2}" title="Expiry in MM/YY format" />
-                  <input type="password" placeholder="CVV" maxLength="3" required pattern="\d{3}" title="3 digit CVV" />
+                  <input 
+                    id="real-card-expiry-field"
+                    name="user_specified_card_expiry"
+                    type="text" 
+                    placeholder="MM/YY" 
+                    maxLength="5" 
+                    required 
+                    value={expiryDate}
+                    onChange={handleExpiryChange}
+                    pattern="(0[1-9]|1[0-2])\/[0-9]{2}" 
+                    title="Expiry in MM/YY format" 
+                    autoComplete="new-password"
+                  />
+                  <input 
+                    id="real-card-cvv-field"
+                    name="user_specified_card_cvv"
+                    type="tel" 
+                    placeholder="CVV" 
+                    maxLength="3" 
+                    required 
+                    pattern="\d{3}" 
+                    title="3 digit CVV" 
+                    autoComplete="new-password"
+                    style={{ WebkitTextSecurity: 'disc' }} 
+                  />
                 </div>
                 
                 <button type="submit" className="pay-btn" disabled={isProcessing}>
@@ -549,6 +628,11 @@ function Contact() {
                 <input name="email" type="email" placeholder="Email Address" required value={form.email} onChange={handleChange} />
                 <input name="phone" type="tel" placeholder="Phone Number" required value={form.phone} onChange={handleChange} />
                 
+                <div style={{ marginBottom: '10px' }}>
+                  <label style={{ display: 'block', fontSize: '0.8rem', color: '#665', marginBottom: '5px', textAlign: 'left' }}>Travel Date</label>
+                  <input name="travelDate" type="date" required value={form.travelDate} onChange={handleChange} min={getMinTravelDateIST()} />
+                </div>
+
                 <select name="pkg" required value={form.pkg} onChange={handleChange} disabled={!!selectedPackage && !editingId} style={{ backgroundColor: selectedPackage && !editingId ? '#f0f0f0' : '#FFF6EF' }}>
                   <option value="">-- Select a Package --</option>
                   {PACKAGES.map(p => (

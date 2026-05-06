@@ -29,20 +29,8 @@ public class UserController {
     @Autowired
     private EmailService emailService;
     
-    // Temporary storage for Forgot Password OTPs. Key: Email, Value: OTP
-    private ConcurrentHashMap<String, String> forgotPasswordOtpStore = new ConcurrentHashMap<>();
-
-    private String generateOtp() {
-        Random random = new Random();
-        int otp = 100000 + random.nextInt(900000);
-        return String.valueOf(otp);
-    }
-
     @Autowired
     private PasswordResetTokenRepository tokenRepository;
-
-    @Autowired
-    private EmailService emailService;
 
     @PostMapping("/signup")
     public Map<String, Object> signup(@RequestBody User newUser) {
@@ -145,55 +133,6 @@ public class UserController {
         return Map.of("error", "User not found");
     }
 
-    @PostMapping("/forgot-password")
-    public Map<String, Object> forgotPassword(@RequestBody Map<String, String> data) {
-        String email = data.get("email");
-        if (email == null || email.isEmpty()) return Map.of("error", "Email is required");
-
-        Optional<User> userOpt = userRepository.findByEmail(email);
-        if (userOpt.isEmpty()) {
-            return Map.of("error", "No account found with this email");
-        }
-        
-        String otp = generateOtp();
-        forgotPasswordOtpStore.put(email, otp);
-        
-        try {
-            emailService.sendOtpEmail(email, otp, "Password Reset");
-            return Map.of("message", "OTP sent to your email");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Map.of("error", "Failed to send OTP email");
-        }
-    }
-
-    @PostMapping("/reset-password")
-    public Map<String, Object> resetPassword(@RequestBody Map<String, String> data) {
-        String email = data.get("email");
-        String otp = data.get("otp");
-        String newPassword = data.get("newPassword");
-        
-        if (email == null || otp == null || newPassword == null) {
-            return Map.of("error", "All fields are required");
-        }
-        
-        String storedOtp = forgotPasswordOtpStore.get(email);
-        if (storedOtp != null && storedOtp.equals(otp)) {
-            Optional<User> userOpt = userRepository.findByEmail(email);
-            if (userOpt.isPresent()) {
-                User user = userOpt.get();
-                user.setPassword(passwordEncoder.encode(newPassword));
-                user.setPasswordSet(true);
-                userRepository.save(user);
-                
-                forgotPasswordOtpStore.remove(email);
-                return Map.of("message", "Password reset successfully");
-            }
-        }
-        
-        return Map.of("error", "Invalid or expired OTP");
-    }
-
     @GetMapping("/users")
     public List<User> getUsers() {
         List<User> users = userRepository.findAll();
@@ -236,7 +175,7 @@ public class UserController {
         return Map.of("error", "User not found");
     }
 
-    // ─── FORGOT PASSWORD ────────────────────────────────────────────
+    // ─── FORGOT PASSWORD (Token-based) ─────────────────────────────
 
     @Transactional
     @PostMapping("/forgot-password")
@@ -260,6 +199,7 @@ public class UserController {
             try {
                 emailService.sendPasswordResetEmail(email, token);
             } catch (Exception e) {
+                e.printStackTrace();
                 return Map.of("error", "Failed to send email. Please try again later.");
             }
         }
