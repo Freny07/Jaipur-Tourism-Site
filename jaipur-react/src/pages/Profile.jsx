@@ -24,6 +24,58 @@ function Profile({ user: userProp, onUserChange }) {
   
   const [loginData, setLoginData] = useState({ email: '', password: '' })
 
+  const [resetStep, setResetStep] = useState(1)
+  const [resetEmail, setResetEmail] = useState('')
+  const [resetOtp, setResetOtp] = useState('')
+  const [resetNewPassword, setResetNewPassword] = useState('')
+  const [isSendingReset, setIsSendingReset] = useState(false)
+
+  async function handleSendResetOtp(e) {
+    e.preventDefault()
+    setIsSendingReset(true)
+    try {
+      const res = await fetch(`${API_URL}/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: resetEmail })
+      })
+      const data = await res.json()
+      if (data.error) {
+        alert(data.error)
+      } else {
+        setResetStep(2)
+      }
+    } catch (err) {
+      alert("Failed to connect to server.")
+    } finally {
+      setIsSendingReset(false)
+    }
+  }
+
+  async function handleResetPassword(e) {
+    e.preventDefault()
+    try {
+      const res = await fetch(`${API_URL}/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: resetEmail, otp: resetOtp, newPassword: resetNewPassword })
+      })
+      const data = await res.json()
+      if (data.error) {
+        alert(data.error)
+      } else {
+        alert("Password reset successfully! You can now log in.")
+        setAuthMode('signin')
+        setResetStep(1)
+        setResetEmail('')
+        setResetOtp('')
+        setResetNewPassword('')
+      }
+    } catch (err) {
+      alert("Failed to connect to server.")
+    }
+  }
+
   function handleFormChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
@@ -305,8 +357,33 @@ function Profile({ user: userProp, onUserChange }) {
             <form onSubmit={handleSignin} style={{ width: '100%' }}>
               <input name="email" type="email" placeholder="Email" required value={loginData.email} onChange={handleLoginChange} />
               <input name="password" type="password" placeholder="Password" required value={loginData.password} onChange={handleLoginChange} />
+              <div style={{ textAlign: 'right', width: '100%', marginBottom: '10px' }}>
+                <a href="#" onClick={(e) => { e.preventDefault(); setAuthMode('forgot-password') }} style={{ fontSize: '0.9rem', color: '#A1673F', textDecoration: 'none' }}>Forgot Password?</a>
+              </div>
               <button type="submit" style={{ marginTop: '10px' }}>Sign In</button>
             </form>
+          </>
+        ) : authMode === 'forgot-password' ? (
+          <>
+            <h3 style={{ textAlign: 'center', marginBottom: '20px', color: '#3C2A21' }}>Reset Password</h3>
+            {resetStep === 1 ? (
+              <form onSubmit={handleSendResetOtp} style={{ width: '100%' }}>
+                <p style={{ textAlign: 'center', marginBottom: '15px', color: '#665' }}>Enter your email to receive an OTP to reset your password.</p>
+                <input name="email" type="email" placeholder="Email Address" required value={resetEmail} onChange={(e) => setResetEmail(e.target.value)} />
+                <button type="submit" disabled={isSendingReset} style={{ marginTop: '10px' }}>
+                  {isSendingReset ? 'Sending...' : 'Send OTP'}
+                </button>
+                <button type="button" onClick={() => setAuthMode('signin')} style={{ background: '#f0f0f0', color: '#333', marginTop: '10px' }}>Back to Log In</button>
+              </form>
+            ) : (
+              <form onSubmit={handleResetPassword} style={{ width: '100%' }}>
+                <p style={{ textAlign: 'center', marginBottom: '15px', color: '#665' }}>Enter the OTP sent to <b>{resetEmail}</b></p>
+                <input name="otp" type="text" placeholder="6-digit OTP" required value={resetOtp} onChange={(e) => setResetOtp(e.target.value)} style={{ textAlign: 'center', letterSpacing: '2px', fontSize: '1.2rem', padding: '10px', borderRadius: '5px', border: '1px solid #ccc', marginBottom: '10px', width: '100%', boxSizing: 'border-box' }} />
+                <input name="newPassword" type="password" placeholder="New Password" required value={resetNewPassword} onChange={(e) => setResetNewPassword(e.target.value)} />
+                <button type="submit" style={{ marginTop: '10px' }}>Reset Password</button>
+                <button type="button" onClick={() => { setAuthMode('signin'); setResetStep(1); }} style={{ background: '#f0f0f0', color: '#333', marginTop: '10px' }}>Cancel</button>
+              </form>
+            )}
           </>
         ) : (
           <>

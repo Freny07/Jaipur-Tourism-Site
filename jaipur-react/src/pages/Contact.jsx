@@ -1,12 +1,35 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Carousel from '../Carousel'
 
 const STORAGE_KEY = 'jaipur_users'
-const PACKAGES = {
-  1: { title: 'Jaipur One-Day Tour', details: 'Amber Fort, Hawa Mahal, City Palace, Jantar Mantar, Shopping at Bapu Bazaar.' },
-  2: { title: '2 Days Heritage Tour', details: 'Day 1: Amber Fort, Jaigarh Fort, Nahargarh Fort.\nDay 2: City Palace, Albert Hall Museum, Birla Mandir, Chokhi Dhani.' },
-  3: { title: '3 Days Jaipur–Ajmer–Pushkar Tour', details: 'Day 1: Jaipur sightseeing.\nDay 2: Ajmer Sharif Dargah.\nDay 3: Pushkar Lake & Brahma Temple.' },
+
+// Calculate future dates for package starts
+const getFutureDate = (days) => {
+  const d = new Date()
+  d.setDate(d.getDate() + days)
+  d.setHours(9, 0, 0, 0)
+  return d.toISOString()
 }
+
+const PACKAGES = [
+  { id: '1', title: 'Amber Fort Heritage Tour', duration: 'Full Day', price: '₹1,500', details: 'Explore the majestic Amber Fort, including a guided tour of the Diwan-e-Aam, Sheesh Mahal, and the royal courtyards. Enjoy a magnificent sunset view.', image: '/packages/amber_fort.png', startDate: getFutureDate(7) },
+  { id: '2', title: 'Royal Palace Tour', duration: 'Half Day', price: '₹1,200', details: 'A deep dive into the City Palace of Jaipur showcasing its intricate royal architecture, vibrant pink and peach colors, and elegant courtyards.', image: '/packages/city_palace.png', startDate: getFutureDate(14) },
+  { id: '3', title: 'Cultural Night Safari', duration: 'Evening', price: '₹2,000', details: 'Experience Nahargarh fort at night overlooking the glittering city of Jaipur. Includes dinner under the starry sky and a magical atmosphere.', image: '/packages/night_safari.png', startDate: getFutureDate(3) },
+  { id: '4', title: 'Spiritual Pushkar Journey', duration: 'Full Day', price: '₹2,500', details: 'A spiritual trip to the holy Pushkar lake surrounded by traditional temples and ghats. Includes a visit to the famous Brahma Temple.', image: '/packages/pushkar.png', startDate: getFutureDate(21) },
+  { id: '5', title: 'Rajasthani Culinary Walk', duration: '3 Hours', price: '₹1,800', details: 'A vibrant and rich traditional Rajasthani food tour. Taste various local curries, breads, and sweets in authentic settings.', image: '/packages/food.png', startDate: getFutureDate(5) },
+  { id: '6', title: 'Pink City Shopping Spree', duration: 'Half Day', price: '₹1,000', details: 'A guided shopping tour through the vibrant bustling markets of Jaipur. Buy traditional textiles, umbrellas, and exquisite handicrafts.', image: '/packages/shopping.png', startDate: getFutureDate(10) }
+]
+
+const PLACES = [
+  { id: 'p1', name: 'Amber Fort', price: 500, image: '/packages/amber_fort.png' },
+  { id: 'p2', name: 'City Palace', price: 400, image: '/packages/city_palace.png' },
+  { id: 'p3', name: 'Nahargarh Fort', price: 600, image: '/packages/night_safari.png' },
+  { id: 'p4', name: 'Jal Mahal', price: 300, image: '/packages/jal_mahal.png' },
+  { id: 'p5', name: 'Hawa Mahal', price: 200, image: '/packages/hawa_mahal.png' },
+  { id: 'p6', name: 'Jantar Mantar', price: 200, image: '/packages/jantar_mantar.png' },
+  { id: 'p7', name: 'Albert Hall Museum', price: 300, image: '/packages/albert_hall.png' },
+  { id: 'p8', name: 'Chokhi Dhani (Dinner)', price: 1000, image: '/packages/food.png' },
+]
 
 const socials = [
   {
@@ -60,93 +83,402 @@ function saveUsers(users) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(users))
 }
 
+function CountdownTimer({ targetDate }) {
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft())
+
+  function calculateTimeLeft() {
+    const difference = new Date(targetDate) - new Date()
+    if (difference <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+    return {
+      days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((difference / 1000 / 60) % 60),
+      seconds: Math.floor((difference / 1000) % 60)
+    }
+  }
+
+  useEffect(() => {
+    const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000)
+    return () => clearInterval(timer)
+  }, [targetDate])
+
+  return (
+    <div className="countdown-box">
+      <div className="countdown-item"><span>{timeLeft.days}</span><small>Days</small></div>
+      <div className="countdown-item"><span>{timeLeft.hours}</span><small>Hours</small></div>
+      <div className="countdown-item"><span>{timeLeft.minutes}</span><small>Mins</small></div>
+      <div className="countdown-item"><span>{timeLeft.seconds}</span><small>Secs</small></div>
+    </div>
+  )
+}
+
 function Contact() {
   const [users, setUsers] = useState(loadUsers)
   const [form, setForm] = useState({ name: '', email: '', phone: '', pkg: '' })
   const [editingId, setEditingId] = useState(null)
-  const [popup, setPopup] = useState(null)
+  
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedPackage, setSelectedPackage] = useState(null)
+  
+  // Payment Gateway State
+  const [paymentStep, setPaymentStep] = useState(false)
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [paymentSuccess, setPaymentSuccess] = useState(false)
+
+  // Custom Package State
+  const [customPlaces, setCustomPlaces] = useState([])
+  
+  const totalCustomPrice = customPlaces.reduce((sum, id) => sum + PLACES.find(p => p.id === id).price, 0)
+  
+  function toggleCustomPlace(id) {
+    if (customPlaces.includes(id)) {
+      setCustomPlaces(customPlaces.filter(p => p !== id))
+    } else {
+      setCustomPlaces([...customPlaces, id])
+    }
+  }
+
+  function openCustomBookingModal() {
+    if (customPlaces.length === 0) {
+      alert("Please select at least one place for your custom package.")
+      return
+    }
+    const customPkg = {
+      id: 'custom-' + Date.now(),
+      title: 'Custom Jaipur Package',
+      price: `₹${totalCustomPrice}`,
+      details: `Visiting: ${customPlaces.map(id => PLACES.find(p => p.id === id).name).join(', ')}`,
+      startDate: getFutureDate(5),
+      isCustom: true
+    }
+    openBookingModal(customPkg)
+  }
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  function handleSubmit(e) {
+  function openBookingModal(pkg) {
+    setSelectedPackage(pkg)
+    setForm({ ...form, pkg: pkg.id })
+    setIsModalOpen(true)
+    setPaymentStep(false)
+    setPaymentSuccess(false)
+  }
+
+  function closeBookingModal() {
+    setIsModalOpen(false)
+    setSelectedPackage(null)
+    setPaymentStep(false)
+    setPaymentSuccess(false)
+    setIsProcessing(false)
+    if (!editingId) {
+      setForm({ name: '', email: '', phone: '', pkg: '' })
+    }
+  }
+
+  function handleDetailsSubmit(e) {
     e.preventDefault()
     const { name, email, phone, pkg } = form
     if (!name || !email || !phone || !pkg) { alert('Please complete all fields.'); return }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email.'); return }
     if (!/^[0-9+\-\s()]{6,20}$/.test(phone)) { alert('Please enter a valid phone number.'); return }
+    
+    // Proceed to payment gateway
+    setPaymentStep(true)
+  }
 
-    const packageName = PACKAGES[pkg]?.title || pkg
+  function handlePaymentSubmit(e) {
+    e.preventDefault()
+    setIsProcessing(true)
+    
+    // Simulate payment processing delay (2 seconds)
+    setTimeout(() => {
+      setIsProcessing(false)
+      setPaymentSuccess(true)
+      
+      // Simulate Email sending delay (1 second)
+      setTimeout(() => {
+        finalizeBooking()
+      }, 1500)
+    }, 2000)
+  }
+
+  async function finalizeBooking() {
+    const { name, email, phone, pkg } = form
+    const pkgData = selectedPackage || PACKAGES.find(p => p.id === pkg)
+    const packageName = pkgData ? pkgData.title : pkg
+    const price = pkgData ? pkgData.price : 'Custom'
+    const startDate = pkgData ? pkgData.startDate : new Date().toISOString()
 
     let updated
     if (editingId) {
-      updated = users.map(u => u.id === editingId ? { ...u, name, email, phone, packageValue: pkg, packageName } : u)
+      updated = users.map(u => u.id === editingId ? { ...u, name, email, phone, packageValue: pkg, packageName, price, startDate } : u)
       setEditingId(null)
     } else {
       const id = String(Date.now()) + Math.floor(Math.random() * 999)
-      updated = [{ id, name, email, phone, packageValue: pkg, packageName }, ...users]
-      alert(`Thank you, ${name}! You have successfully registered for ${packageName}. Confirmation will be sent to ${email}.`)
+      updated = [{ id, name, email, phone, packageValue: pkg, packageName, price, startDate, bookingDate: new Date().toISOString() }, ...users]
     }
 
     saveUsers(updated)
     setUsers(updated)
-    setForm({ name: '', email: '', phone: '', pkg: '' })
+    
+    // Call backend to send email
+    try {
+      await fetch('http://localhost:8080/api/send-booking-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, packageName, startDate })
+      });
+      alert(`Payment Successful! A real confirmation email has been sent to ${email} (check spam just in case!).`)
+    } catch (err) {
+      console.error(err)
+      alert(`Payment Successful! However, we couldn't send the email right now.`)
+    }
+    closeBookingModal()
   }
 
   function startEdit(u) {
     setForm({ name: u.name, email: u.email, phone: u.phone, pkg: u.packageValue || '' })
     setEditingId(u.id)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    
+    let pkgData = PACKAGES.find(p => p.id === u.packageValue)
+    if (!pkgData && u.packageValue.startsWith('custom-')) {
+       pkgData = {
+         id: u.packageValue,
+         title: u.packageName,
+         price: u.price || 'Custom Price',
+         startDate: u.startDate,
+         isCustom: true
+       }
+    }
+    
+    setSelectedPackage(pkgData)
+    setIsModalOpen(true)
+    setPaymentStep(false) // editing skips payment for demo, or you could force payment again.
   }
 
-  function deleteUser(id) {
-    if (!confirm('Delete this registration?')) return
-    const updated = users.filter(u => u.id !== id)
+  const [cancelBookingId, setCancelBookingId] = useState(null)
+  const [cancelStep, setCancelStep] = useState(1)
+  const [cancelOtp, setCancelOtp] = useState('')
+  const [isSendingOtp, setIsSendingOtp] = useState(false)
+
+  function startCancel(u) {
+    setCancelBookingId(u.id)
+    setCancelStep(1)
+    setCancelOtp('')
+  }
+
+  function closeCancelModal() {
+    setCancelBookingId(null)
+    setCancelStep(1)
+    setCancelOtp('')
+  }
+
+  async function handleSendCancelOtp() {
+    const u = users.find(user => user.id === cancelBookingId)
+    if (!u) return;
+    
+    setIsSendingOtp(true)
+    try {
+      const res = await fetch('http://localhost:8080/api/send-cancellation-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: u.email, packageName: u.packageName })
+      });
+      if (res.ok) {
+        setCancelStep(2)
+      } else {
+        alert("Failed to send OTP.")
+      }
+    } catch (err) {
+      alert("Failed to connect to server.")
+    } finally {
+      setIsSendingOtp(false)
+    }
+  }
+
+  async function handleCancelConfirm() {
+    const u = users.find(user => user.id === cancelBookingId)
+    if (!u) {
+      closeCancelModal()
+      return
+    }
+
+    try {
+      const otpRes = await fetch('http://localhost:8080/api/verify-cancellation-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: u.email, otp: cancelOtp })
+      });
+      
+      if (!otpRes.ok) {
+        alert("Invalid or expired OTP.")
+        return
+      }
+    } catch (err) {
+       alert("Error verifying OTP.")
+       return
+    }
+
+    // Call backend to send cancellation email
+    try {
+      await fetch('http://localhost:8080/api/send-cancellation-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: u.name, email: u.email, phone: u.phone, packageName: u.packageName, startDate: u.startDate })
+      });
+      alert(`Trip Canceled. A cancellation confirmation email has been sent to ${u.email}.`)
+    } catch (err) {
+      console.error(err)
+      alert(`Trip Canceled. However, we couldn't send the cancellation email right now.`)
+    }
+
+    const updated = users.filter(user => user.id !== cancelBookingId)
     saveUsers(updated)
     setUsers(updated)
-    if (editingId === id) { setEditingId(null); setForm({ name: '', email: '', phone: '', pkg: '' }) }
-  }
-
-  function showPackage() {
-    if (!form.pkg) { alert('Please select a package first!'); return }
-    setPopup(PACKAGES[form.pkg])
+    closeCancelModal()
   }
 
   return (
     <>
       <Carousel 
-        title="Contact &amp; Book Your Jaipur Tour" 
-        subtitle="Send us your details to register for a tourism package" 
+        title="Discover Royal Jaipur" 
+        subtitle="Choose from our exclusive, hand-picked tourism packages" 
       />
 
       <div className="container">
-        <div className="section-title">Get in Touch</div>
-        <div
-          className="cards-row"
-          style={{
-            backgroundColor: '#ffd4b7',
-            borderRadius: '20px',
-            padding: '20px 25px',
-            color: 'black',
-            marginBottom: '20px',
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: '20px'
-          }}
-        >
-          <div style={{ flex: '1 1 300px' }}>
-            <p style={{ margin: '0 0 8px 0' }}><b>Address:</b> Jaipur Tourism Office, Pink City, Jaipur, Rajasthan</p>
-            <p style={{ margin: '0 0 8px 0' }}><b>Email:</b> info@jaipurtourism.com</p>
-            <p style={{ margin: '0 0 8px 0' }}><b>Phone:</b> +91-12345-67890</p>
-            <p style={{ margin: '0' }}><b>Timings:</b> 9:00 AM – 7:00 PM (All days)</p>
+        
+        {/* Upcoming Trips (Countdown Timer Section) */}
+        {users.length > 0 && (
+          <div className="upcoming-trips-section">
+            <h2 style={{ textAlign: 'left', color: '#A1673F', marginBottom: '20px' }}>
+              <i className="fa-solid fa-plane-departure"></i> Your Upcoming Trips
+            </h2>
+            {users.map(u => {
+              let pkgData = PACKAGES.find(p => p.id === u.packageValue)
+              if (!pkgData && u.packageValue.startsWith('custom-')) {
+                 pkgData = {
+                   id: u.packageValue,
+                   title: u.packageName,
+                   price: u.price || 'Custom Price',
+                   startDate: u.startDate,
+                   isCustom: true
+                 }
+              }
+              if (!pkgData) return null;
+              
+              return (
+                <div className="trip-card" key={u.id}>
+                  <div className="trip-info">
+                    <h4>{u.packageName}</h4>
+                    <p><i className="fa-regular fa-calendar"></i> Starts on: {new Date(pkgData.startDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
+                    <p style={{fontSize: '0.9em', color: '#888'}}>Booked under: {u.name} ({u.email})</p>
+                  </div>
+                  <div>
+                    <p style={{ margin: '0 0 5px 0', fontSize: '0.9rem', fontWeight: 'bold', color: '#A1673F' }}>Starts in:</p>
+                    <CountdownTimer targetDate={pkgData.startDate} />
+                    <button onClick={() => startCancel(u)} style={{ marginTop: '10px', width: '100%', padding: '8px', background: '#ff4d4d', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>Cancel Trip</button>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
+
+        <div className="section-title" style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '10px' }}>Our Exclusive Packages</div>
+        <p style={{ textAlign: 'center', color: '#665', fontSize: '1.1rem', marginBottom: '40px' }}>Experience the rich culture, heritage, and flavors of the Pink City.</p>
+        
+        {/* Packages Grid */}
+        <div className="packages-grid">
+          {PACKAGES.map((pkg) => (
+            <div className="package-card" key={pkg.id}>
+              <div className="package-img-wrapper">
+                <img src={pkg.image} alt={pkg.title} />
+                <div className="package-badge"><i className="fa-regular fa-clock"></i> {pkg.duration}</div>
+              </div>
+              <div className="package-content">
+                <div className="package-title">{pkg.title}</div>
+                <div className="package-desc">{pkg.details}</div>
+                <div className="package-footer">
+                  <div className="package-price">{pkg.price} <span>/ person</span></div>
+                  <button className="book-now-btn" onClick={() => openBookingModal(pkg)}>Book Now</button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="section-title" style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '10px', marginTop: '40px' }}>Build Your Custom Package</div>
+        <p style={{ textAlign: 'center', color: '#665', fontSize: '1.1rem', marginBottom: '30px' }}>Select the places you want to visit and we will calculate your customized package cost.</p>
+        
+        <div className="custom-builder-card" style={{ background: 'white', padding: '30px', borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)', marginBottom: '40px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px', marginBottom: '30px' }}>
+            {PLACES.map(place => (
+              <div 
+                key={place.id} 
+                onClick={() => toggleCustomPlace(place.id)}
+                style={{ 
+                  borderRadius: '15px', 
+                  overflow: 'hidden', 
+                  boxShadow: customPlaces.includes(place.id) ? '0 0 0 4px #A1673F' : '0 5px 15px rgba(0,0,0,0.1)', 
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  transform: customPlaces.includes(place.id) ? 'scale(1.02)' : 'scale(1)'
+                }}
+              >
+                <img src={place.image} alt={place.name} style={{ width: '100%', height: '180px', objectFit: 'cover', display: 'block' }} />
+                <div style={{ position: 'absolute', top: '10px', right: '10px', background: 'white', borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 5px rgba(0,0,0,0.2)' }}>
+                   {customPlaces.includes(place.id) ? <i className="fa-solid fa-check" style={{ color: '#A1673F', fontWeight: 'bold' }}></i> : <div style={{width:'15px', height:'15px', borderRadius:'50%', border:'2px solid #ccc'}}></div>}
+                </div>
+                <div style={{ padding: '15px', background: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontWeight: '600', color: '#3C2A21', fontSize: '1.1rem' }}>{place.name}</span>
+                  <span style={{ color: '#A1673F', fontWeight: 'bold', fontSize: '1.1rem' }}>₹{place.price}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px dashed #eee', paddingTop: '20px', flexWrap: 'wrap', gap: '20px' }}>
+            <div style={{ fontSize: '1.2rem', color: '#333' }}>Total Estimated Cost: <span style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#A1673F' }}>₹{totalCustomPrice}</span> <span style={{ fontSize: '0.9rem', color: '#888' }}>/ person</span></div>
+            <button className="book-now-btn" onClick={openCustomBookingModal} style={{ padding: '12px 30px', fontSize: '1.1rem' }}>Book Custom Package</button>
+          </div>
+        </div>
+
+        {/* Contact Info Glass Card */}
+        <div className="contact-glass-card">
+          <div style={{ flex: '1 1 350px' }}>
+            <h2 style={{ color: '#A1673F', fontSize: '2rem', marginBottom: '25px', fontFamily: '"Playfair Display", serif' }}>Get in Touch</h2>
+            
+            <div className="contact-info-item">
+              <div className="contact-icon-circle"><i className="fa-solid fa-location-dot"></i></div>
+              <div className="contact-info-text">
+                <h4>Our Office</h4>
+                <p>Jaipur Tourism Center, Pink City, Jaipur, Rajasthan</p>
+              </div>
+            </div>
+
+            <div className="contact-info-item">
+              <div className="contact-icon-circle"><i className="fa-solid fa-envelope"></i></div>
+              <div className="contact-info-text">
+                <h4>Email Us</h4>
+                <p>info@jaipurtourism.com</p>
+              </div>
+            </div>
+
+            <div className="contact-info-item">
+              <div className="contact-icon-circle"><i className="fa-solid fa-phone"></i></div>
+              <div className="contact-info-text">
+                <h4>Call Us</h4>
+                <p>+91-12345-67890 (9:00 AM - 7:00 PM)</p>
+              </div>
+            </div>
           </div>
 
-          <div style={{ flex: '0 0 auto', textAlign: 'center' }}>
-            <p style={{ fontWeight: '700', marginBottom: '12px', color: '#A1673F' }}>Connect with us</p>
-            <div style={{ display: 'flex', gap: '15px' }}>
+          <div style={{ flex: '0 0 auto', textAlign: 'center', background: 'rgba(255,255,255,0.8)', padding: '30px', borderRadius: '20px', boxShadow: '0 5px 15px rgba(0,0,0,0.05)' }}>
+            <h3 style={{ fontWeight: '700', marginBottom: '20px', color: '#A1673F' }}>Follow Our Journey</h3>
+            <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
               {socials.map((s) => (
                 <a
                   key={s.name}
@@ -155,7 +487,7 @@ function Contact() {
                   rel="noopener noreferrer"
                   title={s.label}
                   className={`footer-social-btn footer-social-${s.name.toLowerCase()}`}
-                  style={{ '--glow': s.glow, '--grad': s.gradient }}
+                  style={{ '--glow': s.glow, '--grad': s.gradient, width: '55px', height: '55px' }}
                 >
                   <span className="footer-social-icon">{s.icon}</span>
                   <span className="footer-social-ring" />
@@ -165,68 +497,107 @@ function Contact() {
           </div>
         </div>
 
-        <div id="packages" className="form-section">
-          <h2>Register for a Tourism Package</h2>
-          <form onSubmit={handleSubmit}>
-            <input name="name" type="text" placeholder="Full Name" required value={form.name} onChange={handleChange} />
-            <input name="email" type="email" placeholder="Email Address" required value={form.email} onChange={handleChange} />
-            <input name="phone" type="tel" placeholder="Phone Number" required value={form.phone} onChange={handleChange} />
-            <select name="pkg" required value={form.pkg} onChange={handleChange}>
-              <option value="">-- Select a Package --</option>
-              <option value="1">Package 1: Jaipur One-Day Tour</option>
-              <option value="2">Package 2: 2 Days Heritage Tour</option>
-              <option value="3">Package 3: 3 Days Jaipur–Ajmer–Pushkar Tour</option>
-            </select>
-            <button type="button" onClick={showPackage}>View Package Details</button>
-            <button type="submit">{editingId ? 'Update' : 'Register'}</button>
-          </form>
-        </div>
+      </div>
 
-        <div className="form-section" style={{ marginTop: '10px' }}>
-          <h2>Registered Users</h2>
-          <div style={{ overflowX: 'auto' }}>
-            {users.length === 0 ? (
-              <p style={{ color: '#b37400' }}>No registrations yet.</p>
+      {/* Booking & Payment Modal */}
+      {isModalOpen && (
+        <div className="booking-modal-overlay">
+          <div className="booking-modal">
+            <div className="booking-modal-header">
+              <h3>
+                {paymentSuccess ? 'Booking Confirmed!' : 
+                 paymentStep ? 'Secure Payment' : 
+                 editingId ? 'Update Booking' : 'Complete Your Booking'}
+              </h3>
+              <i className="fa-solid fa-xmark modal-close-icon" onClick={closeBookingModal}></i>
+            </div>
+            
+            {selectedPackage && !paymentSuccess && (
+              <div className="selected-package-info">
+                <p><strong>Selected:</strong> {selectedPackage.title}</p>
+                <p><strong>Price:</strong> {selectedPackage.price} / person</p>
+                <p><strong>Date:</strong> {new Date(selectedPackage.startDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' })}</p>
+              </div>
+            )}
+
+            {paymentSuccess ? (
+              <div className="success-msg">
+                <i className="fa-solid fa-circle-check" style={{ fontSize: '4rem', marginBottom: '15px' }}></i>
+                <p>Payment Successful!</p>
+                <p style={{ fontSize: '1rem', color: '#665', fontWeight: 'normal' }}>Generating your confirmation email...</p>
+              </div>
+            ) : paymentStep ? (
+              <form onSubmit={handlePaymentSubmit} className="payment-gateway-container">
+                <p style={{ fontSize: '0.9rem', color: '#665', textAlign: 'center', marginBottom: '10px' }}><i className="fa-solid fa-lock"></i> Mock Payment Gateway (Do not enter real card details)</p>
+                
+                <input type="text" placeholder="Cardholder Name" required defaultValue={form.name} />
+                <input type="text" placeholder="Card Number" maxLength="19" required pattern="\d{4}\s?\d{4}\s?\d{4}\s?\d{4}" title="16 digit card number" />
+                
+                <div className="card-details-row">
+                  <input type="text" placeholder="MM/YY" maxLength="5" required pattern="(0[1-9]|1[0-2])\/[0-9]{2}" title="Expiry in MM/YY format" />
+                  <input type="password" placeholder="CVV" maxLength="3" required pattern="\d{3}" title="3 digit CVV" />
+                </div>
+                
+                <button type="submit" className="pay-btn" disabled={isProcessing}>
+                  {isProcessing ? 'Processing Payment...' : `Pay ${selectedPackage.price}`}
+                </button>
+                <button type="button" onClick={() => setPaymentStep(false)} style={{ background: '#f0f0f0', color: '#333' }}>Go Back</button>
+              </form>
             ) : (
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontFamily: 'inherit', fontSize: '0.95em' }}>
-                <thead>
-                  <tr style={{ background: '#5f2aee', color: '#ffffff' }}>
-                    <th style={{ padding: '10px', border: '1px solid black', textAlign: 'center' }}>Name</th>
-                    <th style={{ padding: '10px', border: '1px solid black', textAlign: 'center' }}>Email</th>
-                    <th style={{ padding: '10px', border: '1px solid black', textAlign: 'center' }}>Phone</th>
-                    <th style={{ padding: '10px', border: '1px solid black', textAlign: 'center' }}>Package</th>
-                    <th style={{ padding: '10px', border: '1px solid black', textAlign: 'center', width: '150px' }}>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {users.map(u => (
-                    <tr key={u.id}>
-                      <td style={{ padding: '10px', color: '#5f2aee', border: '1px solid black' }}>{u.name}</td>
-                      <td style={{ padding: '10px', color: '#5f2aee', border: '1px solid black' }}>{u.email}</td>
-                      <td style={{ padding: '10px', color: '#5f2aee', border: '1px solid black' }}>{u.phone}</td>
-                      <td style={{ padding: '10px', color: '#5f2aee', border: '1px solid black' }}>{u.packageName}</td>
-                      <td style={{ padding: '8px', color: '#5f2aee', border: '1px solid black', textAlign: 'center' }}>
-                        <button onClick={() => startEdit(u)} style={{ marginRight: '8px', padding: '6px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer' }}>Edit</button>
-                        <button onClick={() => deleteUser(u.id)} style={{ padding: '6px 8px', borderRadius: '6px', border: 'none', cursor: 'pointer' }}>Delete</button>
-                      </td>
-                    </tr>
+              <form onSubmit={handleDetailsSubmit} style={{ width: '100%', maxWidth: '100%' }}>
+                <input name="name" type="text" placeholder="Full Name" required value={form.name} onChange={handleChange} />
+                <input name="email" type="email" placeholder="Email Address" required value={form.email} onChange={handleChange} />
+                <input name="phone" type="tel" placeholder="Phone Number" required value={form.phone} onChange={handleChange} />
+                
+                <select name="pkg" required value={form.pkg} onChange={handleChange} disabled={!!selectedPackage && !editingId} style={{ backgroundColor: selectedPackage && !editingId ? '#f0f0f0' : '#FFF6EF' }}>
+                  <option value="">-- Select a Package --</option>
+                  {PACKAGES.map(p => (
+                    <option key={p.id} value={p.id}>{p.title}</option>
                   ))}
-                </tbody>
-              </table>
+                  {selectedPackage?.isCustom && (
+                    <option value={selectedPackage.id}>{selectedPackage.title}</option>
+                  )}
+                </select>
+                
+                <button type="submit" style={{ marginTop: '15px' }}>{editingId ? 'Proceed to Payment' : 'Proceed to Payment'}</button>
+              </form>
             )}
           </div>
         </div>
-      </div>
-
-      {popup && (
-        <div className="popup" style={{ display: 'flex' }}>
-          <div className="popup-content">
-            <span className="close-btn" onClick={() => setPopup(null)}>×</span>
-            <h3>{popup.title}</h3>
-            <p>{popup.details}</p>
-          </div>
-        </div>
       )}
+
+      {cancelBookingId && (() => {
+        const u = users.find(user => user.id === cancelBookingId)
+        if (!u) return null;
+        return (
+          <div className="booking-modal-overlay">
+            <div className="booking-modal" style={{ textAlign: 'center', maxWidth: '400px' }}>
+              <i className="fa-solid fa-triangle-exclamation" style={{ fontSize: '3rem', color: '#ff4d4d', marginBottom: '15px' }}></i>
+              <h3 style={{ color: '#3C2A21', marginBottom: '10px' }}>Cancel Trip?</h3>
+              {cancelStep === 1 ? (
+                <>
+                  <p style={{ color: '#665', marginBottom: '20px' }}>Are you sure you want to cancel your trip to <strong>{u.packageName}</strong>? We will send an OTP to {u.email} to confirm.</p>
+                  <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+                    <button onClick={closeCancelModal} style={{ background: '#f0f0f0', color: '#333', flex: 1 }}>No, Keep It</button>
+                    <button onClick={handleSendCancelOtp} disabled={isSendingOtp} style={{ background: '#ff4d4d', color: 'white', flex: 1 }}>
+                      {isSendingOtp ? 'Sending...' : 'Send OTP'}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <p style={{ color: '#665', marginBottom: '10px' }}>Enter the 6-digit OTP sent to your email to confirm cancellation.</p>
+                  <input type="text" placeholder="Enter OTP" value={cancelOtp} onChange={(e) => setCancelOtp(e.target.value)} style={{ width: '100%', marginBottom: '15px', textAlign: 'center', letterSpacing: '2px', fontSize: '1.2rem', padding: '10px', borderRadius: '5px', border: '1px solid #ccc' }} />
+                  <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+                    <button onClick={closeCancelModal} style={{ background: '#f0f0f0', color: '#333', flex: 1 }}>Cancel</button>
+                    <button onClick={handleCancelConfirm} style={{ background: '#ff4d4d', color: 'white', flex: 1 }}>Verify & Cancel Trip</button>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )
+      })()}
     </>
   )
 }

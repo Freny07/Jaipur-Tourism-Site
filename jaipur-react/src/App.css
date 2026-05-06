@@ -844,6 +844,7 @@ footer {
   border: 2px solid transparent;
   background: var(--grad) border-box;
   -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: destination-out;
   mask-composite: exclude;
   opacity: 0;
@@ -1727,3 +1728,346 @@ footer {
 .leaflet-popup-content {
   margin: 0;
 }
+
+
+/* --- Packages Page Styles --- */
+
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.package-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(161, 103, 63, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba(233, 203, 167, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.package-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(161, 103, 63, 0.2);
+  border-color: #A1673F;
+}
+
+.package-img-wrapper {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.package-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.package-card:hover .package-img-wrapper img {
+  transform: scale(1.1);
+}
+
+.package-badge {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #A1673F;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  backdrop-filter: blur(4px);
+}
+
+.package-content {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.package-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #3C2A21;
+  margin-bottom: 10px;
+  font-family: "Playfair Display", serif;
+}
+
+.package-desc {
+  font-size: 0.95rem;
+  color: #665;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.package-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.package-price {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #A1673F;
+}
+
+.package-price span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #888;
+}
+
+.book-now-btn {
+  background: linear-gradient(135deg, #A1673F, #d6824a);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(161, 103, 63, 0.3);
+}
+
+.book-now-btn:hover {
+  background: linear-gradient(135deg, #d6824a, #A1673F);
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(161, 103, 63, 0.4);
+}
+
+.booking-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+  animation: fadeIn 0.3s ease;
+}
+
+.booking-modal {
+  background: #FFF9F6;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 24px;
+  padding: 35px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  position: relative;
+  border: 2px solid #E9CBA7;
+  animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+.booking-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #E9CBA7;
+  padding-bottom: 15px;
+}
+
+.booking-modal-header h3 {
+  margin: 0;
+  color: #3C2A21;
+  font-size: 1.5rem;
+}
+
+.modal-close-icon {
+  font-size: 1.5rem;
+  color: #A1673F;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.modal-close-icon:hover {
+  transform: rotate(90deg);
+  color: #d6824a;
+}
+
+.selected-package-info {
+  background: #F5E6D3;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border-left: 4px solid #A1673F;
+}
+
+.selected-package-info p {
+  margin: 5px 0;
+  font-weight: 600;
+  color: #3C2A21;
+}
+
+/* Contact Details Glass Card */
+.contact-glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(161, 103, 63, 0.08);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-glass-card::before {
+  content: "";
+  position: absolute;
+  top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(233, 203, 167, 0.3) 0%, transparent 60%);
+  z-index: -1;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+
+.contact-info-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.contact-icon-circle {
+  width: 50px;
+  height: 50px;
+  background: #FFF6EF;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #A1673F;
+  font-size: 1.2rem;
+  box-shadow: 0 5px 15px rgba(161, 103, 63, 0.15);
+}
+
+.contact-info-text h4 { margin: 0 0 5px 0; color: #3C2A21; font-size: 1.1rem; }
+.contact-info-text p { margin: 0; color: #665; font-size: 0.95rem; }
+
+
+
+
+/* --- Payment Gateway Styles --- */
+.payment-gateway-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.payment-gateway-container input {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-family: monospace;
+  font-size: 1.1rem;
+}
+.card-details-row {
+  display: flex;
+  gap: 15px;
+}
+.card-details-row input {
+  flex: 1;
+}
+.pay-btn {
+  background: #4caf50;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s;
+}
+.pay-btn:hover {
+  background: #45a049;
+}
+.pay-btn:disabled {
+  background: #9e9e9e;
+  cursor: not-allowed;
+}
+.success-msg {
+  text-align: center;
+  color: #4caf50;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 20px;
+}
+
+/* --- Countdown Styles --- */
+.upcoming-trips-section {
+  background: #fffdf8;
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 6px 25px #faa94d35;
+  margin-bottom: 40px;
+  border: 2px solid #E9CBA7;
+}
+.trip-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFF9F6;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border-left: 5px solid #A1673F;
+}
+.trip-info h4 {
+  margin: 0 0 5px 0;
+  color: #3C2A21;
+  font-size: 1.2rem;
+}
+.trip-info p {
+  margin: 0;
+  color: #665;
+}
+.countdown-box {
+  display: flex;
+  gap: 10px;
+}
+.countdown-item {
+  background: #A1673F;
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 60px;
+}
+.countdown-item span {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.countdown-item small {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
