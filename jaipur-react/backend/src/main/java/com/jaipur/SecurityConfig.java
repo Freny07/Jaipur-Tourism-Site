@@ -32,8 +32,10 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/signup", "/api/login", "/api/set-password", "/api/me", "/api/chat", "/api/update", "/api/send-booking-email", "/api/send-cancellation-email", "/api/send-cancellation-otp", "/api/verify-cancellation-otp", "/api/forgot-password", "/api/reset-password").permitAll()
-                .requestMatchers("/api/signup", "/api/login", "/api/set-password", "/api/me", "/api/chat", "/api/update", "/api/forgot-password", "/api/reset-password").permitAll()
+                .requestMatchers("/api/signup", "/api/login", "/api/set-password", "/api/me", "/api/chat", "/api/update", 
+                               "/api/send-booking-email", "/api/send-cancellation-email", "/api/send-cancellation-otp", 
+                               "/api/verify-cancellation-otp", "/api/forgot-password", "/api/reset-password",
+                               "/api/save-booking", "/api/my-bookings").permitAll()
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth -> oauth
@@ -69,7 +71,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:5174", "http://35.154.74.197"));
+        configuration.setAllowedOrigins(Arrays.asList(
+            "http://localhost:5173", 
+            "http://localhost:5174", 
+            "http://35.154.74.197",
+            "http://35.154.74.197.nip.io",
+            "https://35.154.74.197.nip.io"
+        ));
 
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With"));

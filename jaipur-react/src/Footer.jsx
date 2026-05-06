@@ -74,7 +74,7 @@ function Footer() {
             <h4 style={{ color: '#f4c27a', fontWeight: '700', marginBottom: '10px' }}>Contact Info</h4>
             <p>📍 Jaipur Tourism Office,<br />Rajasthan, India</p>
             <p>📞 +91 98765 43210</p>
-            <p>📧 info@jaipurtourism.in</p>
+            <p>📧 jaipur.tourism.official@gmail.com</p>
 
             {/* Social Media Icons */}
             <div style={{ marginTop: '18px' }}>

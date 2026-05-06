@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(origins = "*") 
 public class UserController {
 
     @Autowired
@@ -31,6 +31,9 @@ public class UserController {
     
     @Autowired
     private PasswordResetTokenRepository tokenRepository;
+
+    @Autowired
+    private BookingRepository bookingRepository;
 
     @PostMapping("/signup")
     public Map<String, Object> signup(@RequestBody User newUser) {
@@ -244,5 +247,21 @@ public class UserController {
         tokenRepository.delete(resetToken);
 
         return Map.of("message", "Password reset successfully! You can now sign in.");
+    }
+
+    @PostMapping("/save-booking")
+    public Map<String, Object> saveBooking(@RequestBody Booking booking) {
+        try {
+            Booking saved = bookingRepository.save(booking);
+            return Map.of("message", "Booking saved to database", "booking", saved);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Map.of("error", "Failed to save booking to database");
+        }
+    }
+
+    @GetMapping("/my-bookings")
+    public List<Booking> getMyBookings(@RequestParam String email) {
+        return bookingRepository.findByUserEmail(email);
     }
 }

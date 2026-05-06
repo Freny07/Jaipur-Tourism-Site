@@ -68,7 +68,6 @@ const socials = [
       </svg>
     ),
     gradient: 'linear-gradient(45deg, #000000, #14171A)',
-    glow: 'rgba(29, 161, 242, 0.6)',
     label: 'X (Twitter)',
   },
   {
@@ -257,19 +256,48 @@ function Contact() {
     saveUsers(updated)
     setUsers(updated)
     
-    // Call backend to send email
+    // 1. MUST Save to Database first
     try {
-      await fetch(`${API_BASE_URL}/send-booking-email`, {
+      const dbRes = await fetch(`${API_BASE_URL}/save-booking`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, packageName, startDate })
+        body: JSON.stringify({
+          userName: name,
+          userEmail: email,
+          userPhone: phone,
+          packageName: packageName,
+          packagePrice: price,
+          travelDate: startDate
+        })
       });
-      alert(`Payment Successful! A real confirmation email has been sent to ${email} (check spam just in case!).`)
+      
+      if (!dbRes.ok) throw new Error("Server high demand");
+      
+      console.log('Booking saved to database successfully');
+      
+      // 2. Only if DB save succeeded, try to send email
+      try {
+        await fetch(`${API_BASE_URL}/send-booking-email`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, phone, packageName, startDate })
+        });
+      } catch (e) {
+        console.error('Email failed but DB saved:', e);
+        // We don't fail the whole process if only email fails, but we notify
+      }
+
+      alert(`Payment Successful! Your booking for ${packageName} has been confirmed.`)
+      closeBookingModal()
+
     } catch (err) {
-      console.error(err)
-      alert(`Payment Successful! However, we couldn't send the email right now.`)
+      console.error('Database Save Error:', err);
+      alert("Payment not successful due to our servers experiencing high demand on our end. Please try again in a few minutes.");
+      // Do NOT close modal so they can try again or check details
+      setIsProcessing(false); 
+      setPaymentSuccess(false);
+      setPaymentStep(true); 
     }
-    closeBookingModal()
   }
 
   function startEdit(u) {
@@ -496,7 +524,7 @@ function Contact() {
               <div className="contact-icon-circle"><i className="fa-solid fa-envelope"></i></div>
               <div className="contact-info-text">
                 <h4>Email Us</h4>
-                <p>info@jaipurtourism.com</p>
+                <p>jaipur.tourism.official@gmail.com</p>
               </div>
             </div>
 

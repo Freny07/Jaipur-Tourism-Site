@@ -23,9 +23,11 @@ nav {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   z-index: 1000;
-  position: fixed;
+  position: sticky;
   top: 0;
   box-sizing: border-box;
+  overflow-x: auto; /* Allow horizontal scroll if links are too wide at high zoom */
+  white-space: nowrap; /* Keep links in one line or allow scrolling */
 }
 
 nav .logo {
@@ -273,7 +275,6 @@ nav ul li a:hover:not(.active-nav) {
 header {
   position: relative;
   width: 100%;
-  padding-top: 90px;
 }
 
 .hero-box {
@@ -1860,22 +1861,44 @@ footer {
   align-items: center;
   z-index: 10000;
   animation: fadeIn 0.3s ease;
+  overflow-y: auto; /* Allow scrolling */
+  padding: 40px 0; /* Space for scrolling */
 }
 
 .booking-modal {
   background: #FFF9F6;
-  width: 90%;
+  width: 95%; /* Slightly wider for better space usage */
   max-width: 500px;
   border-radius: 24px;
-  padding: 35px;
+  padding: 30px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.3);
   position: relative;
   border: 2px solid #E9CBA7;
   animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-sizing: border-box !important;
+  margin: auto; /* Centering in scrollable container */
+}
+
+@media (max-width: 480px) {
+  .booking-modal {
+    padding: 20px;
+    border-radius: 16px;
+  }
 }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Ensure ALL inputs/selects inside the booking modal are perfectly contained */
+.booking-modal input,
+.booking-modal select,
+.booking-modal form {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
 
 .booking-modal-header {
   display: flex;
@@ -1884,6 +1907,7 @@ footer {
   margin-bottom: 25px;
   border-bottom: 2px solid #E9CBA7;
   padding-bottom: 15px;
+  box-sizing: border-box;
 }
 
 .booking-modal-header h3 {
