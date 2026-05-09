@@ -26,25 +26,6 @@ const getMinTravelDateIST = () => {
   return istTime.toISOString().split('T')[0];
 }
 
-const PACKAGES = [
-  { id: '1', title: 'Amber Fort Heritage Tour', duration: 'Full Day', price: '₹1,500', details: 'Explore the majestic Amber Fort, including a guided tour of the Diwan-e-Aam, Sheesh Mahal, and the royal courtyards. Enjoy a magnificent sunset view.', image: '/packages/amber_fort.png', startDate: getFutureDate(7) },
-  { id: '2', title: 'Royal Palace Tour', duration: 'Half Day', price: '₹1,200', details: 'A deep dive into the City Palace of Jaipur showcasing its intricate royal architecture, vibrant pink and peach colors, and elegant courtyards.', image: '/packages/city_palace.png', startDate: getFutureDate(14) },
-  { id: '3', title: 'Cultural Night Safari', duration: 'Evening', price: '₹2,000', details: 'Experience Nahargarh fort at night overlooking the glittering city of Jaipur. Includes dinner under the starry sky and a magical atmosphere.', image: '/packages/night_safari.png', startDate: getFutureDate(3) },
-  { id: '4', title: 'Spiritual Pushkar Journey', duration: 'Full Day', price: '₹2,500', details: 'A spiritual trip to the holy Pushkar lake surrounded by traditional temples and ghats. Includes a visit to the famous Brahma Temple.', image: '/packages/pushkar.png', startDate: getFutureDate(21) },
-  { id: '5', title: 'Rajasthani Culinary Walk', duration: '3 Hours', price: '₹1,800', details: 'A vibrant and rich traditional Rajasthani food tour. Taste various local curries, breads, and sweets in authentic settings.', image: '/packages/food.png', startDate: getFutureDate(5) },
-  { id: '6', title: 'Pink City Shopping Spree', duration: 'Half Day', price: '₹1,000', details: 'A guided shopping tour through the vibrant bustling markets of Jaipur. Buy traditional textiles, umbrellas, and exquisite handicrafts.', image: '/packages/shopping.png', startDate: getFutureDate(10) }
-]
-
-const PLACES = [
-  { id: 'p1', name: 'Amber Fort', price: 500, image: '/packages/amber_fort.png' },
-  { id: 'p2', name: 'City Palace', price: 400, image: '/packages/city_palace.png' },
-  { id: 'p3', name: 'Nahargarh Fort', price: 600, image: '/packages/night_safari.png' },
-  { id: 'p4', name: 'Jal Mahal', price: 300, image: '/packages/jal_mahal.png' },
-  { id: 'p5', name: 'Hawa Mahal', price: 200, image: '/packages/hawa_mahal.png' },
-  { id: 'p6', name: 'Jantar Mantar', price: 200, image: '/packages/jantar_mantar.png' },
-  { id: 'p7', name: 'Albert Hall Museum', price: 300, image: '/packages/albert_hall.png' },
-  { id: 'p8', name: 'Chokhi Dhani (Dinner)', price: 1000, image: '/packages/food.png' },
-]
 
 const socials = [
   {
@@ -127,6 +108,91 @@ function CountdownTimer({ targetDate }) {
 }
 
 function Contact() {
+  const [dbPackages, setDbPackages] = useState([])
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [adminModalOpen, setAdminModalOpen] = useState(false)
+  const [adminFormData, setAdminFormData] = useState({ id: null, title: '', description: '', duration: '', price: '', imageUrl: '', packageType: 'EXCLUSIVE' })
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}/packages`)
+      .then(res => res.json())
+      .then(data => setDbPackages(data))
+      .catch(err => console.error("Error fetching packages:", err));
+      
+    fetch(`${API_BASE_URL}/me`, { credentials: 'include' })
+      .then(res => res.ok ? res.json() : null)
+      .then(data => { if (data && data.user && data.user.email === 'jaipur.tourism.official@gmail.com') setIsAdmin(true); })
+      .catch(e => console.error(e));
+  }, []);
+
+  const PACKAGES = dbPackages.filter(p => p.packageType === 'EXCLUSIVE').map(p => ({
+    id: String(p.id),
+    title: p.title,
+    duration: p.duration,
+    price: '₹' + (p.price || 0).toLocaleString('en-IN'),
+    rawPrice: p.price,
+    details: p.description,
+    image: p.imageUrl,
+    startDate: getFutureDate(7)
+  }));
+
+  const PLACES = dbPackages.filter(p => p.packageType === 'CUSTOM').map(p => ({
+    id: String(p.id),
+    name: p.title,
+    price: p.price || 0,
+    image: p.imageUrl
+  }));
+
+  const handleDeletePackage = async (id) => {
+    if (!window.confirm("Are you sure you want to permanently delete this package?")) return;
+    try {
+      const res = await fetch(`${API_BASE_URL}/admin/packages/${id}`, { method: 'DELETE', credentials: 'include' });
+      if (res.ok) {
+        setDbPackages(prev => prev.filter(p => String(p.id) !== String(id)));
+      } else {
+        alert("Error deleting package. Only admins can do this.");
+      }
+    } catch (e) { console.error(e); }
+  };
+
+  const handleAdminSave = async (e) => {
+    e.preventDefault();
+    const isEdit = !!adminFormData.id;
+    const url = isEdit ? `${API_BASE_URL}/admin/packages/${adminFormData.id}` : `${API_BASE_URL}/admin/packages`;
+    const method = isEdit ? 'PUT' : 'POST';
+    
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(adminFormData),
+        credentials: 'include'
+      });
+      if (res.ok) {
+        const savedPkg = await res.json();
+        if (isEdit) {
+          setDbPackages(prev => prev.map(p => p.id === savedPkg.id ? savedPkg : p));
+        } else {
+          setDbPackages(prev => [...prev, savedPkg]);
+        }
+        setAdminModalOpen(false);
+      } else {
+        alert("Error saving package. Make sure you are admin.");
+      }
+    } catch(e) {
+      console.error(e);
+    }
+  };
+
+  const openAdminModal = (pkg = null, type = 'EXCLUSIVE') => {
+    if (pkg) {
+      setAdminFormData({ id: pkg.id, title: pkg.title || pkg.name, description: pkg.details || pkg.description || '', duration: pkg.duration || '', price: pkg.rawPrice || pkg.price, imageUrl: pkg.image || pkg.imageUrl, packageType: type })
+    } else {
+      setAdminFormData({ id: null, title: '', description: '', duration: '', price: '', imageUrl: '', packageType: type })
+    }
+    setAdminModalOpen(true)
+  };
+
   const [users, setUsers] = useState(loadUsers)
   const [form, setForm] = useState({ name: '', email: '', phone: '', pkg: '', travelDate: '' })
   const [editingId, setEditingId] = useState(null)
@@ -525,7 +591,13 @@ function Contact() {
         {/* Packages Grid */}
         <div className="packages-grid">
           {PACKAGES.map((pkg) => (
-            <div className="package-card" key={pkg.id}>
+            <div className="package-card" key={pkg.id} style={{ position: 'relative' }}>
+              {isAdmin && (
+                <>
+                  <button className="delete-badge" style={{ position: 'absolute', top: '10px', left: '10px', background: 'red', color: 'white', width: '30px', height: '30px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', zIndex: 999, fontWeight: 'bold', border: 'none', boxShadow: '0 2px 5px rgba(0,0,0,0.3)' }} onClick={(e) => { e.stopPropagation(); handleDeletePackage(pkg.id); }}>-</button>
+                  <button className="edit-btn" style={{ position: 'absolute', top: '50px', left: '10px', background: '#A1673F', color: 'white', width: '30px', height: '30px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', zIndex: 999, border: 'none', boxShadow: '0 2px 5px rgba(0,0,0,0.3)' }} onClick={(e) => { e.stopPropagation(); openAdminModal(pkg, 'EXCLUSIVE'); }}>✏️</button>
+                </>
+              )}
               <div className="package-img-wrapper">
                 <img src={pkg.image} alt={pkg.title} />
                 <div className="package-badge"><i className="fa-regular fa-clock"></i> {pkg.duration}</div>
@@ -540,6 +612,12 @@ function Contact() {
               </div>
             </div>
           ))}
+          {isAdmin && (
+             <div className="package-card dummy-card" style={{ border: '2px dashed #A1673F', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '300px', cursor: 'pointer', background: '#fefefe' }} onClick={() => openAdminModal(null, 'EXCLUSIVE')}>
+                 <div style={{ fontSize: '3rem', color: '#A1673F' }}>+</div>
+                 <p style={{ color: '#A1673F', fontWeight: 'bold', marginTop: '10px' }}>Add New Package</p>
+             </div>
+          )}
         </div>
 
         <div className="section-title" style={{ textAlign: 'center', fontSize: '2.5rem', marginBottom: '10px', marginTop: '40px' }}>Build Your Custom Package</div>
@@ -550,7 +628,6 @@ function Contact() {
             {PLACES.map(place => (
               <div 
                 key={place.id} 
-                onClick={() => toggleCustomPlace(place.id)}
                 style={{ 
                   borderRadius: '15px', 
                   overflow: 'hidden', 
@@ -561,16 +638,30 @@ function Contact() {
                   transform: customPlaces.includes(place.id) ? 'scale(1.02)' : 'scale(1)'
                 }}
               >
-                <img src={place.image} alt={place.name} style={{ width: '100%', height: '180px', objectFit: 'cover', display: 'block' }} />
-                <div style={{ position: 'absolute', top: '10px', right: '10px', background: 'white', borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 5px rgba(0,0,0,0.2)' }}>
-                   {customPlaces.includes(place.id) ? <i className="fa-solid fa-check" style={{ color: '#A1673F', fontWeight: 'bold' }}></i> : <div style={{width:'15px', height:'15px', borderRadius:'50%', border:'2px solid #ccc'}}></div>}
-                </div>
-                <div style={{ padding: '15px', background: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontWeight: '600', color: '#3C2A21', fontSize: '1.1rem' }}>{place.name}</span>
-                  <span style={{ color: '#A1673F', fontWeight: 'bold', fontSize: '1.1rem' }}>₹{place.price}</span>
+                {isAdmin && (
+                  <>
+                    <button className="delete-badge" style={{ position: 'absolute', top: '10px', left: '10px', background: 'red', color: 'white', width: '30px', height: '30px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', zIndex: 999, fontWeight: 'bold', border: 'none', boxShadow: '0 2px 5px rgba(0,0,0,0.3)' }} onClick={(e) => { e.stopPropagation(); handleDeletePackage(place.id); }}>-</button>
+                    <button className="edit-btn" style={{ position: 'absolute', top: '50px', left: '10px', background: '#A1673F', color: 'white', width: '30px', height: '30px', borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer', zIndex: 999, border: 'none', boxShadow: '0 2px 5px rgba(0,0,0,0.3)' }} onClick={(e) => { e.stopPropagation(); openAdminModal(place, 'CUSTOM'); }}>✏️</button>
+                  </>
+                )}
+                <div onClick={() => toggleCustomPlace(place.id)}>
+                  <img src={place.image} alt={place.name} style={{ width: '100%', height: '180px', objectFit: 'cover', display: 'block' }} />
+                  <div style={{ position: 'absolute', top: '10px', right: '10px', background: 'white', borderRadius: '50%', width: '30px', height: '30px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 2px 5px rgba(0,0,0,0.2)' }}>
+                     {customPlaces.includes(place.id) ? <i className="fa-solid fa-check" style={{ color: '#A1673F', fontWeight: 'bold' }}></i> : <div style={{width:'15px', height:'15px', borderRadius:'50%', border:'2px solid #ccc'}}></div>}
+                  </div>
+                  <div style={{ padding: '15px', background: 'white', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontWeight: '600', color: '#3C2A21', fontSize: '1.1rem' }}>{place.name}</span>
+                    <span style={{ color: '#A1673F', fontWeight: 'bold', fontSize: '1.1rem' }}>₹{place.price}</span>
+                  </div>
                 </div>
               </div>
             ))}
+            {isAdmin && (
+              <div className="dummy-card" style={{ border: '2px dashed #A1673F', borderRadius: '15px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '180px', cursor: 'pointer', background: '#fefefe' }} onClick={() => openAdminModal(null, 'CUSTOM')}>
+                  <div style={{ fontSize: '3rem', color: '#A1673F' }}>+</div>
+                  <p style={{ color: '#A1673F', fontWeight: 'bold', marginTop: '10px' }}>Add New Package</p>
+              </div>
+            )}
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '2px dashed #eee', paddingTop: '20px', flexWrap: 'wrap', gap: '20px' }}>
             <div style={{ fontSize: '1.2rem', color: '#333' }}>Total Estimated Cost: <span style={{ fontSize: '1.8rem', fontWeight: 'bold', color: '#A1673F' }}>₹{totalCustomPrice}</span> <span style={{ fontSize: '0.9rem', color: '#888' }}>/ person</span></div>
@@ -781,6 +872,40 @@ function Contact() {
           </div>
         )
       })()}
+
+      {/* Admin Package Modal */}
+      {adminModalOpen && (
+        <div className="booking-modal-overlay">
+          <div className="booking-modal">
+            <div className="booking-modal-header">
+              <h3>{adminFormData.id ? 'Edit Package' : 'New Package'}</h3>
+              <i className="fa-solid fa-xmark modal-close-icon" onClick={() => setAdminModalOpen(false)}></i>
+            </div>
+            <form onSubmit={handleAdminSave} style={{ width: '100%' }}>
+              <input name="title" type="text" placeholder="Package Title" required value={adminFormData.title} onChange={(e) => setAdminFormData({...adminFormData, title: e.target.value})} />
+              
+              {adminFormData.packageType === 'EXCLUSIVE' && (
+                <>
+                  <textarea name="description" placeholder="Package Description" rows="3" value={adminFormData.description} onChange={(e) => setAdminFormData({...adminFormData, description: e.target.value})} style={{ width: '100%', padding: '10px', marginBottom: '15px', border: '1px solid #ddd', borderRadius: '8px' }}></textarea>
+                  
+                  <input name="duration" type="text" placeholder="Duration (e.g., Full Day, 2 Days)" value={adminFormData.duration} onChange={(e) => setAdminFormData({...adminFormData, duration: e.target.value})} />
+                </>
+              )}
+              
+              <input name="price" type="number" placeholder="Price (Numeric only)" required value={adminFormData.price} onChange={(e) => setAdminFormData({...adminFormData, price: e.target.value})} />
+              
+              <input name="imageUrl" type="text" placeholder="Image URL (e.g., https://...)" required value={adminFormData.imageUrl} onChange={(e) => setAdminFormData({...adminFormData, imageUrl: e.target.value})} />
+
+              <select name="packageType" value={adminFormData.packageType} onChange={(e) => setAdminFormData({...adminFormData, packageType: e.target.value})} style={{ width: '100%', padding: '10px', marginBottom: '15px', border: '1px solid #ddd', borderRadius: '8px' }}>
+                <option value="EXCLUSIVE">Exclusive Package</option>
+                <option value="CUSTOM">Custom Package (Place)</option>
+              </select>
+              
+              <button type="submit" style={{ marginTop: '15px' }}>Save Package</button>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   )
 }
