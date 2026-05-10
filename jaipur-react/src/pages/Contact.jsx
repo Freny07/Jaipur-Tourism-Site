@@ -129,7 +129,40 @@ function Contact() {
       .catch(e => console.error(e));
   }, []);
 
-  const PACKAGES = dbPackages.filter(p => p.packageType === 'EXCLUSIVE').map(p => ({
+  const FALLBACK_PACKAGES = [
+    {
+      id: 'f1',
+      title: 'Amber Fort Heritage Tour',
+      duration: 'Full Day',
+      price: '₹1,500',
+      rawPrice: 1500,
+      details: 'Explore the majestic Amber Fort, including a guided tour of the Diwan-e-Aam, Sheesh Mahal, and the royal courtyards. Enjoy a magnificent sunset view.',
+      image: '/packages/amber_fort.png',
+      startDate: getFutureDate(7)
+    },
+    {
+      id: 'f2',
+      title: 'Royal Palace Tour',
+      duration: 'Half Day',
+      price: '₹1,200',
+      rawPrice: 1200,
+      details: 'A deep dive into the City Palace of Jaipur showcasing its intricate royal architecture, vibrant pink and peach colors, and elegant courtyards.',
+      image: '/packages/city_palace.png',
+      startDate: getFutureDate(10)
+    },
+    {
+      id: 'f3',
+      title: 'Cultural Night Safari',
+      duration: 'Evening',
+      price: '₹2,000',
+      rawPrice: 2000,
+      details: 'Experience Nahargarh fort at night overlooking the glittering city of Jaipur. Includes dinner under the starry sky and a magical atmosphere.',
+      image: '/packages/nahagarh fort.jpg',
+      startDate: getFutureDate(12)
+    }
+  ];
+
+  const fetchedPackages = dbPackages.filter(p => p.packageType === 'EXCLUSIVE').map(p => ({
     id: String(p.id),
     title: p.title,
     duration: p.duration,
@@ -139,6 +172,8 @@ function Contact() {
     image: p.imageUrl,
     startDate: getFutureDate(7)
   }));
+
+  const PACKAGES = fetchedPackages.length > 0 ? fetchedPackages : FALLBACK_PACKAGES;
 
   const PLACES = dbPackages.filter(p => p.packageType === 'CUSTOM').map(p => ({
     id: String(p.id),
