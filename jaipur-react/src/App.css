@@ -122,6 +122,61 @@ nav ul li a:hover:not(.active-nav) {
   transform: translateY(-2px);
 }
 
+.nav-item-dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(15px);
+  background: white;
+  min-width: 200px;
+  box-shadow: 0 10px 30px rgba(161, 103, 63, 0.15);
+  border-radius: 12px;
+  padding: 10px 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  list-style: none;
+  z-index: 1000;
+  border: 1px solid rgba(233, 203, 167, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-item-dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-menu li {
+  margin: 0;
+  width: 100%;
+}
+
+.dropdown-menu li a {
+  display: block;
+  padding: 12px 20px !important;
+  color: #3C2A21 !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
+  text-decoration: none;
+  transition: all 0.2s !important;
+  border-radius: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.dropdown-menu li a:hover {
+  background: #FFF9F6 !important;
+  color: #A1673F !important;
+  padding-left: 25px !important;
+}
+
 .nav-profile-circle {
   display: flex;
   align-items: center;

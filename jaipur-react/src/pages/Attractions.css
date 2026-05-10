@@ -1,0 +1,155 @@
+/* Attractions Page Sidebar and Layout Styles */
+
+.attractions-page-container.container {
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 40px; /* Maintain a small elegant gutter */
+  padding-right: 40px;
+  padding-top: 5px;
+}
+
+.attractions-page-container {
+  display: flex;
+  gap: 30px; /* Balanced gap */
+  position: relative;
+  margin-bottom: 60px;
+  align-items: stretch;
+}
+
+.attractions-sidebar {
+  width: 250px;
+  flex-shrink: 0;
+}
+
+.sidebar-sticky-content {
+  position: sticky;
+  top: 100px;
+  background: rgba(255, 249, 246, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(161, 103, 63, 0.15);
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(161, 103, 63, 0.08);
+  z-index: 900;
+}
+
+.sidebar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: #3C2A21;
+  margin: 0 0 12px 0;
+  text-align: center;
+}
+
+.sidebar-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #A1673F, transparent);
+  margin-bottom: 15px;
+  opacity: 0.3;
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-links li {
+  margin-bottom: 5px;
+}
+
+.sidebar-links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  color: #5A473E;
+  text-decoration: none;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.sidebar-links a i {
+  color: #A1673F;
+  font-size: 0.95rem;
+  opacity: 0.6;
+  transition: all 0.3s ease;
+}
+
+.sidebar-links a:hover {
+  background: #f5e6d3;
+  color: #3C2A21;
+  transform: translateX(5px);
+}
+
+.sidebar-links a:hover i {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+.sidebar-links a.active {
+  background: #A1673F;
+  color: white;
+}
+
+.sidebar-links a.active i {
+  color: white;
+  opacity: 1;
+}
+
+.attractions-main-content {
+  flex-grow: 1;
+}
+
+/* Modal and Grid adjustments for sidebar layout */
+.attractions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+/* Responsive sidebar */
+@media (max-width: 1024px) {
+  .attractions-page-container {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .attractions-sidebar {
+    width: 100%;
+  }
+
+  .sidebar-sticky-content {
+    position: static;
+    padding: 15px;
+  }
+
+  .sidebar-links {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+    padding-bottom: 5px;
+    scrollbar-width: none;
+  }
+
+  .sidebar-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sidebar-links li {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .sidebar-links a {
+    white-space: nowrap;
+    padding: 8px 15px;
+  }
+
+  .sidebar-title, .sidebar-divider {
+    display: none;
+  }
+}

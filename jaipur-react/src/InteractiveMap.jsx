@@ -585,36 +585,59 @@ const locations = [
   },
   {
     "id": 104,
-    "name": "LMB Hotel",
-    "position": [
-      26.9217,
-      75.8242
-    ],
+    "name": "LMB (Laxmi Mishthan Bhandar)",
+    "position": [26.9217, 75.8242],
     "category": "Cuisine",
-    "description": "Iconic spot for traditional Rajasthani sweets.",
+    "description": "Iconic spot in Johari Bazaar, famous for its Ghewar and Rajasthani Thali.",
     "image": "https://media-cdn.tripadvisor.com/media/photo-s/0e/63/99/d7/authentic-rajasthani.jpg"
   },
   {
     "id": 105,
-    "name": "Rawat Misthan",
-    "position": [
-      26.9272,
-      75.7946
-    ],
+    "name": "Rawat Mishthan Bhandar",
+    "position": [26.9272, 75.7946],
     "category": "Cuisine",
-    "description": "Famous for the mouth-watering Pyaaz Kachori.",
+    "description": "Legendary spot world-renowned for its crispy Pyaaz Kachori.",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp_O0qG9U9U9U9U9U9U9U9U9U9U9U9U9U9U9U&s"
   },
   {
     "id": 106,
-    "name": "Chokhi Dhani (Cuisine)",
-    "position": [
-      26.7672,
-      75.8362
-    ],
+    "name": "Chokhi Dhani",
+    "position": [26.7672, 75.8362],
     "category": "Cuisine",
-    "description": "A cultural village resort for authentic dining.",
+    "description": "Authentic mock Rajasthani village with traditional dining experience.",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6_9U9U9U9U9U9U9U9U9U9U9U9U9U9U9U9U&s"
+  },
+  {
+    "id": 107,
+    "name": "Shreenath Lassiwala",
+    "position": [26.9200, 75.8150],
+    "category": "Cuisine",
+    "description": "Serving thick, creamy lassi in earthen kulhads since 1944.",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Lassi_in_Kulhad.jpg"
+  },
+  {
+    "id": 108,
+    "name": "Tapri Central",
+    "position": [26.9100, 75.8050],
+    "category": "Cuisine",
+    "description": "Chic rooftop cafe with park views and artisanal chai.",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipN_XqU9U9U9U9U9U9U9U9U9U9U9U9U9U9U9U=w408-h272-k-no"
+  },
+  {
+    "id": 109,
+    "name": "Masala Chowk",
+    "position": [26.9110, 75.8180],
+    "category": "Cuisine",
+    "description": "Open-air food court featuring all of Jaipur's famous street food.",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipM_9U9U9U9U9U9U9U9U9U9U9U9U9U9U9U9U=w408-h306-k-no"
+  },
+  {
+    "id": 110,
+    "name": "Pandit Kulfi",
+    "position": [26.9230, 75.8260],
+    "category": "Cuisine",
+    "description": "Historic spot for mouth-watering Kulfi Faluda and Thandai.",
+    "image": "https://lh5.googleusercontent.com/p/AF1QipP_9U9U9U9U9U9U9U9U9U9U9U9U9U9U9U9U=w408-h544-k-no"
   }
 ];
 

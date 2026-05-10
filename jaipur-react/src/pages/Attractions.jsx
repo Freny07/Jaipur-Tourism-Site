@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Carousel from '../Carousel';
+import './Attractions.css';
 
 const attractionsData = [
   // Forts & Palaces
@@ -76,8 +78,22 @@ function Attractions() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [showScroll, setShowScroll] = useState(false);
   const [selectedAttraction, setSelectedAttraction] = useState(null);
+  const location = useLocation();
 
   const filters = ['All', 'Forts & Palaces', 'Gates', 'Science & Heritage', 'Gardens', 'Temples', 'Museums'];
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        setTimeout(() => {
+          const y = element.getBoundingClientRect().top + window.pageYOffset - 120; // 120px offset for sticky navbar
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   useEffect(() => {
     const checkScrollTop = () => {
@@ -95,12 +111,12 @@ function Attractions() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleFilterClick = (filter) => {
-    setActiveFilter(filter);
-    const filterBar = document.querySelector('.filter-bar-wrapper');
-    if (filterBar) {
-        const offset = filterBar.getBoundingClientRect().top + window.pageYOffset - 100;
-        window.scrollTo({ top: offset, behavior: 'smooth' });
+  const handleSidebarClick = (e, id) => {
+    e.preventDefault();
+    const element = document.getElementById(id);
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.pageYOffset - 120;
+      window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
 
@@ -136,7 +152,7 @@ function Attractions() {
     </div>
   );
 
-  const visibleCategories = filters.filter(f => f !== 'All' && (activeFilter === 'All' || activeFilter === f));
+  const visibleCategories = filters.filter(f => f !== 'All');
 
   return (
     <>
@@ -145,84 +161,105 @@ function Attractions() {
         subtitle="Explore forts, palaces, and heritage sites that define the Pink City." 
       />
 
-
-
-      <div className="container" style={{ paddingTop: '20px' }}>
-        {visibleCategories.map(category => {
-          const categoryAttractions = attractionsData.filter(attr => attr.category === category);
-          if (categoryAttractions.length === 0) return null;
-          
-          return (
-            <div key={category} className="category-section">
-              {renderSectionHeader(category)}
-              <div className="attractions-grid">
-                {categoryAttractions.map(renderCard)}
-              </div>
-            </div>
-          );
-        })}
-
-        <div className="section-header" style={{ marginTop: '50px', marginBottom: '20px' }}>
-            <div className="section-title">A Note for the Traveler</div>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
-          <div
-            style={{
-              background: 'radial-gradient(circle at center, #FDF6E3 0%, #ECE2C6 100%)',
-              border: '1px solid #D4C3A3',
-              borderRadius: '2px 12px 3px 15px',
-              padding: '25px 35px',
-              maxWidth: '550px',
-              width: '100%',
-              color: '#4A3B32',
-              boxShadow: '2px 4px 10px rgba(0,0,0,0.1), inset 0 0 20px rgba(139, 69, 19, 0.05)',
-              transform: 'rotate(-1deg)',
-              position: 'relative'
-            }}
-          >
-            {/* Vintage Tape Effect */}
-            <div style={{
-              position: 'absolute',
-              top: '-10px',
-              left: '50%',
-              transform: 'translateX(-50%) rotate(1deg)',
-              width: '70px',
-              height: '20px',
-              background: 'rgba(255, 255, 255, 0.5)',
-              boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
-              border: '1px solid rgba(0,0,0,0.05)'
-            }}></div>
-
-            {/* Faded Quill Icon */}
-            <i className="fa-solid fa-feather-pointed" style={{ 
-              color: '#8B5A2B', 
-              fontSize: '2.5rem', 
-              opacity: '0.1', 
-              position: 'absolute', 
-              right: '25px', 
-              bottom: '25px', 
-              transform: 'rotate(-15deg)',
-              pointerEvents: 'none'
-            }}></i>
-            
-            <p style={{ 
-              margin: 0, 
-              fontWeight: '600', 
-              fontSize: '1.1rem', 
-              lineHeight: '1.6', 
-              fontFamily: '"Segoe Script", "Bradley Hand", "Lucida Handwriting", cursive', 
-              color: '#3B2C24',
-              letterSpacing: '0.2px'
-            }}>
-              Dear Traveler,<br/><br/>
-              Carry water for the desert sun, wear comfortable shoes, and book tickets online to skip the lines. Most heritage sites welcome you from dawn till dusk.<br/>
-              <span style={{ display: 'block', textAlign: 'right', marginTop: '15px', fontSize: '1rem', color: '#5A473E' }}>
-                Warmly,<br/>
-                <strong style={{ fontSize: '1.1rem' }}>Jaipur Tourism</strong>
-              </span>
-            </p>
+      <div className="attractions-page-container container">
+        <aside className="attractions-sidebar">
+          <div className="sidebar-sticky-content">
+            <h4 className="sidebar-title">Quick Navigation</h4>
+            <div className="sidebar-divider"></div>
+            <ul className="sidebar-links">
+              {filters.filter(f => f !== 'All').map(category => {
+                const categoryId = category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
+                return (
+                  <li key={category}>
+                    <a 
+                      href={`#${categoryId}`} 
+                      onClick={(e) => handleSidebarClick(e, categoryId)}
+                    >
+                      <i className="fa-solid fa-location-dot"></i> {category}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-        </div>
+        </aside>
+
+        <main className="attractions-main-content">
+          {visibleCategories.map(category => {
+            const categoryAttractions = attractionsData.filter(attr => attr.category === category);
+            if (categoryAttractions.length === 0) return null;
+            
+            const categoryId = category.toLowerCase().replace(/ & /g, '-').replace(/ /g, '-');
+            return (
+              <div key={category} id={categoryId} className="category-section">
+                {renderSectionHeader(category)}
+                <div className="attractions-grid">
+                  {categoryAttractions.map(renderCard)}
+                </div>
+              </div>
+            );
+          })}
+
+          <div className="section-header" style={{ marginTop: '50px', marginBottom: '20px' }}>
+              <div className="section-title">A Note for the Traveler</div>
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
+            <div
+              style={{
+                background: 'radial-gradient(circle at center, #FDF6E3 0%, #ECE2C6 100%)',
+                border: '1px solid #D4C3A3',
+                borderRadius: '2px 12px 3px 15px',
+                padding: '25px 35px',
+                maxWidth: '550px',
+                width: '100%',
+                color: '#4A3B32',
+                boxShadow: '2px 4px 10px rgba(0,0,0,0.1), inset 0 0 20px rgba(139, 69, 19, 0.05)',
+                transform: 'rotate(-1deg)',
+                position: 'relative'
+              }}
+            >
+              <div style={{
+                position: 'absolute',
+                top: '-10px',
+                left: '50%',
+                transform: 'translateX(-50%) rotate(1deg)',
+                width: '70px',
+                height: '20px',
+                background: 'rgba(255, 255, 255, 0.5)',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
+                border: '1px solid rgba(0,0,0,0.05)'
+              }}></div>
+
+              <i className="fa-solid fa-feather-pointed" style={{ 
+                color: '#8B5A2B', 
+                fontSize: '2.5rem', 
+                opacity: '0.1', 
+                position: 'absolute', 
+                right: '25px', 
+                bottom: '25px', 
+                transform: 'rotate(-15deg)',
+                pointerEvents: 'none'
+              }}></i>
+              
+              <p style={{ 
+                margin: 0, 
+                fontWeight: '600', 
+                fontSize: '1.1rem', 
+                lineHeight: '1.6', 
+                fontFamily: '"Segoe Script", "Bradley Hand", "Lucida Handwriting", cursive', 
+                color: '#3B2C24',
+                letterSpacing: '0.2px'
+              }}>
+                Dear Explorer,<br/><br/>
+                Carry water for the desert sun, wear comfortable shoes, and book tickets online to skip the lines. Most heritage sites welcome you from dawn till dusk.<br/>
+                <span style={{ display: 'block', textAlign: 'right', marginTop: '15px', fontSize: '1rem', color: '#5A473E' }}>
+                  Warmly,<br/>
+                  <strong style={{ fontSize: '1.1rem' }}>Jaipur Tourism</strong>
+                </span>
+              </p>
+            </div>
+          </div>
+        </main>
       </div>
 
       <button 
@@ -234,67 +271,46 @@ function Attractions() {
         <i className="fa-solid fa-arrow-up"></i>
       </button>
 
+      {/* Booking/Explore Modal */}
       {selectedAttraction && (
-        <div className="attraction-modal-overlay" onClick={() => setSelectedAttraction(null)}>
-          <div className="attraction-modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="attraction-modal-close" onClick={() => setSelectedAttraction(null)}>
+        <div className="modal-overlay" onClick={() => setSelectedAttraction(null)}>
+          <div className="modal-content glass" onClick={e => e.stopPropagation()}>
+            <button className="close-modal" onClick={() => setSelectedAttraction(null)}>
               <i className="fa-solid fa-xmark"></i>
             </button>
-            <div className="attraction-modal-left">
-              <img src={selectedAttraction.image} alt={selectedAttraction.title} />
-            </div>
-            <div className="attraction-modal-right">
-              <h2>{selectedAttraction.title}</h2>
-              <div className="modal-rating">
-                <i className="fa-solid fa-star"></i> {selectedAttraction.rating}
+            <div className="modal-body">
+              <div className="modal-img">
+                <img src={selectedAttraction.image} alt={selectedAttraction.title} />
               </div>
-              <p className="modal-desc">{selectedAttraction.desc}</p>
-              
-              <div className="modal-details">
-                <div className="modal-detail-item">
-                  <div className="detail-icon"><i className="fa-solid fa-indian-rupee-sign"></i></div>
-                  <div className="detail-text">
-                    <strong>Entry Fee</strong>
+              <div className="modal-info">
+                <h2>{selectedAttraction.title}</h2>
+                <span className="modal-category">{selectedAttraction.category}</span>
+                <p className="modal-desc">{selectedAttraction.desc}</p>
+                <div className="modal-stats">
+                  <div className="stat-item">
+                    <i className="fa-solid fa-star"></i>
+                    <span>{selectedAttraction.rating} Rating</span>
+                  </div>
+                  <div className="stat-item">
+                    <i className="fa-regular fa-clock"></i>
+                    <span>{selectedAttraction.duration}</span>
+                  </div>
+                  <div className="stat-item">
+                    <i className="fa-solid fa-ticket"></i>
                     <span>{selectedAttraction.fee}</span>
                   </div>
                 </div>
-                <div className="modal-detail-item">
-                  <div className="detail-icon"><i className="fa-regular fa-clock"></i></div>
-                  <div className="detail-text">
-                    <strong>Time Slots</strong>
-                    <span>9:00 AM - 5:00 PM</span>
-                  </div>
+                <div className="modal-actions">
+                  <button className="book-now-btn">Book Tickets Now</button>
+                  <Link to="/explorer" className="view-map-btn">View on Map</Link>
                 </div>
-                <div className="modal-detail-item">
-                  <div className="detail-icon"><i className="fa-solid fa-hourglass-half"></i></div>
-                  <div className="detail-text">
-                    <strong>Duration</strong>
-                    <span>{selectedAttraction.duration}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="modal-reviews">
-                <h3>What people say</h3>
-                {selectedAttraction && [
-                  { name: ['Freny', 'Nayan', 'Bikash', 'Paras', 'Prabal'][selectedAttraction.id % 5], text: 'Amazing experience! The architecture is breathtaking.', color: '#A1673F' },
-                  { name: ['Freny', 'Nayan', 'Bikash', 'Paras', 'Prabal'][(selectedAttraction.id + 2) % 5], text: 'Highly recommended. Best place to visit in Jaipur!', color: '#D9B27C' }
-                ].map((review, i) => (
-                  <div className="review-item" key={i}>
-                    <div className="review-avatar" style={{background: review.color}}>{review.name.charAt(0)}</div>
-                    <div className="review-text">
-                      <strong>{review.name}</strong>
-                      <span>{review.text}</span>
-                    </div>
-                  </div>
-                ))}
               </div>
             </div>
           </div>
         </div>
       )}
     </>
-  )
+  );
 }
 
-export default Attractions
+export default Attractions;
