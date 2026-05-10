@@ -564,13 +564,90 @@ const locations = [
   {
     "id": 102,
     "name": "Bapu Bazaar",
-    "position": [
-      26.9157,
-      75.8193
-    ],
+    "position": [26.9157, 75.8193],
     "category": "Shopping",
-    "description": "Best for textiles and traditional Mojari footwear.",
-    "image": "https://images.tv9hindi.com/wp-content/uploads/2022/10/Bapu-Bazar.jpg"
+    "description": "A vibrant market known for leather mojris, colorful bandhej suits, and traditional Rajasthani puppets.",
+    "image": "https://i.pinimg.com/736x/df/c8/6f/dfc86f8738627f52657b6ae68680343a.jpg"
+  },
+  {
+    "id": 111,
+    "name": "Tripolia Bazaar",
+    "position": [26.9240, 75.8180],
+    "category": "Shopping",
+    "description": "Famous for stunning lac bangles and traditional brassware. Watch artisans make bangles live.",
+    "image": "https://d3gw4aml0lneeh.cloudfront.net/assets/locations/14716/oJQgbbb6Dtf6.jpg"
+  },
+  {
+    "id": 112,
+    "name": "Chandpole Bazaar",
+    "position": [26.9235, 75.8080],
+    "category": "Shopping",
+    "description": "Renowned for exquisite marble sculptures, handicrafts and the finest stone carvers of the city.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa-n2VwhtW8Pen6CanPiVsppEkx29UbC4BmA&s"
+  },
+  {
+    "id": 113,
+    "name": "Nehru Bazaar",
+    "position": [26.9148, 75.8175],
+    "category": "Shopping",
+    "description": "Famous for its collection of multi-colored juttis and traditional fabrics.",
+    "image": "https://media1.thrillophilia.com/filestore/fqhf4bu1yqhqr3rkbmkrjoh7yq35_1568709132_market-2691177_1920.jpg"
+  },
+  {
+    "id": 114,
+    "name": "Kishanpole Bazaar",
+    "position": [26.9220, 75.8095],
+    "category": "Shopping",
+    "description": "Known for textile goods and wooden furniture, great for Bandhani and Leheriya textiles.",
+    "image": "https://i.pinimg.com/736x/75/34/c9/7534c9e9577751cd3112536dd546e992.jpg"
+  },
+  {
+    "id": 115,
+    "name": "Sireh Deori Bazaar",
+    "position": [26.9239, 75.8268],
+    "category": "Shopping",
+    "description": "Located right outside Hawa Mahal, perfect for camel leather shoes and bags.",
+    "image": "https://s3.india.com/wp-content/uploads/2024/07/Sireh-Deori-Bazaar.jpg?impolicy=Medium_Widthonly&w=350&h=263"
+  },
+  {
+    "id": 116,
+    "name": "MI Road",
+    "position": [26.9131, 75.8162],
+    "category": "Shopping",
+    "description": "The upscale side of Jaipur's shopping, lined with premium emporiums and high-end jewelry stores.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHb-VQN1uAhEAAmtvOk691DEqSJMaUFVvCkQ&s"
+  },
+  {
+    "id": 117,
+    "name": "The Gem Palace",
+    "position": [26.9200, 75.8228],
+    "category": "Shopping",
+    "description": "The most legendary jewelry store in Jaipur, serving royalty and celebrities for generations.",
+    "image": "https://d3gw4aml0lneeh.cloudfront.net/assets/locations/zvfIDwP04Oa6.jpg"
+  },
+  {
+    "id": 118,
+    "name": "Kripal Kumbh",
+    "position": [26.9085, 75.8030],
+    "category": "Shopping",
+    "description": "The original home of Jaipur's famous Blue Pottery, started by the legendary Kripal Singh Shekhawat.",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPAqDjz29lbzZr4SAJWQlvR2vyuwlw7wwlsA&s"
+  },
+  {
+    "id": 119,
+    "name": "Anokhi",
+    "position": [26.8968, 75.8068],
+    "category": "Shopping",
+    "description": "The ultimate destination for premium block-printed textiles, garments, and home furnishings.",
+    "image": "https://i.pinimg.com/1200x/79/40/ae/7940ae5d92a97cca8031cf654b13a876.jpg"
+  },
+  {
+    "id": 120,
+    "name": "Purohit ji ka Katla",
+    "position": [26.9228, 75.8210],
+    "category": "Shopping",
+    "description": "A bustling wholesale market in narrow lanes, offering incredible deals on fabrics and wedding attire.",
+    "image": "https://i.pinimg.com/1200x/53/be/e4/53bee4de2d71e0bb84655976876bc44d.jpg"
   },
   {
     "id": 103,
