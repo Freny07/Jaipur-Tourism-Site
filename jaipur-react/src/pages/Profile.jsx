@@ -61,7 +61,7 @@ function Profile({ user: userProp, onUserChange }) {
       const res = await fetch(`${API_URL}/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: resetEmail, otp: resetOtp, newPassword: resetNewPassword })
+        body: JSON.stringify({ email: resetEmail, token: resetOtp, newPassword: resetNewPassword })
       })
       const data = await res.json()
       if (data.error) {

@@ -45,7 +45,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/signup", "/api/login", "/api/set-password", "/api/me", "/api/chat", "/api/update", 
                                "/api/send-booking-email", "/api/send-cancellation-email", "/api/send-cancellation-otp", 
                                "/api/verify-cancellation-otp", "/api/forgot-password", "/api/reset-password",
-                               "/api/save-booking", "/api/my-bookings", "/api/packages", "/api/login/oauth2/code/**", "/oauth2/authorization/**").permitAll()
+                               "/api/save-booking", "/api/my-bookings", "/api/packages", 
+                               "/login/oauth2/code/**", "/oauth2/authorization/**").permitAll()
 
                 .anyRequest().authenticated()
             )
@@ -54,7 +55,7 @@ public class SecurityConfig {
                     .authorizationRequestResolver(authorizationRequestResolver())
                 )
                 .redirectionEndpoint(redirection -> redirection
-                    .baseUri("/api/login/oauth2/code/*")
+                    .baseUri("/login/oauth2/code/*")
                 )
                 .successHandler((request, response, authentication) -> {
                     response.sendRedirect(frontendUrl);
