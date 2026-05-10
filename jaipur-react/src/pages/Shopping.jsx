@@ -193,36 +193,78 @@ function Shopping() {
     ? MARKETS_DATA 
     : MARKETS_DATA.filter(m => m.category === activeFilter);
 
-  const featuredMarkets = filteredMarkets.filter(m => m.featured).slice(0, 4);
-  const generalMarkets = filteredMarkets.filter(m => !m.featured);
+  const featuredBazaars = MARKETS_DATA.slice(0, 3);
+  const gridMarkets = isAll ? MARKETS_DATA.slice(3) : filteredMarkets;
 
   const openModal = (market) => setSelectedMarket(market);
   const closeModal = () => setSelectedMarket(null);
 
-  const renderCard = (market) => (
-    <div className="attraction-card" key={market.id}>
-      <div className="attraction-img-wrapper">
-        <img src={market.image} alt={market.name} style={{ objectFit: 'cover', width: '100%', height: '100%' }} />
-        <span className="rating-badge">
-          <i className="fa-solid fa-star"></i> {market.rating}
+  const renderCard = (market, minHeight = '300px') => (
+    <div className="col-md-4 col-lg-3" key={market.id}>
+      <div 
+        className="bento-card hover-lift-card" 
+        style={{ position: 'relative', overflow: 'hidden', borderRadius: '1rem', border: 'none', cursor: 'pointer', height: '100%', minHeight: minHeight }}
+        onClick={() => openModal(market)}
+      >
+        <img src={market.image} alt={market.name} className="bento-img" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        <div style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, transparent 100%)', position: 'absolute', inset: 0, pointerEvents: 'none' }}></div>
+        <div style={{ position: 'absolute', bottom: 0, left: 0, padding: '1.5rem', color: '#ffffff', zIndex: 2, pointerEvents: 'none', width: '100%' }}>
+          <h5 style={{ fontWeight: 'bold', margin: 0, color: '#ffffff', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>{market.name}</h5>
+          <p style={{ margin: '0.5rem 0 0 0', opacity: 0.9, fontSize: '0.9rem', color: '#ffffff', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>{market.speciality}</p>
+          <p className="card-desc" style={{ color: '#ffffff', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>
+            {market.description ? market.description.substring(0, 100) + '...' : ''}
+          </p>
+        </div>
+        <span className="rating-badge" style={{ position: 'absolute', top: '15px', right: '15px', zIndex: 2, background: 'rgba(255,255,255,0.9)', color: '#000', padding: '4px 8px', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 'bold' }}>
+          <i className="fa-solid fa-star" style={{ color: '#FFD700' }}></i> {market.rating}
         </span>
       </div>
-      <div className="card-content">
-        <div className="card-title">{market.name}</div>
-        <div className="card-desc">{market.speciality}</div>
-        <div className="card-meta">
-          <div className="meta-item"><i className="fa-regular fa-clock"></i> {market.timings}</div>
-          <div className="meta-item"><i className="fa-solid fa-tag"></i> {market.bargain} Bargain</div>
-        </div>
-        <button className="explore-btn" onClick={() => openModal(market)}>
-          Explore <i className="fa-solid fa-arrow-right"></i>
-        </button>
+    </div>
+  );
+
+  const renderBentoCard = (market, minHeight) => (
+    <div 
+      className="bento-card hover-lift-card" 
+      style={{ position: 'relative', overflow: 'hidden', borderRadius: '1rem', border: 'none', cursor: 'pointer', height: '100%', minHeight: minHeight }}
+      onClick={() => openModal(market)}
+    >
+      <img src={market.image} alt={market.name} className="bento-img" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+      <div style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 40%, transparent 100%)', position: 'absolute', inset: 0, pointerEvents: 'none' }}></div>
+      <div style={{ position: 'absolute', bottom: 0, left: 0, padding: '2rem', color: '#ffffff', zIndex: 2, pointerEvents: 'none', width: '100%' }}>
+        <h3 style={{ fontWeight: 'bold', margin: 0, color: '#ffffff', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>{market.name}</h3>
+        <p style={{ margin: '0.5rem 0 0 0', opacity: 0.9, fontSize: '1rem', color: '#ffffff', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>{market.speciality}</p>
+        <p className="card-desc" style={{ color: '#ffffff', textShadow: '0 2px 6px rgba(0,0,0,0.8)' }}>
+          {market.description ? market.description.substring(0, 100) + '...' : ''}
+        </p>
       </div>
     </div>
   );
 
   return (
     <>
+      <style>
+        {`
+          .bento-card .bento-img {
+            transition: transform 0.5s ease;
+          }
+          .bento-card:hover .bento-img {
+            transform: scale(1.05);
+          }
+          .card-desc {
+            margin: 0.5rem 0 0 0;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            transform: translateY(5px);
+            font-size: 0.9rem;
+          }
+          .bento-card:hover .card-desc {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+          }
+        `}
+      </style>
       <Carousel 
         title="Pink City Shopping" 
         subtitle="Discover ancient bazaars where every lane tells a story of craft and color." 
@@ -246,7 +288,7 @@ function Shopping() {
         </div>
 
         {/* Featured Bento Grid */}
-        {activeFilter === 'all' && (
+        {isAll && featuredBazaars.length >= 3 && (
           <div className="category-section">
             <div className="section-header">
               <div className="section-title">Must-Visit Featured Bazaars</div>
@@ -258,35 +300,20 @@ function Shopping() {
               </div>
             </div>
 
-            <div className="row g-4 mb-5">
-              {featuredMarkets.map((market) => (
-                <div key={market.id} className="col-md-6">
-                  <div 
-                    className="card h-100 shadow-sm border-0" 
-                    style={{ cursor: 'pointer', overflow: 'hidden', borderRadius: '15px' }} 
-                    onClick={() => openModal(market)}
-                  >
-                    <div className="row g-0 h-100">
-                      <div className="col-5">
-                        <img 
-                          src={market.image} 
-                          alt={market.name} 
-                          style={{ objectFit: 'cover', width: '100%', height: '100%', minHeight: '180px' }} 
-                        />
-                      </div>
-                      <div className="col-7">
-                        <div className="card-body d-flex flex-column h-100">
-                          <h5 className="card-title text-primary fw-bold">{market.name}</h5>
-                          <span className="badge bg-secondary mb-2 align-self-start">{market.speciality}</span>
-                          <p className="card-text small text-muted mb-auto" style={{ display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                            {market.description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+            <div className="featured-bento-enclosure mb-5" style={{ backgroundColor: '#fdf8f5', border: '1px solid #e0e0e0', borderRadius: '1.5rem', padding: '2rem', boxShadow: '0 6px 18px rgba(0,0,0,0.05)' }}>
+              <div className="row g-4">
+                <div className="col-lg-7">
+                  {renderBentoCard(featuredBazaars[0], '380px')}
+                </div>
+                <div className="col-lg-5 d-flex flex-column gap-3">
+                  <div className="flex-fill">
+                    {renderBentoCard(featuredBazaars[1], '180px')}
+                  </div>
+                  <div className="flex-fill">
+                    {renderBentoCard(featuredBazaars[2], '180px')}
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           </div>
         )}
@@ -302,8 +329,8 @@ function Shopping() {
               <i>Discover local treasures and specialized bazaars.</i>
             </div>
           </div>
-          <div className="attractions-grid">
-            {filteredMarkets.map(renderCard)}
+          <div className="row g-4">
+            {gridMarkets.map(market => renderCard(market))}
           </div>
         </div>
 
