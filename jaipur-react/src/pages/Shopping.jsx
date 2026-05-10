@@ -412,9 +412,9 @@ function Shopping() {
           </div>
         </div>
 
-        {/* Note for the Traveler */}
+        {/* Note for the Shopper */}
         <div className="section-header" style={{ marginTop: '50px', marginBottom: '20px' }}>
-            <div className="section-title">A Note for the Traveler</div>
+            <div className="section-title">A Note for the Shopper</div>
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
           <div
@@ -465,7 +465,7 @@ function Shopping() {
               color: '#3B2C24',
               letterSpacing: '0.2px'
             }}>
-              Dear Traveler,<br/><br/>
+              Dear Shopper,<br/><br/>
               When exploring the vibrant lanes of Jaipur, remember that authenticity is key. Always request a certificate of authenticity for precious gemstones, and negotiate warmly with a smile in the bustling street markets. Enjoy the vibrant colors!<br/>
               <span style={{ display: 'block', textAlign: 'right', marginTop: '15px', fontSize: '1rem', color: '#5A473E' }}>
                 Warmly,<br/>
