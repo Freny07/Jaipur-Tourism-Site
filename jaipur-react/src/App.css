@@ -2628,3 +2628,245 @@ footer {
     padding: 20px;
   }
 }
+
+/* --- Shopping Page Overhaul Styles --- */
+
+.section-intro {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 10px;
+}
+
+.section-intro-bar {
+  width: 5px;
+  height: 36px;
+  border-radius: 4px;
+  background: linear-gradient(to bottom, #A1673F, #3C2A21);
+  margin-right: 14px;
+  flex: none;
+}
+
+.section-intro-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #A1673F;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.section-intro-title {
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #3C2A21;
+  line-height: 1.1;
+}
+
+.spec-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.spec-chip {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  background: #fff;
+  border-radius: 18px;
+  padding: 22px 14px 18px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.07);
+  border: 2px solid transparent;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.spec-chip.active {
+  border-color: #A1673F;
+  background: #FFF6EF;
+  box-shadow: 0 8px 25px rgba(161, 103, 63, 0.15);
+}
+
+.spec-chip:hover:not(.active) {
+  border-color: #E9CBA7;
+  transform: translateY(-5px);
+}
+
+.spec-chip-icon {
+  font-size: 2rem;
+  transition: transform 0.3s;
+}
+
+.spec-chip:hover .spec-chip-icon {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+.spec-chip-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #3C2A21;
+}
+
+.spec-chip-sub {
+  font-size: 0.67rem;
+  color: #888;
+  line-height: 1.4;
+}
+
+/* Featured Market Cards */
+.featured-market-card {
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.featured-market-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.featured-market-card img {
+  transition: transform 0.5s ease;
+}
+.featured-market-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Tips Section */
+.tips-wrapper {
+  position: relative;
+  border-radius: 24px;
+  background: #FFF6EF;
+  border: 1.5px solid rgba(161, 103, 63, 0.2);
+  padding: 36px 32px 32px;
+  margin-bottom: 50px;
+  box-shadow: 0 6px 30px rgba(161, 103, 63, 0.08);
+  overflow: hidden;
+}
+
+.tips-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 26px;
+}
+
+.tips-header-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  background: #A1673F;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  font-size: 1.2rem; flex: none;
+}
+
+.tips-header h3 {
+  font-size: 1.15rem; font-weight: 700;
+  color: #3C2A21; margin: 0;
+}
+
+.tips-header p {
+  font-size: 0.72rem; color: #888; margin: 2px 0 0;
+}
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.tip-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 18px;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.06);
+  border-left: 4px solid #A1673F;
+  transition: all 0.28s ease;
+}
+
+.tip-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 14px 36px rgba(0,0,0,0.1);
+}
+
+.tip-icon-box {
+  flex: none;
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.45rem;
+  background: rgba(161, 103, 63, 0.1);
+  transition: transform 0.3s;
+}
+
+.tip-card:hover .tip-icon-box { transform: scale(1.1) rotate(-6deg); }
+
+.tip-body h4 {
+  font-size: 0.88rem; font-weight: 700;
+  margin: 0 0 5px; color: #3C2A21;
+}
+
+.tip-body p {
+  font-size: 0.77rem; color: #666;
+  line-height: 1.6; margin: 0;
+}
+
+/* Visit Banner */
+.visit-banner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 52px;
+}
+
+.visit-slot {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px 18px;
+  text-align: center;
+  box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+  border-top: 3px solid #A1673F;
+  transition: all 0.28s ease;
+}
+
+.visit-slot:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(0,0,0,0.1); }
+.visit-slot-emoji { font-size: 1.8rem; margin-bottom: 8px; }
+.visit-slot-time { font-size: 0.75rem; font-weight: 700; color: #A1673F; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 4px; }
+.visit-slot-label { font-size: 0.95rem; font-weight: 700; color: #3C2A21; margin-bottom: 4px; }
+.visit-slot-desc { font-size: 0.73rem; color: #888; line-height: 1.5; }
+
+@media (max-width: 860px) {
+  .shopping-bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-card-featured { grid-column: 1; grid-row: auto; min-height: 320px; }
+  .bento-card-r1       { grid-column: 1; grid-row: auto; }
+  .bento-card-r2       { grid-column: 1; grid-row: auto; }
+  .bento-card-wide     { grid-column: 1; grid-row: auto; }
+  .spec-strip    { grid-template-columns: repeat(2, 1fr); }
+  .tips-grid     { grid-template-columns: 1fr; }
+  .visit-banner  { grid-template-columns: 1fr; }
+  .tips-wrapper  { padding: 24px 18px; }
+}
+
+/* Hover Lift Classes for Shopping UI */
+.hover-lift-card {
+  transition: all 0.3s ease;
+}
+
+.hover-lift-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1) !important;
+}
+
+.hover-scale-icon {
+  transition: all 0.3s ease;
+}
+
+.hover-lift-card:hover .hover-scale-icon {
+  transform: scale(1.1);
+}
