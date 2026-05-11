@@ -34,70 +34,53 @@ public class ChatController {
     private String knowledgeBase =
         "=== ABOUT THIS WEBSITE ===\n" +
         "Website: Jaipur City Tourism — 'The Pink City – Heritage, Colors, Culture, Wonders & More'\n" +
-        "Pages available: Home, Attractions (/attractions), Shopping (/shopping), Cuisine (/cuisine), Packages & Contact (/contact).\n" +
-        "To book a tour or contact us: visit the /contact page.\n\n" +
-
-        "=== ABOUT JAIPUR ===\n" +
-        "Jaipur is the capital of Rajasthan, India, famously called the Pink City due to its distinct pink-coloured buildings.\n" +
-        "Founded in 1727 by Maharaja Sawai Jai Singh II — India's first planned city.\n" +
-        "Jaipur is part of the Golden Triangle tourist circuit along with Delhi and Agra.\n" +
-        "Best time to visit: October to March (pleasant weather). Summers (April–June) are very hot.\n\n" +
+        "Navigation: Home, Attractions (/attractions), Shopping (/shopping), Cuisine (/cuisine), Packages & Contact (/contact).\n" +
+        "Interactive Features:\n" +
+        "- Live Weather: Check real-time Jaipur weather on the Home page (updated every 15 mins).\n" +
+        "- Interactive Travel Map: Explore tourist locations visually on the Home and Explorer pages.\n" +
+        "- User Profile System: Click the person icon in the nav to create a profile (Solo/Family/Couple) and track bookings.\n" +
+        "- Real-time Statistics: Site displays active tourist counts (28,500+ monthly) and total attraction counts (32).\n\n" +
 
         "=== ATTRACTIONS (/attractions) ===\n" +
-        "The site lists 32 attractions total. Here are the 6 featured ones:\n" +
-        "FORTS & PALACES:\n" +
-        "- Amber Fort: Majestic hilltop fort with elephant rides, light & sound show at 7 PM, stunning views of Maota Lake.\n" +
-        "- Hawa Mahal: 'Palace of Winds' with 953 intricately carved windows, built for royal ladies to view street processions.\n" +
-        "- City Palace: Royal residence complex with courtyards, museums, and the famous Peacock Gate.\n" +
-        "SCIENCE & HERITAGE:\n" +
-        "- Jantar Mantar: UNESCO World Heritage astronomical observatory with the world's largest stone sundial.\n" +
-        "- Albert Hall Museum: Collection of paintings, carpets, ivory, stone, and metal sculptures.\n" +
-        "- Birla Mandir: Modern white marble temple, beautifully lit in the evening.\n" +
-        "Visit Tip: Most attractions open morning to evening. Book tickets online to avoid queues. Carry water, wear comfortable footwear.\n\n" +
+        "Jaipur features 32 major heritage sites categorized for explorers:\n" +
+        "FORTS & PALACES: Amber Fort (₹500 F / ₹100 I, 4.8★), City Palace (₹700 F / ₹300 I), Hawa Mahal (₹200 F / ₹50 I), Jaigarh Fort (World's largest cannon), Jal Mahal (Water Palace), Nahargarh Fort (Overlooking city).\n" +
+        "GATES (Free Entry): Patrika Gate (Vibrant photo spot), Tripolia Gate, Ajmeri Gate, Sanganeri Gate, Chandpole Gate.\n" +
+        "TEMPLES: Akshardham (Stunning architecture), Govind Dev Ji (Sacred Krishna temple), Birla Mandir, Galtaji (Monkey temple), Moti Dungri Ganesh.\n" +
+        "SCIENCE & HERITAGE: Jantar Mantar (UNESCO Observatory, largest stone sundial), Panna Meena ka Kund (Stepwell), Jawahar Kala Kendra.\n" +
+        "MUSEUMS: Albert Hall (₹300 F / ₹40 I), Amrapali Museum (Jewellery), Anokhi Museum (Hand Printing), Wax Museum (Nahargarh).\n" +
+        "GARDENS: Central Park, Kanak Vrindavan, Sisodia Rani Garden (tier gardens with fountains).\n" +
+        "Visitor Note: Most sites open 9 AM – 6 PM. Carry water, wear comfortable shoes, and book online to skip lines.\n\n" +
 
         "=== SHOPPING (/shopping) ===\n" +
-        "4 popular markets featured:\n" +
-        "- Johari Bazaar: Best for gold, kundan, and meenakari jewellery. Ideal for wedding shopping.\n" +
-        "- Bapu Bazaar: Great for mojris (shoes), bandhej sarees, kurtis, and Jaipuri quilts.\n" +
-        "- Pink City Market: Traditional Rajasthani attire, handicrafts, puppets, and decorative items.\n" +
-        "- Tripolia Bazaar: Known for lac bangles, brassware, and premium textiles at wholesale prices.\n" +
-        "Shopping Tips: Bargaining is common — start low. Use government emporiums for gems. Keep cash for small shops. Shop in the evening in summer — afternoons are very hot.\n\n" +
+        "Markets & Specialty Shops:\n" +
+        "- Johari Bazaar: Famous for precious gemstones, gold, and Kundan jewellery. Timing: 10 AM - 8 PM.\n" +
+        "- Bapu Bazaar: Best for leather mojris, bandhej suits, and Jaipuri quilts. Timing: 11 AM - 9 PM.\n" +
+        "- Tripolia Bazaar: Known for lac bangles and traditional brassware. (Closed on Sundays).\n" +
+        "- Chandpole Bazaar: Famous for marble sculptures and stone carvings.\n" +
+        "- Specialty Stops: The Gem Palace (Antique jewellery), Anokhi (Hand block prints), Kripal Kumbh (Blue Pottery).\n" +
+        "Shopping Tips: Bargaining is common in street markets (aim for 30-40% lower). Large stores accept cards/UPI; carry cash for street vendors. Best vibes are in the Evening (5 PM - 9 PM).\n\n" +
 
         "=== CUISINE (/cuisine) ===\n" +
-        "4 signature dishes to try:\n" +
-        "- Rajasthani Thali: A royal platter with dal-baati-churma, gatte ki sabzi, kadhi, roti, rice, and sweets. Must-try!\n" +
-        "- Ghewar: Honeycomb-like sweet cake, especially popular during the Teej festival and monsoon season.\n" +
-        "- Pyaz Kachori: Crispy pastry stuffed with spicy onion filling — a classic Jaipur breakfast snack.\n" +
-        "- Laal Maas: Fiery red mutton curry slow-cooked with Mathania chillies and traditional spices (very spicy!).\n" +
-        "Where to Eat: Try local dhabas and rooftop restaurants in the old city. Thali restaurants near MI Road and C-Scheme serve unlimited Rajasthani thalis. For street food, explore near Bapu Bazaar and Johari Bazaar in the evening.\n\n" +
+        "Must-Try Rajasthani Dishes:\n" +
+        "- Main Course: Rajasthani Thali (Unlimited platter), Dal-Baati-Churma (The iconic trio), Laal Maas (Spicy red mutton), Gatte ki Sabzi, Ker Sangri.\n" +
+        "- Snacks: Pyaz Kachori (Best at Rawat Mishthan Bhandar), Mirchi Bada, Aloo Tikki (Masala Chowk).\n" +
+        "- Sweets: Ghewar (Monsoon specialty), Mawa Kachori, Feeni, Jalebi (Saras Parlour).\n" +
+        "- Beverages: Kulhad Lassi (Lassiwala, MI Road), Jaljeera, Thandai (Pandit Kulfi).\n" +
+        "Top Eateries: LMB (Johari Bazaar), Chokhi Dhani (Village experience), Tapri Central (Rooftop cafe), Spice Court.\n\n" +
 
         "=== PACKAGES & BOOKING (/contact) ===\n" +
-        "3 tourism packages available:\n" +
-        "- Package 1: Jaipur One-Day Tour\n" +
-        "- Package 2: 2 Days Heritage Tour\n" +
-        "- Package 3: 3 Days Jaipur–Ajmer–Pushkar Tour\n" +
-        "To register: Fill the form on /contact with your Name, Email, Phone, and selected Package.\n\n" +
+        "Exclusive Tour Packages:\n" +
+        "- Amber Fort Heritage Tour: Full Day, ₹1,500/person.\n" +
+        "- Royal Palace Tour: Half Day, ₹1,200/person.\n" +
+        "- Cultural Night Safari: Evening (Nahargarh), ₹2,000/person (Includes dinner).\n" +
+        "- Custom Packages: Users can 'Build Your Custom Package' by selecting specific sites (Amber Fort, Hawa Mahal, Jantar Mantar, etc.) with automated price calculation.\n" +
+        "To Book: Use the form on /contact. Payments are secure, and cancellations can be managed via an OTP-verified email system.\n\n" +
 
-        "=== CONTACT INFORMATION ===\n" +
-        "Address: Jaipur Tourism Office, Pink City, Jaipur, Rajasthan\n" +
-        "Email: info@jaipurtourism.com\n" +
-        "Phone: +91-12345-67890\n" +
-        "Office Hours: 9:00 AM to 7:00 PM, all days.\n\n" +
-
-        "=== TODAY'S FEATURED EVENTS ===\n" +
-        "- Light & Sound Show at Amber Fort — 7:00 PM\n" +
-        "- Folk Dance Night at Central Park — 8:30 PM\n" +
-        "- Artisan Market at Johari Bazaar — All Day\n" +
-        "- Rajasthani Food Fest at Bapu Bazaar — 5:00 PM\n\n" +
-
-        "=== USER PROFILE SYSTEM ===\n" +
-        "To create a profile: Click the person icon in the top navigation bar.\n" +
-        "Fill in name, email, phone, age, city, travel type (Solo/Family/Friends/Couple), and interest (Culture/Food/Adventure/Shopping/Heritage). You can also upload a profile photo.\n" +
-        "Profile is saved in your browser. You can edit or logout at any time.\n\n" +
-
-        "=== WEATHER INFO ===\n" +
-        "The website shows live weather for Jaipur on the Home page, updated every 15 minutes.\n" +
-        "General climate: Hot summers (up to 45C), monsoon (July–September), pleasant winter (October–February, 10–20C). Best tourist season: October–March.";
+        "=== CONTACT & SUPPORT ===\n" +
+        "Address: Jaipur Tourism Center, Pink City, Jaipur.\n" +
+        "Email: jaipur.tourism.official@gmail.com\n" +
+        "Phone: +91-12345-67890 (9 AM - 7 PM).\n" +
+        "Socials: Active on Instagram (@jaipur_tour_updates), Facebook, and X.";
 
     @PostMapping("/chat")
     public Map<String, String> chat(@RequestBody Map<String, String> request) {
