@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Carousel from '../Carousel';
 import './Attractions.css';
 
@@ -79,6 +79,7 @@ function Attractions() {
   const [showScroll, setShowScroll] = useState(false);
   const [selectedAttraction, setSelectedAttraction] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const filters = ['All', 'Forts & Palaces', 'Gates', 'Science & Heritage', 'Gardens', 'Temples', 'Museums'];
 
@@ -303,16 +304,18 @@ function Attractions() {
                   </div>
                 </div>
                 <div className="modal-actions">
-                  <button className="book-now-btn">Book Tickets Now</button>
+                  <button className="book-now-btn" onClick={() => navigate('/contact', { state: { bookingItem: selectedAttraction, type: 'attraction' } })}>Book Tickets Now</button>
                   <Link to="/explorer" className="view-map-btn">View on Map</Link>
                 </div>
 
                 <div className="modal-reviews">
                   <h3>Visitor Reviews</h3>
                   {[
-                    { id: 1, user: "Ananya Sharma", rating: 5, comment: "Absolutely breathtaking! The architecture is stunning and the guide was very knowledgeable." },
-                    { id: 2, user: "James Wilson", rating: 4, comment: "A must-visit in Jaipur. It gets a bit crowded, so try to reach early." },
-                    { id: 3, user: "Rajesh Gupta", rating: 5, comment: "The light and sound show in the evening is magical. Don't miss it!" }
+                    { id: 1, user: "Freny", rating: 5, comment: "Absolutely breathtaking! The architecture is stunning and the guide was very knowledgeable." },
+                    { id: 2, user: "Nayan", rating: 4, comment: "A must-visit in Jaipur. It gets a bit crowded, so try to reach early." },
+                    { id: 3, user: "Prabal", rating: 5, comment: "The light and sound show in the evening is magical. Don't miss it!" },
+                    { id: 4, user: "Paras", rating: 4, comment: "Incredible detail in every corner. Jaipur never ceases to amaze me." },
+                    { id: 5, user: "Bikash", rating: 5, comment: "One of the best heritage sites I've ever visited. Very well maintained." }
                   ].map(review => (
                     <div key={review.id} className="review-item">
                       <div className="review-header">

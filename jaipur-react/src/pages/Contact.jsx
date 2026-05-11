@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Carousel from '../Carousel'
 import { API_BASE_URL } from '../apiConfig'
 
@@ -112,6 +113,8 @@ function Contact() {
   const [isAdmin, setIsAdmin] = useState(false)
   const [adminModalOpen, setAdminModalOpen] = useState(false)
   const [adminFormData, setAdminFormData] = useState({ id: null, title: '', description: '', duration: '', price: '', imageUrl: '', packageType: 'EXCLUSIVE' })
+  const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/packages`)
@@ -175,12 +178,42 @@ function Contact() {
 
   const PACKAGES = fetchedPackages.length > 0 ? fetchedPackages : FALLBACK_PACKAGES;
 
-  const PLACES = dbPackages.filter(p => p.packageType === 'CUSTOM').map(p => ({
-    id: String(p.id),
-    name: p.title,
-    price: p.price || 0,
-    image: p.imageUrl
-  }));
+  const STATIC_PLACES = [
+    // Attractions
+    { id: 'a1', name: 'Amber Fort', price: 100, image: '/packages/amber_fort.png' },
+    { id: 'a2', name: 'City Palace', price: 300, image: '/packages/city_palace.png' },
+    { id: 'a3', name: 'Hawa Mahal', price: 50, image: '/packages/hawa_mahal.png' },
+    { id: 'a4', name: 'Nahargarh Fort', price: 50, image: '/packages/nahagarh fort.jpg' },
+    { id: 'a5', name: 'Jantar Mantar', price: 50, image: '/packages/jantar_mantar.png' },
+    { id: 'a6', name: 'Albert Hall Museum', price: 40, image: '/packages/albert_hall.png' },
+    { id: 'a7', name: 'Jaigarh Fort', price: 35, image: '/packages/jaigarh fort.jpg' },
+    { id: 'a8', name: 'Jal Mahal', price: 0, image: '/packages/jal_mahal.png' },
+    { id: 'a9', name: 'Patrika Gate', price: 0, image: '/packages/patrika gate.jpg' },
+    { id: 'a10', name: 'Galta Ji Temple', price: 0, image: '/packages/galtaji temple.jpg' },
+    { id: 'a11', name: 'Birla Mandir', price: 0, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0N-O3xVq5q8o1u5L5W0nK6L5L5L5L5L5L5L5&s' },
+    { id: 'a12', name: 'Govind Dev Ji Temple', price: 0, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_w-M8Y-o6K-x-y-z-w-v-u-t-s-r-q-p-o-n&s' },
+    { id: 'a13', name: 'Samode Palace', price: 1000, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-P-O-N-M-L-K-J-I-H-G-F-E-D-C-B-A&s' },
+    { id: 'a14', name: 'Chokhi Dhani', price: 900, image: 'https://i.redd.it/e9yo0utefpo61.jpg' },
+    
+    // Shopping
+    { id: 's1', name: 'Johari Bazaar', price: 0, image: 'https://i.pinimg.com/736x/8f/55/40/8f55404f451c715ce3ac30ebdceb12aa.jpg' },
+    { id: 's2', name: 'Bapu Bazaar', price: 0, image: 'https://i.pinimg.com/736x/df/c8/6f/dfc86f8738627f52657b6ae68680343a.jpg' },
+    { id: 's3', name: 'Tripolia Bazaar', price: 0, image: 'https://d3gw4aml0lneeh.cloudfront.net/assets/locations/14716/oJQgbbb6Dtf6.jpg' },
+    { id: 's4', name: 'Chandpole Bazaar', price: 0, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQa-n2VwhtW8Pen6CanPiVsppEkx29UbC4BmA&s' },
+    { id: 's5', name: 'Nehru Bazaar', price: 0, image: 'https://media1.thrillophilia.com/filestore/fqhf4bu1yqhqr3rkbmkrjoh7yq35_1568709132_market-2691177_1920.jpg' },
+    { id: 's6', name: 'MI Road', price: 0, image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHb-VQN1uAhEAAmtvOk691DEqSJMaUFVvCkQ&s' },
+    { id: 's7', name: 'The Gem Palace', price: 0, image: 'https://d3gw4aml0lneeh.cloudfront.net/assets/locations/zvfIDwP04Oa6.jpg' }
+  ];
+
+  const PLACES = [
+    ...STATIC_PLACES,
+    ...dbPackages.filter(p => p.packageType === 'CUSTOM').map(p => ({
+      id: String(p.id),
+      name: p.title,
+      price: p.price || 0,
+      image: p.imageUrl
+    }))
+  ];
 
   const handleDeletePackage = async (id) => {
     if (!window.confirm("Are you sure you want to permanently delete this package?")) return;
@@ -291,7 +324,24 @@ function Contact() {
       console.error("Sync initialization failed:", e);
     }
   }, []);
-  
+
+  useEffect(() => {
+    if (location.state && location.state.bookingItem) {
+      const item = location.state.bookingItem;
+      const pkg = {
+        id: 'external-' + item.id,
+        title: item.title || item.name,
+        price: item.fee || item.price || 'Free',
+        details: item.desc || item.description,
+        image: item.image,
+        startDate: getFutureDate(7)
+      };
+      openBookingModal(pkg);
+      // Clear state so it doesn't reopen on refresh
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location, PACKAGES, PLACES]);
+
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedPackage, setSelectedPackage] = useState(null)
