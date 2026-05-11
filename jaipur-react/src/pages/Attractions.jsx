@@ -185,61 +185,7 @@ function Attractions() {
         </aside>
 
         <main className="attractions-main-content">
-          <section className="exclusive-packages-section" style={{ marginBottom: '50px' }}>
-            <div className="section-header">
-              <div className="section-title">Our Exclusive Packages</div>
-              <div className="decorative-divider">
-                <span></span><i className="fa-solid fa-star"></i><span></span>
-              </div>
-              <div className="section-subtitle">
-                <i>Experience the rich culture, heritage, and flavors of the Pink City.</i>
-              </div>
-            </div>
-            
-            <div className="packages-grid">
-              {[
-                {
-                  id: 'f1',
-                  title: 'Amber Fort Heritage Tour',
-                  duration: 'Full Day',
-                  price: '₹1,500',
-                  details: 'Explore the majestic Amber Fort, including a guided tour of the Diwan-e-Aam, Sheesh Mahal, and the royal courtyards. Enjoy a magnificent sunset view.',
-                  image: '/packages/amber_fort.png'
-                },
-                {
-                  id: 'f2',
-                  title: 'Royal Palace Tour',
-                  duration: 'Half Day',
-                  price: '₹1,200',
-                  details: 'A deep dive into the City Palace of Jaipur showcasing its intricate royal architecture, vibrant pink and peach colors, and elegant courtyards.',
-                  image: '/packages/city_palace.png'
-                },
-                {
-                  id: 'f3',
-                  title: 'Cultural Night Safari',
-                  duration: 'Evening',
-                  price: '₹2,000',
-                  details: 'Experience Nahargarh fort at night overlooking the glittering city of Jaipur. Includes dinner under the starry sky and a magical atmosphere.',
-                  image: '/packages/nahagarh fort.jpg'
-                }
-              ].map((pkg) => (
-                <div className="package-card" key={pkg.id}>
-                  <div className="package-img-wrapper">
-                    <img src={pkg.image} alt={pkg.title} />
-                    <div className="package-badge"><i className="fa-regular fa-clock"></i> {pkg.duration}</div>
-                  </div>
-                  <div className="package-content">
-                    <div className="package-title">{pkg.title}</div>
-                    <div className="package-desc">{pkg.details}</div>
-                    <div className="package-footer">
-                      <div className="package-price">{pkg.price} <span>/ person</span></div>
-                      <Link to="/contact" className="book-now-btn" style={{ textDecoration: 'none', display: 'inline-block', textAlign: 'center' }}>Book Now</Link>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+
 
           {visibleCategories.map(category => {
             const categoryAttractions = attractionsData.filter(attr => attr.category === category);
@@ -359,6 +305,25 @@ function Attractions() {
                 <div className="modal-actions">
                   <button className="book-now-btn">Book Tickets Now</button>
                   <Link to="/explorer" className="view-map-btn">View on Map</Link>
+                </div>
+
+                <div className="modal-reviews">
+                  <h3>Visitor Reviews</h3>
+                  {[
+                    { id: 1, user: "Ananya Sharma", rating: 5, comment: "Absolutely breathtaking! The architecture is stunning and the guide was very knowledgeable." },
+                    { id: 2, user: "James Wilson", rating: 4, comment: "A must-visit in Jaipur. It gets a bit crowded, so try to reach early." },
+                    { id: 3, user: "Rajesh Gupta", rating: 5, comment: "The light and sound show in the evening is magical. Don't miss it!" }
+                  ].map(review => (
+                    <div key={review.id} className="review-item">
+                      <div className="review-header">
+                        <strong>{review.user}</strong>
+                        <span className="review-rating">
+                          {[...Array(review.rating)].map((_, i) => <i key={i} className="fa-solid fa-star"></i>)}
+                        </span>
+                      </div>
+                      <p className="review-comment">"{review.comment}"</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

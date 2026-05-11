@@ -427,13 +427,13 @@
 .food-modal {
   background: #FFF9F6;
   width: 100%;
-  max-width: 800px;
+  max-width: 900px;
   border-radius: 24px;
   overflow: hidden;
   position: relative;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   max-height: 90vh;
 }
 
@@ -461,15 +461,17 @@
 }
 
 .food-modal-img {
-  width: 100%;
-  height: 350px;
+  width: 40%;
+  flex-shrink: 0;
   position: relative;
+  min-height: 100%;
 }
 
 .food-modal-img img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .must-try-badge {
@@ -486,8 +488,11 @@
 }
 
 .food-modal-content {
+  flex: 1;
   padding: 30px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .food-modal-header {
@@ -596,9 +601,17 @@
   line-height: 1.4;
 }
 
-@media (max-width: 600px) {
-  .food-modal-img { height: 250px; }
-  .food-modal-header h2 { font-size: 1.8rem; }
+@media (max-width: 700px) {
+  .food-modal {
+    flex-direction: column;
+    max-height: 92vh;
+  }
+  .food-modal-img {
+    width: 100%;
+    min-height: 220px;
+    max-height: 240px;
+  }
+  .food-modal-header h2 { font-size: 1.6rem; }
   .food-modal-content { padding: 20px; }
 }
 

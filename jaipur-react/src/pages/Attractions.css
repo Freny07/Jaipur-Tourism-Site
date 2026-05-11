@@ -111,6 +111,276 @@
   gap: 25px;
 }
 
+/* =============================================
+   Attractions Explore Modal
+   ============================================= */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 20px;
+  animation: fadeInOverlay 0.25s ease;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-content.glass {
+  background: #FFF9F6;
+  width: 100%;
+  max-width: 860px;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.35);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUpModal 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes slideUpModal {
+  from { opacity: 0; transform: translateY(40px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
+.close-modal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  color: #3C2A21;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.close-modal:hover {
+  background: #A1673F;
+  color: white;
+  transform: rotate(90deg);
+}
+
+/* Side-by-side layout: image left, info right */
+.modal-body {
+  display: flex;
+  flex-direction: row;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-img {
+  width: 42%;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.modal-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.modal-info {
+  flex: 1;
+  padding: 35px 30px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.modal-info h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #3C2A21;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.modal-category {
+  display: inline-block;
+  background: #f5e6d3;
+  color: #A1673F;
+  border: 1px solid rgba(161, 103, 63, 0.3);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-desc {
+  font-size: 1rem;
+  color: #5A473E;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.modal-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: #f5e6d3;
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: #3C2A21;
+  font-weight: 500;
+}
+
+.stat-item i {
+  color: #A1673F;
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.book-now-btn {
+  background: #A1673F;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 26px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.book-now-btn:hover {
+  background: #8b5a2b;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(161, 103, 63, 0.35);
+  color: white;
+}
+
+.view-map-btn {
+  background: transparent;
+  color: #A1673F;
+  border: 2px solid #A1673F;
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view-map-btn:hover {
+  background: #A1673F;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Responsive: stack vertically on smaller screens */
+@media (max-width: 700px) {
+  .modal-body {
+    flex-direction: column;
+  }
+  .modal-img {
+    width: 100%;
+    height: 240px;
+  }
+  .modal-info {
+    padding: 22px 18px;
+  }
+  .modal-info h2 {
+    font-size: 1.6rem;
+  }
+}
+
+/* Modal Reviews Section */
+.modal-reviews {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(161, 103, 63, 0.2);
+}
+
+.modal-reviews h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: #3C2A21;
+  margin-bottom: 20px;
+}
+
+.review-item {
+  background: rgba(255, 255, 255, 0.5);
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(161, 103, 63, 0.1);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.review-header strong {
+  color: #3C2A21;
+  font-size: 0.95rem;
+}
+
+.review-rating {
+  color: #f2c94c;
+  font-size: 0.8rem;
+}
+
+.review-comment {
+  font-size: 0.9rem;
+  color: #5A473E;
+  font-style: italic;
+  margin: 0;
+  line-height: 1.5;
+}
+
 /* Responsive sidebar */
 @media (max-width: 1024px) {
   .attractions-page-container {
