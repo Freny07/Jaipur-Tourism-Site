@@ -310,23 +310,27 @@ function Attractions() {
 
                 <div className="modal-reviews">
                   <h3>Visitor Reviews</h3>
-                  {[
-                    { id: 1, user: "Freny", rating: 5, comment: "Absolutely breathtaking! The architecture is stunning and the guide was very knowledgeable." },
-                    { id: 2, user: "Nayan", rating: 4, comment: "A must-visit in Jaipur. It gets a bit crowded, so try to reach early." },
-                    { id: 3, user: "Prabal", rating: 5, comment: "The light and sound show in the evening is magical. Don't miss it!" },
-                    { id: 4, user: "Paras", rating: 4, comment: "Incredible detail in every corner. Jaipur never ceases to amaze me." },
-                    { id: 5, user: "Bikash", rating: 5, comment: "One of the best heritage sites I've ever visited. Very well maintained." }
-                  ].map(review => (
-                    <div key={review.id} className="review-item">
-                      <div className="review-header" style={{ justifyContent: 'flex-start' }}>
-                        <strong>{review.user}</strong>
-                        <span className="review-rating" style={{ marginLeft: '10px' }}>
-                          {[...Array(review.rating)].map((_, i) => <i key={i} className="fa-solid fa-star"></i>)}
-                        </span>
+                  {(() => {
+                    const allReviews = [
+                      { id: 1, user: "Freny",  rating: 5, comment: "Absolutely breathtaking! The architecture is stunning and the guide was very knowledgeable.", color: '#A1673F' },
+                      { id: 2, user: "Nayan",  rating: 4, comment: "A must-visit in Jaipur. It gets a bit crowded, so try to reach early.", color: '#D9B27C' },
+                      { id: 3, user: "Prabal", rating: 5, comment: "The light and sound show in the evening is magical. Don't miss it!", color: '#8B5A2B' },
+                      { id: 4, user: "Paras",  rating: 4, comment: "Incredible detail in every corner. Jaipur never ceases to amaze me.", color: '#C4813A' },
+                      { id: 5, user: "Bikash", rating: 5, comment: "One of the best heritage sites I've ever visited. Very well maintained.", color: '#7A4F30' }
+                    ];
+                    const seed = typeof selectedAttraction.id === 'number' ? selectedAttraction.id : selectedAttraction.id.charCodeAt(0);
+                    const i1 = seed % 5;
+                    const i2 = (seed + 2) % 5;
+                    return [allReviews[i1], allReviews[i2]].map(review => (
+                      <div key={review.id} className="review-item">
+                        <div className="review-avatar" style={{ background: review.color }}>{review.user.charAt(0)}</div>
+                        <div className="review-text">
+                          <strong>{review.user} <span className="review-rating" style={{ marginLeft: '6px', color: '#f2c94c', fontSize: '0.8rem' }}>{[...Array(review.rating)].map((_, i) => <i key={i} className="fa-solid fa-star"></i>)}</span></strong>
+                          <span>{review.comment}</span>
+                        </div>
                       </div>
-                      <p className="review-comment">"{review.comment}"</p>
-                    </div>
-                  ))}
+                    ));
+                  })()}
                 </div>
               </div>
             </div>
