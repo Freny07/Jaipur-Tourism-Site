@@ -318,9 +318,9 @@ function Attractions() {
                     { id: 5, user: "Bikash", rating: 5, comment: "One of the best heritage sites I've ever visited. Very well maintained." }
                   ].map(review => (
                     <div key={review.id} className="review-item">
-                      <div className="review-header">
+                      <div className="review-header" style={{ justifyContent: 'flex-start' }}>
                         <strong>{review.user}</strong>
-                        <span className="review-rating">
+                        <span className="review-rating" style={{ marginLeft: '10px' }}>
                           {[...Array(review.rating)].map((_, i) => <i key={i} className="fa-solid fa-star"></i>)}
                         </span>
                       </div>

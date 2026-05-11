@@ -325,22 +325,7 @@ function Contact() {
     }
   }, []);
 
-  useEffect(() => {
-    if (location.state && location.state.bookingItem) {
-      const item = location.state.bookingItem;
-      const pkg = {
-        id: 'external-' + item.id,
-        title: item.title || item.name,
-        price: item.fee || item.price || 'Free',
-        details: item.desc || item.description,
-        image: item.image,
-        startDate: getFutureDate(7)
-      };
-      openBookingModal(pkg);
-      // Clear state so it doesn't reopen on refresh
-      navigate(location.pathname, { replace: true, state: {} });
-    }
-  }, [location, PACKAGES, PLACES]);
+
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -353,6 +338,25 @@ function Contact() {
 
   // Custom Package State
   const [customPlaces, setCustomPlaces] = useState([])
+
+  useEffect(() => {
+    if (location.state && location.state.bookingItem) {
+      const item = location.state.bookingItem;
+      const itemName = (item.title || item.name).toLowerCase();
+      const place = PLACES.find(p => p.name.toLowerCase().includes(itemName) || itemName.includes(p.name.toLowerCase()));
+      
+      if (place) {
+        setCustomPlaces(prev => prev.includes(place.id) ? prev : [...prev, place.id]);
+        setTimeout(() => {
+          const builderSection = document.querySelector('.custom-builder-card');
+          if (builderSection) {
+            builderSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location, PLACES]);
   
   // Payment Formatting State
   const [cardNumber, setCardNumber] = useState('')
